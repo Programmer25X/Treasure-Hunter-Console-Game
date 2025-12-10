@@ -13,7 +13,7 @@ using std::endl;
 constexpr auto ROWS = 25;
 constexpr auto COLUMNS = 30;
 
-PlayerCharacter* playerCharacters = nullptr;
+PlayerCharacter* playerCharacter = nullptr;
 Enemy* enemies[5] = {};
 CollectableItem* coins[10] = {};
 CollectableItem* treasureChests[10] = {};
@@ -129,9 +129,24 @@ void Game::displayIntroMenu() const
 
 }
 
-void Game::createGameBoard() const
+void Game::createGameBoard()
 {
-	playerCharacters = new PlayerCharacter; 
+	playerCharacter = new PlayerCharacter; 
+
+	for (int i = 0; i < (sizeof(enemies) / sizeof(enemies[0])); i++)
+	{
+		enemies[i] = new Enemy(30.0f);
+	}
+
+	for (int i = 0; i < (sizeof(coins) / sizeof(coins[0])); i++)
+	{
+		coins[i] = new CollectableItem("Coin", 'c', 1);
+	}
+
+	for (int i = 0; i < (sizeof(treasureChests) / sizeof(treasureChests[0])); i++)
+	{
+		treasureChests[i] = new CollectableItem("Chest", 'T', 50);
+	}
 }
 
 
