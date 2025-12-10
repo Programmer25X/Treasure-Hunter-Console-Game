@@ -2,6 +2,13 @@
 
 class Game
 {
+
+
+public:
+
+	Game(); // Constructor
+	~Game(); // Deconstructor 
+
 private:
 
 	bool isGameRunning = false;
@@ -9,6 +16,8 @@ private:
 	unsigned int currentLevel = 1;
 
 public:
+
+	// Getter and Setter Methods 
 
 	void setIsGameRunning(bool gameRunning);
 	bool getIsGameRunning() const;
@@ -19,6 +28,11 @@ public:
 	int getCurrentLevel() const;
 	void increaseCurrentLevel();
 
+
+	// Other Methods 
+
+	int getPlayerInput(); 
+	void welcomeMenu() const; 
 
 };
 

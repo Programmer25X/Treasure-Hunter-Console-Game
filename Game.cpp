@@ -1,5 +1,15 @@
 #include "Game.h"
 
+#include <iostream>
+#include <conio.h>
+
+Game::Game()
+{
+	std::cout << std::endl << std::endl << "- - - - - Game Started - - - - -" << std::endl; 
+
+	welcomeMenu(); 
+}
+
 /// <summary>
 /// Sets whether the game is stil running
 /// </summary>
@@ -36,7 +46,6 @@ bool Game::getReplay() const
 	return replay;
 }
 
-
 /// <summary>
 /// Retrieves the current level
 /// </summary>
@@ -54,3 +63,38 @@ void Game::increaseCurrentLevel()
 {
 	currentLevel++;
 }
+
+
+
+
+
+int Game::getPlayerInput()
+{
+	int keycode = 0;
+
+	std::cout << std::endl << "WASD - To Move | Esc - To Exit";
+	do
+	{
+		keycode = toupper(_getch());
+
+	} while (keycode == 27 || keycode == 87 || keycode == 83 || keycode == 65 || keycode == 68);
+
+	if (keycode == 27)
+	{
+		isGameRunning = false; 
+	}
+
+	return keycode;
+}
+
+void Game::welcomeMenu() const
+{
+	system("cls");
+	std::cout << "\033[32m"; 
+	std::cout << std::endl << "\tTreasure Hunter";
+	std::cout << std::endl << "\t- - - - - - - -  " << std::endl; 
+	std::cout << std::endl << "\tCollect All the Treasure" << std::endl; 
+	std::cout << std::endl << "\tAvoid All the Enemies" << std::endl;
+}
+
+
