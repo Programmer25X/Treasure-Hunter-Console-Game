@@ -2,7 +2,6 @@
 //
 
 #include "Game.h"
-#include "Characters.h"
 #include <iostream>
 
 int main()

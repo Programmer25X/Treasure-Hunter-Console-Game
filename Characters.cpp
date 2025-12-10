@@ -2,6 +2,8 @@
 #include "Items.h"
 
 
+// =========================================================================== //
+
 // Character Class Member Functions 
 
 /// <summary>
@@ -73,7 +75,23 @@ char Character::getSymbol() const
 }
 
 
+// =========================================================================== //
+
 // PlayerCharacter Class Member Functions 
+
+
+/// <summary>
+/// Constructor
+/// </summary>
+PlayerCharacter::PlayerCharacter()
+{
+	health = 100.0f;
+	symbol = 'P';
+	xPosition = 0;
+	yPosition = 0;
+	numberOfCoins = 0;
+	numberOfPoints = 0;
+}
 
 /// <summary>
 /// Retrieves the number of coins that the PC has collected 
@@ -90,7 +108,7 @@ int PlayerCharacter::getNumberOfCoins() const
 /// <returns></returns>
 int PlayerCharacter::getAmountOfPoints() const
 {
-	return amountOfPoints;
+	return numberOfPoints;
 }
 
 /// <summary>
@@ -99,10 +117,10 @@ int PlayerCharacter::getAmountOfPoints() const
 /// <param name="amountToAdd"></param>
 void PlayerCharacter::setNumberOfPoints(int amountToAdd)
 {
-	amountOfPoints += amountToAdd; 
+	numberOfPoints += amountToAdd; 
 }
 
-/// <summary>
+/// <summary>	
 /// Updates the number of coins the PC has collected
 /// </summary>
 /// <param name="amountToAdd"></param>
@@ -112,7 +130,24 @@ void PlayerCharacter::setNumberOfCoins(int amountToAdd)
 }
 
 
+
+// =========================================================================== //
+
 // Enemy Class Member Functions 
+
+
+/// <summary>
+/// Constructor
+/// </summary>
+/// <param name="PDamage"></param>
+Enemy::Enemy(float PDamage)
+{
+	name = "Enemy";
+	symbol = 'W';
+	xPosition = 0;
+	yPosition = 0;
+	damage = PDamage;
+}
 
 /// <summary>
 /// Retrieves the damage the enemy will inflict onto the PC

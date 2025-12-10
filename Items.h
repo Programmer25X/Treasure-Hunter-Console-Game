@@ -4,6 +4,9 @@
 
 class CollectableItem
 {
+public:
+	CollectableItem(std::string pName, char pSymbol, int pValue); 
+
 private:
 
 	std::string name = "";

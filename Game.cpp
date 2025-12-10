@@ -1,3 +1,5 @@
+#include "Characters.h"
+#include "Items.h"
 #include "Game.h"
 
 #include <iostream>
@@ -5,6 +7,16 @@
 
 using std::cout;
 using std::endl;
+
+
+
+constexpr auto ROWS = 25;
+constexpr auto COLUMNS = 30;
+
+PlayerCharacter* playerCharacters = nullptr;
+Enemy* enemies[5] = {};
+CollectableItem* coins[10] = {};
+CollectableItem* treasureChests[10] = {};
 
 /// <summary>
 /// Constructor
@@ -115,6 +127,11 @@ void Game::displayIntroMenu() const
 	cout << endl << "\tCollect All the Treasure" << endl; 
 	cout << endl << "\tAvoid All the Enemies" << endl; 
 
+}
+
+void Game::createGameBoard() const
+{
+	playerCharacters = new PlayerCharacter; 
 }
 
 

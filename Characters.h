@@ -27,10 +27,15 @@ public:
 
 class PlayerCharacter : private Character
 {
+
+public:
+
+	PlayerCharacter();
+
 private:
 	
-	int unsigned numberOfCoins = 0;
-	unsigned int amountOfPoints = 0;
+	unsigned int numberOfCoins = 0;
+	unsigned int numberOfPoints = 0;
 
 public:
 	
@@ -45,6 +50,11 @@ public:
 
 class Enemy : private Character
 {
+	
+public:
+
+	Enemy(float PDamage = 10); 
+
 private:
 
 	float damage = 10.0f;

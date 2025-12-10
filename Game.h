@@ -2,8 +2,6 @@
 
 class Game
 {
-
-
 public:
 
 	Game(); // Constructor
