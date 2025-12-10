@@ -32,7 +32,8 @@ public:
 	// Other Methods 
 
 	int getPlayerInput(); 
-	void welcomeMenu() const; 
+	void displayIntroMenu() const; 
+	void createGameBoard() const; 
 
 };
 

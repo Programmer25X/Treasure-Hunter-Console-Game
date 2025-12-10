@@ -3,11 +3,25 @@
 #include <iostream>
 #include <conio.h>
 
+using std::cout;
+using std::endl;
+
+/// <summary>
+/// Constructor
+/// </summary>
 Game::Game()
 {
-	std::cout << std::endl << std::endl << "- - - - - Game Started - - - - -" << std::endl; 
+	cout << endl << endl << "- - - - - Game Started - - - - -" << endl; 
 
-	welcomeMenu(); 
+	displayIntroMenu(); // Displays the Intro Menu
+}
+
+/// <summary>
+/// Deconstructor
+/// </summary>
+Game::~Game()
+{
+
 }
 
 /// <summary>
@@ -65,21 +79,23 @@ void Game::increaseCurrentLevel()
 }
 
 
-
-
-
+/// <summary>
+/// Gets the Player's input to move the PC or exit the game 
+/// </summary>
+/// <returns></returns>
 int Game::getPlayerInput()
 {
 	int keycode = 0;
 
-	std::cout << std::endl << "WASD - To Move | Esc - To Exit";
+	cout << endl << "WASD - To Move | Esc - To Exit";
+
 	do
 	{
-		keycode = toupper(_getch());
+		keycode = toupper(_getch()); // Gets the player's input
 
-	} while (keycode == 27 || keycode == 87 || keycode == 83 || keycode == 65 || keycode == 68);
+	} while (keycode == 27 || keycode == 87 || keycode == 83 || keycode == 65 || keycode == 68); // While not A, W, S, D or Escape
 
-	if (keycode == 27)
+	if (keycode == 27) // Determines whether the player chooses to exit the game
 	{
 		isGameRunning = false; 
 	}
@@ -87,14 +103,18 @@ int Game::getPlayerInput()
 	return keycode;
 }
 
-void Game::welcomeMenu() const
+/// <summary>
+/// Displays the Intro Menu
+/// </summary>
+void Game::displayIntroMenu() const
 {
-	system("cls");
-	std::cout << "\033[32m"; 
-	std::cout << std::endl << "\tTreasure Hunter";
-	std::cout << std::endl << "\t- - - - - - - -  " << std::endl; 
-	std::cout << std::endl << "\tCollect All the Treasure" << std::endl; 
-	std::cout << std::endl << "\tAvoid All the Enemies" << std::endl;
+	system("cls"); // Clears the console
+	cout << "\033[32m"; 
+	cout << endl << "\tTreasure Hunter";
+	cout << endl << "\t- - - - - - - -  " << endl; 
+	cout << endl << "\tCollect All the Treasure" << endl; 
+	cout << endl << "\tAvoid All the Enemies" << endl; 
+
 }
 
 
