@@ -1,18 +1,19 @@
 #pragma once
+#include <string>
 
 class Character
 {
 protected:
 
-	int health = 0;
+	float health = 0;
 	int xPosition = 0;
 	int yPosition = 0;
 	char symbol = ' ';
 
 public:
 
-	int getHealth() const;
-	void setHealth(int amountToAdd);
+	float getHealth() const;
+	void setHealth(float amountToAdd);
 
 	int getXPosition() const;
 	int getYPosition() const;
@@ -20,4 +21,36 @@ public:
 	void setYPosition(int amountToAdd);
 
 	char getSymbol() const;
+};
+
+
+
+class PlayerCharacter : private Character
+{
+private:
+	
+	int unsigned numberOfCoins = 0;
+	unsigned int amountOfPoints = 0;
+
+public:
+	
+	int getNumberOfCoins() const;
+	void setNumberOfCoins(int amountToAdd);
+	
+	int getAmountOfPoints() const;
+	void setNumberOfPoints(int amountToAdd); 
+};
+
+
+
+class Enemy : private Character
+{
+private:
+
+	float damage = 10.0f;
+	std::string name = "";
+
+public:
+	float getDamage() const; 
+
 };
