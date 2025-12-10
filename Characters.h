@@ -12,12 +12,12 @@ protected:
 public:
 
 	int getHealth() const;
-	void setHealth();
+	void setHealth(int amountToAdd);
 
 	int getXPosition() const;
 	int getYPosition() const;
-	void setXPosition();
-	void setYPosition();
+	void setXPosition(int amountToAdd);
+	void setYPosition(int amountToAdd);
 
 	char getSymbol() const;
 };
