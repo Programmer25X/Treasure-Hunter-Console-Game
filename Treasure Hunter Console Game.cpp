@@ -6,6 +6,7 @@
 
 int main()
 {
+    std::cout << "Hello";
     Game* game = new Game;
 
     return 0; 
