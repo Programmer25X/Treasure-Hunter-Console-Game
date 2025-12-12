@@ -10,13 +10,14 @@ using std::endl;
 
 
 
-constexpr auto ROWS = 25;
-constexpr auto COLUMNS = 30;
+constexpr auto NUMBER_OF_ROWS = 25;
+constexpr auto NUMBER_OF_COLUMNS = 30;
 
 PlayerCharacter* playerCharacter = nullptr;
 Enemy* enemies[5] = {};
-CollectableItem* coins[10] = {};
-CollectableItem* treasureChests[10] = {};
+Item* coins[10] = {};
+Item* treasureChests[10] = {};
+Item* walls[200] = {};
 
 /// <summary>
 /// Constructor
@@ -126,10 +127,9 @@ void Game::displayIntroMenu() const
 	cout << endl << "\t- - - - - - - -  " << endl; 
 	cout << endl << "\tCollect All the Treasure" << endl; 
 	cout << endl << "\tAvoid All the Enemies" << endl; 
-
 }
 
-void Game::createGameBoard()
+void Game::generateObjects()
 {
 	playerCharacter = new PlayerCharacter; 
 
@@ -140,13 +140,36 @@ void Game::createGameBoard()
 
 	for (int i = 0; i < (sizeof(coins) / sizeof(coins[0])); i++)
 	{
-		coins[i] = new CollectableItem("Coin", 'c', 1);
+		coins[i] = new Item("Coin", 'c', 1);
 	}
 
 	for (int i = 0; i < (sizeof(treasureChests) / sizeof(treasureChests[0])); i++)
 	{
-		treasureChests[i] = new CollectableItem("Chest", 'T', 50);
+		treasureChests[i] = new Item("Chest", 'T', 50);
+	}
+
+	for (int i = 0; i < (sizeof(walls)) / sizeof(walls[0]); i++)
+	{
+		walls[i] = new Item("Wall", ' * ', 0);
 	}
 }
+
+void Game::displayBoard() const
+{
+	char symbol = ' ';
+
+	for (int row = 0; row < NUMBER_OF_ROWS; row++)
+	{
+		for (int column = 0; column < NUMBER_OF_COLUMNS; column++)
+		{
+			for (Item* wall : walls)
+			{
+
+			}
+		}
+	}
+}
+
+
 
 

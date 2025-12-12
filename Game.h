@@ -31,7 +31,8 @@ public:
 
 	int getPlayerInput(); 
 	void displayIntroMenu() const; 
-	void createGameBoard(); 
+	void generateObjects(); 
+	void displayBoard() const; 
 
 };
 

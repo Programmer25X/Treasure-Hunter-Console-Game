@@ -8,7 +8,7 @@
 /// <param name="pName"></param>
 /// <param name="pSymbol"></param>
 /// <param name="pValue"></param>
-CollectableItem::CollectableItem(std::string pName, char pSymbol, int pValue)
+Item::Item(std::string pName, char pSymbol, int pValue)
 {
 	name = pName;
 	symbol = pSymbol;
@@ -19,7 +19,7 @@ CollectableItem::CollectableItem(std::string pName, char pSymbol, int pValue)
 /// Retrieves the name of the item
 /// </summary>
 /// <returns></returns>
-std::string CollectableItem::getName() const
+std::string Item::getName() const
 {
 	return name;
 }
@@ -28,7 +28,7 @@ std::string CollectableItem::getName() const
 /// Retrieves the symbol used to represent the item on the board 
 /// </summary>
 /// <returns></returns>
-char CollectableItem::getSymbol() const
+char Item::getSymbol() const
 {
 	return symbol; 
 }
@@ -37,7 +37,60 @@ char CollectableItem::getSymbol() const
 /// Retrieves the value of the item
 /// </summary>
 /// <returns></returns>
-int CollectableItem::getValue() const
+int Item::getValue() const
 {
 	return value;
+}
+
+/// <summary>
+/// Retrieves the item can be interacted with
+/// </summary>
+/// <returns></returns>
+bool Item::getIsInteractable() const
+{
+	return isInteractable;
+}
+
+/// <summary>
+/// Retrieves the item's y-coordinate
+/// </summary>
+/// <returns></returns>
+int Item::getYCoordinate() const
+{
+	return yCoordinate;
+}
+
+/// <summary>
+/// Retrieves the item's y-coordinate
+/// </summary>
+/// <returns></returns>
+int Item::getXCoordinate() const
+{
+	return xCoordinate;
+}
+
+/// <summary>
+/// Deactivates item
+/// </summary>
+void Item::deactivateItem()
+{
+	isInteractable = false;
+}
+
+/// <summary>
+/// Updates the item's x-coordinate
+/// </summary>
+/// <param name="amountToAdd"></param>
+void Item::updateXCoordinate(int amountToAdd)
+{
+	xCoordinate += amountToAdd;
+}
+
+/// <summary>
+/// Updates the item's y-coordinate
+/// </summary>
+/// <param name="amountToAdd"></param>
+void Item::updateYCoordinate(int amountToAdd)
+{
+	yCoordinate += amountToAdd;
 }
