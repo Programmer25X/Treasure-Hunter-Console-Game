@@ -146,6 +146,7 @@ Enemy::Enemy(float PDamage)
 	xPosition = 0;
 	yPosition = 0;
 	damage = PDamage;
+	health = 50.0f;
 }
 
 /// <summary>

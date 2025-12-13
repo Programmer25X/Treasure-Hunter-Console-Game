@@ -237,7 +237,7 @@ void Game::resetGame()
 	{
 		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
 		startYCoordinate = rand() % NUMBER_OF_ROWS;
-		if (getIsOverlapping(startXCoordinate, startYCoordinate) == false)
+		if (getIsOverlapping(startXCoordinate, startYCoordinate))
 		{
 			continue;
 		}
