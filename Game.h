@@ -9,6 +9,9 @@ public:
 
 private:
 
+	static int numberOfEnemies;
+	static int numberOfChests;
+
 	bool isGameRunning = false;
 	bool replay = false;
 	unsigned int currentLevel = 1;
@@ -25,6 +28,12 @@ public:
 
 	int getCurrentLevel() const;
 	void increaseCurrentLevel();
+
+	static int getNumberOfEnemies();
+	static void setNumberOfEnemies(int amountToAdd);
+
+	static int getNumberOfChests();
+	static void setNumberOfChests(int amountToAdd); 
 
 
 	// Other Methods 

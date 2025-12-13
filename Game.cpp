@@ -14,7 +14,8 @@ using std::endl;
 constexpr auto NUMBER_OF_ROWS = 25;
 constexpr auto NUMBER_OF_COLUMNS = 30;
 
-std::string grid[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
+int Game::numberOfEnemies = 0;
+int Game::numberOfChests = 0;
 
 PlayerCharacter* playerCharacter = nullptr;
 Enemy* enemies[5] = {};
@@ -94,6 +95,26 @@ void Game::increaseCurrentLevel()
 	currentLevel++;
 }
 
+int Game::getNumberOfEnemies()
+{
+	return numberOfEnemies;
+}
+
+void Game::setNumberOfEnemies(int amountToAdd)
+{
+	numberOfEnemies += amountToAdd;
+}
+
+int Game::getNumberOfChests()
+{
+	return numberOfChests;
+}
+
+void Game::setNumberOfChests(int amountToAdd)
+{
+	numberOfChests += amountToAdd;
+}
+
 
 /// <summary>
 /// Gets the Player's input to move the PC or exit the game 
@@ -129,7 +150,7 @@ void Game::displayIntroMenu() const
 
 	system("cls"); // Clears the console#
 
-	cout << "\033[32m"; 
+	cout << "\033[33m"; 
 
 	cout << endl << "\tTreasure Hunter";
 	cout << endl << "\t- - - - - - - -  " << endl; 
@@ -144,6 +165,7 @@ void Game::displayIntroMenu() const
 
 	} while (keycode != 13);
 }
+
 
 void Game::generateObjects()
 {
@@ -174,6 +196,11 @@ void Game::generateObjects()
 void Game::displayBoard() 
 {
 	system("cls");
+
+	cout << "\033[33m";
+
+	cout << endl << "Enemies: " << getNumberOfEnemies() << endl;
+	cout << endl << "Chests Remaining: " << getNumberOfChests() << endl << endl;
 
 	char symbol = ' ';
 
@@ -243,7 +270,8 @@ void Game::resetGame() const
 
 	srand(static_cast<unsigned int>(time(0)));
 	
-
+	setNumberOfEnemies(-numberOfEnemies);
+	setNumberOfChests(-numberOfChests); 
 
 	for (Item* wall : walls)
 	{
@@ -293,6 +321,7 @@ void Game::resetGame() const
 
 		enemy->setXCoordinate(startXCoordinate);
 		enemy->setYCoordinate(startYCoordinate);
+		setNumberOfEnemies(1); 
 	}
 
 
@@ -310,6 +339,7 @@ void Game::resetGame() const
 
 		treasure->setXCoordinate(startXCoordinate);
 		treasure->setYCoordinate(startYCoordinate);
+		setNumberOfChests(1); 
 	}
 
 
@@ -344,8 +374,8 @@ void Game::resetGame() const
 		}
 	}
 
-
 }
+
 
 bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 {
