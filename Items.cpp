@@ -8,11 +8,13 @@
 /// <param name="pName"></param>
 /// <param name="pSymbol"></param>
 /// <param name="pValue"></param>
-Item::Item(std::string pName, char pSymbol, int pValue)
+Item::Item(std::string pName, char pSymbol, int pValue, int pXCoordinate, int pYcoordinate)
 {
 	name = pName;
 	symbol = pSymbol;
 	value = pValue; 
+	xCoordinate = pXCoordinate;
+	yCoordinate = pYcoordinate; 
 }
 
 /// <summary>

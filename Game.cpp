@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <conio.h>
+#include <ctime>
 
 using std::cout;
 using std::endl;
@@ -12,6 +13,8 @@ using std::endl;
 
 constexpr auto NUMBER_OF_ROWS = 25;
 constexpr auto NUMBER_OF_COLUMNS = 30;
+
+std::string grid[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
 
 PlayerCharacter* playerCharacter = nullptr;
 Enemy* enemies[5] = {};
@@ -140,33 +143,83 @@ void Game::generateObjects()
 
 	for (int i = 0; i < (sizeof(coins) / sizeof(coins[0])); i++)
 	{
-		coins[i] = new Item("Coin", 'c', 1);
+		coins[i] = new Item("Coin", 'c', 1, 0, 0);
 	}
 
 	for (int i = 0; i < (sizeof(treasureChests) / sizeof(treasureChests[0])); i++)
 	{
-		treasureChests[i] = new Item("Chest", 'T', 50);
+		treasureChests[i] = new Item("Chest", 'T', 50, 0, 0);
 	}
 
 	for (int i = 0; i < (sizeof(walls)) / sizeof(walls[0]); i++)
 	{
-		walls[i] = new Item("Wall", ' * ', 0);
+			walls[i] = new Item("Wall", '*', 0, 0, 0);
 	}
 }
 
-void Game::displayBoard() const
+void Game::displayBoard() 
 {
+	system("cls");
+
 	char symbol = ' ';
 
 	for (int row = 0; row < NUMBER_OF_ROWS; row++)
 	{
 		for (int column = 0; column < NUMBER_OF_COLUMNS; column++)
 		{
-			for (Item* wall : walls)
-			{
+			symbol = ' ';
 
+			for (Item* tile : walls)
+			{
+				if (tile->getIsInteractable() && tile->getXCoordinate() == column && tile->getYCoordinate() == row)
+				{
+					symbol = tile->getSymbol();
+				}
 			}
+
+			cout << ' ' << symbol << ' ';
 		}
+
+		cout << endl;
+	}
+}
+
+void Game::resetGame()
+{
+	// srand(static_cast<unsigned int>(time(0)));
+	
+	int i = 0;
+	for (Item* wall : walls)
+	{
+		if (i < 30)
+		{
+			wall->updateXCoordinate(i);
+		}
+		
+		if (i >= 30 && i < 60)
+		{
+			wall->updateXCoordinate(i - 30);
+			wall->updateYCoordinate(24);
+		}
+		
+		if (i > 60 && i < 94)
+		{
+			wall->updateYCoordinate(i - 60);
+		}
+
+		if (i >= 94 && i < 118)
+		{
+			wall->updateXCoordinate(29);
+			wall->updateYCoordinate(i - 94);
+		}
+
+		if (i >= 118 && i < 128)
+		{
+			wall->updateXCoordinate(i - 110);
+			wall->updateYCoordinate(12);
+		}
+
+		i++;
 	}
 }
 

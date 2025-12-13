@@ -7,6 +7,9 @@
 int main()
 {
     Game* game = new Game;
+    game->generateObjects();
+    game->resetGame(); 
+    game->displayBoard();
 
     return 0; 
 }

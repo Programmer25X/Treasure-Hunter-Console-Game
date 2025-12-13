@@ -5,7 +5,7 @@
 class Item
 {
 public:
-	Item(std::string pName, char pSymbol, int pValue); 
+	Item(std::string pName, char pSymbol, int pValue, int pXCoordinate, int pYcoordinate); 
 
 private:
 

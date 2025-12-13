@@ -32,7 +32,8 @@ public:
 	int getPlayerInput(); 
 	void displayIntroMenu() const; 
 	void generateObjects(); 
-	void displayBoard() const; 
+	void displayBoard();
+	void resetGame();
 
 };
 
