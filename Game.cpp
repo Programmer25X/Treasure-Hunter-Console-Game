@@ -109,7 +109,7 @@ int Game::getPlayerInput()
 	{
 		keycode = toupper(_getch()); // Gets the player's input
 
-	} while (keycode == 27 || keycode == 87 || keycode == 83 || keycode == 65 || keycode == 68); // While not A, W, S, D or Escape
+	} while (keycode != 27 && keycode != 87 && keycode != 83 && keycode != 65 && keycode != 68); // While not A, W, S, D or Escape
 
 	if (keycode == 27) // Determines whether the player chooses to exit the game
 	{
@@ -124,12 +124,25 @@ int Game::getPlayerInput()
 /// </summary>
 void Game::displayIntroMenu() const
 {
-	system("cls"); // Clears the console
+	int keycode = 0;
+
+
+	system("cls"); // Clears the console#
+
 	cout << "\033[32m"; 
+
 	cout << endl << "\tTreasure Hunter";
 	cout << endl << "\t- - - - - - - -  " << endl; 
 	cout << endl << "\tCollect All the Treasure" << endl; 
 	cout << endl << "\tAvoid All the Enemies" << endl; 
+
+	cout << endl << endl << "\tPress ENTER to play" << endl;
+	
+	do
+	{
+		keycode = toupper(_getch());
+
+	} while (keycode != 13);
 }
 
 void Game::generateObjects()
@@ -156,6 +169,7 @@ void Game::generateObjects()
 		walls[i] = new Item("Wall", '*', 0, 0, 0);
 	}
 }
+
 
 void Game::displayBoard() 
 {
@@ -188,6 +202,29 @@ void Game::displayBoard()
 				}
 			}
 
+			for (Item* treasure : treasureChests)
+			{
+				if (treasure->getIsInteractable() && treasure->getXCoordinate() == column && treasure->getYCoordinate() == row)
+				{
+					cout << "\033[93m";
+					symbol = treasure->getSymbol();
+				}
+			}
+
+			for (Item* coin : coins)
+			{
+				if (coin->getIsInteractable() && coin->getXCoordinate() == column && coin->getYCoordinate() == row)
+				{
+					cout << "\033[93m";
+					symbol = coin->getSymbol();
+				}
+			}
+
+			if (playerCharacter->getHealth() > 0 && playerCharacter->getXCoordinate() == column && playerCharacter->getYCoordinate() == row)
+			{
+				symbol = playerCharacter->getSymbol();
+			}
+
 			cout << ' ' << symbol << ' ';
 		}
 
@@ -195,65 +232,119 @@ void Game::displayBoard()
 	}
 }
 
-void Game::resetGame()
+void Game::resetGame() const
 {
+	bool isPCSpawned = false;
+
+	int i = 0;
+
+	int startXCoordinate = -1;
+	int startYCoordinate = -1;
+
 	srand(static_cast<unsigned int>(time(0)));
 	
-	int i = 0;
+
+
 	for (Item* wall : walls)
 	{
 		if (i < 30)
 		{
-			wall->updateXCoordinate(i);
+			wall->setXCoordinate(i);
 		}
 		
 		if (i >= 30 && i < 60)
 		{
-			wall->updateXCoordinate(i - 30);
-			wall->updateYCoordinate(24);
+			wall->setXCoordinate(i - 30);
+			wall->setYCoordinate(24);
 		}
 		
 		if (i > 60 && i < 94)
 		{
-			wall->updateYCoordinate(i - 60);
+			wall->setYCoordinate(i - 60);
 		}
 
 		if (i >= 94 && i < 118)
 		{
-			wall->updateXCoordinate(29);
-			wall->updateYCoordinate(i - 94);
+			wall->setXCoordinate(29);
+			wall->setYCoordinate(i - 94);
 		}
 
 		if (i >= 118 && i < 128)
 		{
-			wall->updateXCoordinate(i - 110);
-			wall->updateYCoordinate(12);
+			wall->setXCoordinate(i - 110);
+			wall->setYCoordinate(12);
 		}
 
 		i++;
 	}
 
 
-
-	int startXCoordinate = -1;
-	int startYCoordinate = -1;
-
 	for (Enemy* enemy : enemies)
 	{
-		
-	generateCoordinates: 
+		generateEnemyCoordinates: 
 
 		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
 		startYCoordinate = rand() % NUMBER_OF_ROWS;
 
 		if (getIsOverlapping(startXCoordinate, startYCoordinate))
 		{
-			goto generateCoordinates;
+			goto generateEnemyCoordinates;
 		}
 
 		enemy->setXCoordinate(startXCoordinate);
 		enemy->setYCoordinate(startYCoordinate);
 	}
+
+
+	for (Item* treasure : treasureChests)
+	{
+		generateTreasureCoordinates:
+
+		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
+		startYCoordinate = rand() % NUMBER_OF_ROWS;
+
+		if (getIsOverlapping(startXCoordinate, startYCoordinate))
+		{
+			goto generateTreasureCoordinates;
+		}
+
+		treasure->setXCoordinate(startXCoordinate);
+		treasure->setYCoordinate(startYCoordinate);
+	}
+
+
+	for (Item* coin : coins)
+	{
+		generateCoinCoordinates:
+
+		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
+		startYCoordinate = rand() % NUMBER_OF_ROWS;
+
+		if (getIsOverlapping(startXCoordinate, startYCoordinate))
+		{
+			goto generateCoinCoordinates;
+		}
+
+		coin->setXCoordinate(startXCoordinate);
+		coin->setYCoordinate(startYCoordinate);
+	}
+	
+
+	while (!isPCSpawned)
+	{
+		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
+		startYCoordinate = rand() % NUMBER_OF_ROWS;
+
+		if (!getIsOverlapping(startXCoordinate, startYCoordinate))
+		{
+			isPCSpawned = true;
+
+			playerCharacter->setXCoordinate(startXCoordinate);
+			playerCharacter->setYCoordinate(startYCoordinate);
+		}
+	}
+
+
 }
 
 bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const

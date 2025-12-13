@@ -26,6 +26,6 @@ public:
 	int getXCoordinate() const;
 
 	void deactivateItem();
-	void updateXCoordinate(int amountToAdd);
-	void updateYCoordinate(int amountToAdd);
+	void setXCoordinate(int amountToAdd);
+	void setYCoordinate(int amountToAdd);
 };

@@ -83,7 +83,7 @@ void Item::deactivateItem()
 /// Updates the item's x-coordinate
 /// </summary>
 /// <param name="amountToAdd"></param>
-void Item::updateXCoordinate(int amountToAdd)
+void Item::setXCoordinate(int amountToAdd)
 {
 	xCoordinate += amountToAdd;
 }
@@ -92,7 +92,7 @@ void Item::updateXCoordinate(int amountToAdd)
 /// Updates the item's y-coordinate
 /// </summary>
 /// <param name="amountToAdd"></param>
-void Item::updateYCoordinate(int amountToAdd)
+void Item::setYCoordinate(int amountToAdd)
 {
 	yCoordinate += amountToAdd;
 }

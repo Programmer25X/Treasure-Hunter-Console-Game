@@ -33,7 +33,7 @@ public:
 	void displayIntroMenu() const; 
 	void generateObjects(); 
 	void displayBoard();
-	void resetGame();
+	void resetGame() const;
 	bool getIsOverlapping(int xCoordinate, int yCoordinate) const; 
 
 };
