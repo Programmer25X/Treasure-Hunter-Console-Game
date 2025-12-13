@@ -15,17 +15,17 @@ public:
 	float getHealth() const;
 	void setHealth(float amountToAdd);
 
-	int getXPosition() const;
-	int getYPosition() const;
-	void setXPosition(int amountToAdd);
-	void setYPosition(int amountToAdd);
+	int getXCoordinate() const;
+	int getYCoordinate() const;
+	void setXCoordinate(int amountToAdd);
+	void setYCoordinate(int amountToAdd);
 
 	char getSymbol() const;
 };
 
 
 
-class PlayerCharacter : private Character
+class PlayerCharacter : public Character
 {
 
 public:
@@ -48,7 +48,7 @@ public:
 
 
 
-class Enemy : private Character
+class Enemy : public Character
 {
 	
 public:
@@ -58,9 +58,9 @@ public:
 private:
 
 	float damage = 10.0f;
-	std::string name = "";
 
 public:
+
 	float getDamage() const; 
 
 };

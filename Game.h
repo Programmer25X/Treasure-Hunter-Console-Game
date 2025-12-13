@@ -34,6 +34,7 @@ public:
 	void generateObjects(); 
 	void displayBoard();
 	void resetGame();
+	bool getIsOverlapping(int xCoordinate, int yCoordinate) const; 
 
 };
 

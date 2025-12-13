@@ -153,7 +153,7 @@ void Game::generateObjects()
 
 	for (int i = 0; i < (sizeof(walls)) / sizeof(walls[0]); i++)
 	{
-			walls[i] = new Item("Wall", '*', 0, 0, 0);
+		walls[i] = new Item("Wall", '*', 0, 0, 0);
 	}
 }
 
@@ -177,6 +177,14 @@ void Game::displayBoard()
 				}
 			}
 
+			for (Enemy* enemy : enemies)
+			{
+				if (enemy->getHealth() > 0 && enemy->getXCoordinate() == column && enemy->getYCoordinate() == row)
+				{
+					symbol = enemy->getSymbol();
+				}
+			}
+
 			cout << ' ' << symbol << ' ';
 		}
 
@@ -186,7 +194,7 @@ void Game::displayBoard()
 
 void Game::resetGame()
 {
-	// srand(static_cast<unsigned int>(time(0)));
+	srand(static_cast<unsigned int>(time(0)));
 	
 	int i = 0;
 	for (Item* wall : walls)
@@ -221,7 +229,67 @@ void Game::resetGame()
 
 		i++;
 	}
+
+	int startXCoordinate = -1;
+	int startYCoordinate = -1;
+
+	for (Enemy* enemy : enemies)
+	{
+		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
+		startYCoordinate = rand() % NUMBER_OF_ROWS;
+		if (getIsOverlapping(startXCoordinate, startYCoordinate) == false)
+		{
+			continue;
+		}
+
+		enemy->setXCoordinate(startXCoordinate);
+		enemy->setYCoordinate(startYCoordinate);
+	}
 }
+
+bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
+{
+	for (Item* wall : walls)
+	{
+		if (wall->getXCoordinate() == xCoordinate && wall->getYCoordinate() == yCoordinate)
+		{
+			return true;
+		}
+	}
+
+	for (Enemy* enemy : enemies)
+	{
+		if (enemy->getXCoordinate() == xCoordinate && enemy->getYCoordinate() == yCoordinate && enemy->getHealth() > 0)
+		{
+			return true;
+		}
+	}
+
+	for (Item* coin : coins)
+	{
+		if (coin->getXCoordinate() == xCoordinate && coin->getYCoordinate() == yCoordinate && coin->getIsInteractable())
+		{
+			return true;
+		}
+	}
+
+	for (Item* chest : treasureChests)
+	{
+		if (chest->getXCoordinate() == xCoordinate && chest->getYCoordinate() == yCoordinate && chest->getIsInteractable())
+		{
+			return true;
+		}
+	}
+
+	if (playerCharacter->getXCoordinate() == xCoordinate && playerCharacter->getYCoordinate() == yCoordinate)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+
 
 
 

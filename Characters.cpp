@@ -33,7 +33,7 @@ void Character::setHealth(float amountToAdd)
 /// Retrieves the x-coordinate of the character's position on the board.
 /// </summary>
 /// <returns></returns>
-int Character::getXPosition() const
+int Character::getXCoordinate() const
 {
 	return xPosition;
 }
@@ -42,7 +42,7 @@ int Character::getXPosition() const
 /// Retrieves the y-coordinate of the character's position on the board.
 /// </summary>
 /// <returns></returns>
-int Character::getYPosition() const
+int Character::getYCoordinate() const
 {
 	return yPosition;
 }
@@ -51,7 +51,7 @@ int Character::getYPosition() const
 /// Updates the character's current x-coordinate
 /// </summary>
 /// <param name="amountToAdd"></param>
-void Character::setXPosition(int amountToAdd)
+void Character::setXCoordinate(int amountToAdd)
 {
 	xPosition += amountToAdd;
 }
@@ -60,7 +60,7 @@ void Character::setXPosition(int amountToAdd)
 /// Updates the character's current y-coordinate
 /// </summary>
 /// <param name="amountToAdd"></param>
-void Character::setYPosition(int amountToAdd)
+void Character::setYCoordinate(int amountToAdd)
 {
 	yPosition += amountToAdd;
 }
@@ -142,7 +142,6 @@ void PlayerCharacter::setNumberOfCoins(int amountToAdd)
 /// <param name="PDamage"></param>
 Enemy::Enemy(float PDamage)
 {
-	name = "Enemy";
 	symbol = 'W';
 	xPosition = 0;
 	yPosition = 0;
