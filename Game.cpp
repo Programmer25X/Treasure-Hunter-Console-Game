@@ -168,11 +168,13 @@ void Game::displayBoard()
 		for (int column = 0; column < NUMBER_OF_COLUMNS; column++)
 		{
 			symbol = ' ';
+			cout << "\033[0m";
 
 			for (Item* tile : walls)
 			{
 				if (tile->getIsInteractable() && tile->getXCoordinate() == column && tile->getYCoordinate() == row)
 				{
+					cout << "\033[97m";
 					symbol = tile->getSymbol();
 				}
 			}
@@ -181,6 +183,7 @@ void Game::displayBoard()
 			{
 				if (enemy->getHealth() > 0 && enemy->getXCoordinate() == column && enemy->getYCoordinate() == row)
 				{
+					cout << "\033[91m";
 					symbol = enemy->getSymbol();
 				}
 			}
@@ -230,16 +233,22 @@ void Game::resetGame()
 		i++;
 	}
 
+
+
 	int startXCoordinate = -1;
 	int startYCoordinate = -1;
 
 	for (Enemy* enemy : enemies)
 	{
+		
+	generateCoordinates: 
+
 		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
 		startYCoordinate = rand() % NUMBER_OF_ROWS;
+
 		if (getIsOverlapping(startXCoordinate, startYCoordinate))
 		{
-			continue;
+			goto generateCoordinates;
 		}
 
 		enemy->setXCoordinate(startXCoordinate);
