@@ -97,20 +97,39 @@ void Game::increaseCurrentLevel()
 	currentLevel++;
 }
 
+/// <summary>
+/// Retrieves the number of enemies within the level to display at the top of the screen
+/// </summary>
+/// <returns></returns>
+
 int Game::getNumberOfEnemies()
 {
 	return numberOfEnemies;
 }
+
+/// <summary>
+/// Set the number of enemies within the level to display at the top of the screen
+/// </summary>
+/// <param name="amountToAdd"></param>
 
 void Game::setNumberOfEnemies(int amountToAdd)
 {
 	numberOfEnemies += amountToAdd;
 }
 
+/// <summary>
+/// Retrieves the number of treasure chests within the level to display at the top of the screen
+/// </summary>
+/// <returns></returns>
 int Game::getNumberOfChests()
 {
 	return numberOfChests;
 }
+
+/// <summary>
+/// Set the number of treasure chests within the level to display at the top of the screen
+/// </summary>
+/// <param name="amountToAdd"></param>
 
 void Game::setNumberOfChests(int amountToAdd)
 {
@@ -165,32 +184,34 @@ void Game::displayIntroMenu() const
 	{
 		keycode = toupper(_getch());
 
-	} while (keycode != 13);
+	} while (keycode != 13); // While the ENTER key has not been pressed
 }
 
-
+/// <summary>
+/// Creates the in-game entities
+/// </summary>
 void Game::generateObjects()
 {
-	playerCharacter = new PlayerCharacter;
+	playerCharacter = new PlayerCharacter; // Creates the player character (PC)
 
 	for (int i = 0; i < (sizeof(enemies) / sizeof(enemies[0])); i++)
 	{
-		enemies[i] = new Enemy(i, 30.0f);
+		enemies[i] = new Enemy(i, 30.0f); // Creates a new enemy
 	}
 
 	for (int i = 0; i < (sizeof(coins) / sizeof(coins[0])); i++)
 	{
-		coins[i] = new Item("Coin", 'c', 1, 0, 0);
+		coins[i] = new Item("Coin", 'c', 1, 0, 0); // Creates a new coin
 	}
 
 	for (int i = 0; i < (sizeof(treasureChests) / sizeof(treasureChests[0])); i++)
 	{
-		treasureChests[i] = new Item("Chest", 'T', 50, 0, 0);
+		treasureChests[i] = new Item("Chest", 'T', 50, 0, 0); // Creates a new treasure chest
 	}
 
 	for (int i = 0; i < (sizeof(walls)) / sizeof(walls[0]); i++)
 	{
-		walls[i] = new Item("Wall", '*', 0, 0, 0);
+		walls[i] = new Item("Wall", '*', 0, 0, 0); // Creates a new wall
 	}
 }
 
@@ -203,7 +224,8 @@ void Game::displayBoard()
 
 	cout << "\033[33m";
 
-	cout << endl << "Enemies: " << getNumberOfEnemies() << " | "; // Displays the current number of enemies
+	cout << endl << " PC Health: " << playerCharacter->getHealth() << " | "; // Display's the PC's current health
+	cout << "Enemies: " << getNumberOfEnemies() << " | "; // Displays the current number of enemies
 	cout << "Chests Remaining: " << getNumberOfChests() << " | "; // Displays the current number of chests
 	cout << "Coins Collected: " << playerCharacter->getNumberOfCoins() << endl << endl; // Displays the number of coins collected
 
@@ -267,6 +289,7 @@ void Game::displayBoard()
 
 void Game::resetGame() const
 {
+
 	bool isPCSpawned = false;
 
 	int i = 0;
@@ -394,7 +417,7 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 {
 	for (Item* wall : walls)
 	{
-		if (wall->getXCoordinate() == xCoordinate && wall->getYCoordinate() == yCoordinate) // Is pc colliding with a wall?
+		if (wall->getXCoordinate() == xCoordinate && wall->getYCoordinate() == yCoordinate) // Is the tile a wall?
 		{
 			return true;
 		}
@@ -402,7 +425,7 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 
 	for (Enemy* enemy : enemies)
 	{
-		if (enemy->getXCoordinate() == xCoordinate && enemy->getYCoordinate() == yCoordinate && enemy->getHealth() > 0) // Is pc colliding with an enemy?
+		if (enemy->getXCoordinate() == xCoordinate && enemy->getYCoordinate() == yCoordinate && enemy->getHealth() > 0) // Is the tile an enemy?
 		{
 			return true;
 		}
@@ -410,7 +433,7 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 
 	for (Item* coin : coins)
 	{
-		if (coin->getXCoordinate() == xCoordinate && coin->getYCoordinate() == yCoordinate && coin->getIsInteractable()) // Is pc colliding with a coin?
+		if (coin->getXCoordinate() == xCoordinate && coin->getYCoordinate() == yCoordinate && coin->getIsInteractable()) // Is the tile a coin?
 		{
 			return true;
 		}
@@ -418,13 +441,13 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 
 	for (Item* chest : treasureChests)
 	{
-		if (chest->getXCoordinate() == xCoordinate && chest->getYCoordinate() == yCoordinate && chest->getIsInteractable()) // Is pc colliding with a treasure chest?
+		if (chest->getXCoordinate() == xCoordinate && chest->getYCoordinate() == yCoordinate && chest->getIsInteractable()) // Is the tile a treasure chest?
 		{
 			return true;
 		}
 	}
 
-	if (playerCharacter->getXCoordinate() == xCoordinate && playerCharacter->getYCoordinate() == yCoordinate) 
+	if (playerCharacter->getXCoordinate() == xCoordinate && playerCharacter->getYCoordinate() == yCoordinate) // Is the tile the PC?
 	{
 		return true;
 	}
@@ -439,7 +462,7 @@ void Game::checkForCollisions()
 	{
 		if (enemy->getXCoordinate() == playerCharacter->getXCoordinate() && enemy->getYCoordinate() == playerCharacter->getYCoordinate() && enemy->getHealth() > 0) // Is PC colliding with an enemy?
 		{
-			fightEnemy(enemy->getID());
+			fightEnemy(enemy->getID()); // Start the combat sequence
 		}
 	}
 
@@ -447,18 +470,21 @@ void Game::checkForCollisions()
 	{
 		if (coin->getIsInteractable() && coin->getXCoordinate() == playerCharacter->getXCoordinate() && coin->getYCoordinate() == playerCharacter->getYCoordinate()) // Is PC colliding with a coin?
 		{
-			playerCharacter->setNumberOfCoins(1);
-			coin->deactivateItem();
+			playerCharacter->setNumberOfCoins(1); // Increases the coins collected counter at the top of the screen
+			coin->deactivateItem(); // Deactivate the coin
 		}
 	}
 }
 
-
+/// <summary>
+/// The PvE combat system
+/// </summary>
+/// <param name="enemyIndex"></param>
 void Game::fightEnemy(int enemyIndex)
 {
 	const int delay = 3000;
 
-	setNumberOfEnemies(-1);
+	setNumberOfEnemies(-1); // Reduces the enemy counter at the top of the screen
 
 	while (enemies[enemyIndex]->getHealth() > 0 && playerCharacter->getHealth() > 0)
 	{
@@ -466,7 +492,7 @@ void Game::fightEnemy(int enemyIndex)
 
 		while (playerInput != 1 && playerInput != 2 && playerInput != 3)
 		{
-			system("cls");
+			system("cls"); // Clears the console
 			cout << "PC Health: " << playerCharacter->getHealth() << endl;
 			cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth() << endl;
 			cout << "\n\n\n\ Attack (1) || DEFEND (2) || GIVE UP (3) ";
@@ -475,27 +501,28 @@ void Game::fightEnemy(int enemyIndex)
 
 		switch (playerInput)
 		{
-		case 1:
+		case 1: // PC attacks the enemy
 			std::cout << "PC and the opponent attacked one another!";
-			enemies[enemyIndex]->setHealth(-playerCharacter->getDamage());
+			enemies[enemyIndex]->setHealth(-playerCharacter->getDamage()); // Redeuces the enemy's health
 			
-			if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth())
+			if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth()) // Is the enemy defeated before dealing any damage
 			{
 				break;
 			}
 
-			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage());
+			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage()); // Redeuces the PC's health
 			break;
-		case 2:
+
+		case 2: // PC blocks the incoming attack
 			std::cout << "PC blocked the opponent's attack!";
-			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage() * 0.5);
+			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage() * 0.5); // Redeuces the PC's health
 			break;
-		case 3:
+
+		case 3: // Player gives up
 			std::cout << "PC gave up...";
-			system("cls");
-			//playerLose()
-			exit; 
+			displayPlayerLostScreen(); // Display the Player Lost Screen
 			break;
+
 		default:
 			return;
 		}
@@ -503,21 +530,49 @@ void Game::fightEnemy(int enemyIndex)
 		Sleep(delay);
 	}
 
-	if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0)
+	if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0) // Is the enemy defeated and is the PC alive?
 	{
 		std::cout << "The PC was victorious!";
 	}
 	else
 	{
 		std::cout << "YOU LOST...";
+		displayPlayerLostScreen(); // Display the Player Lost Screen
 	}
 
-	Sleep(delay);
+	Sleep(delay); // Causes a three second delay
 }
 
 void Game::CollectTreasure()
 {
 }
+
+/// <summary>
+/// Displays the Player Lost Screen
+/// </summary>
+void Game::displayPlayerLostScreen()
+{
+	char playerInput = ' ';
+
+	system("cls");
+
+	cout << "You lost..." << endl << "Play again (y/n)";
+
+	while (playerInput != 'y' && playerInput != 'n')
+	{
+		playerInput = tolower(_getch());
+	}
+
+	if (playerInput == 'y') 
+	{
+		replay = true;
+	}
+	else if(playerInput == 'n')
+	{
+		replay = false;
+	}
+}
+
 
 
 /// <summary>
@@ -541,6 +596,8 @@ void Game::updateGame()
 			playerCharacter->move(getPlayerInput()); // Allows the pc to move using the WASD keys
 			checkForCollisions(); 
 		}
+
+		return; 
 	}
 }
 

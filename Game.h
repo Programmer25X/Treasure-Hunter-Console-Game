@@ -49,6 +49,8 @@ public:
 
 	void fightEnemy(int enemyIndex);
 	void CollectTreasure(); 
+
+	void displayPlayerLostScreen(); 
 	void checkForCollisions(); 
 };
 

@@ -116,6 +116,10 @@ int PlayerCharacter::getAmountOfPoints() const
 	return numberOfPoints;
 }
 
+/// <summary>
+/// Retrieves the damage inflicted by the PC
+/// </summary>
+/// <returns></returns>
 float PlayerCharacter::getDamage() const
 {
 	return damage;
@@ -139,18 +143,18 @@ void PlayerCharacter::move(int keycode)
 	{
 	case 87: // W
 		newXCoordinate = xPosition + 0;
-		newYCoordinate = yPosition - 1;
+		newYCoordinate = yPosition - 1; // PC moves up
 		break;
 	case 83: // S
 		newXCoordinate = xPosition + 0;
-		newYCoordinate = yPosition + 1;
+		newYCoordinate = yPosition + 1; // PC moves down
 		break;
 	case 65: // A
-		newXCoordinate = xPosition - 1;
+		newXCoordinate = xPosition - 1; // PC moves left
 		newYCoordinate = yPosition + 0;
 		break;
 	case 68: // D
-		newXCoordinate = xPosition + 1;
+		newXCoordinate = xPosition + 1; // PC moves right
 		newYCoordinate = yPosition + 0;
 		break;
 	}
@@ -161,9 +165,13 @@ void PlayerCharacter::move(int keycode)
 	}
 	else
 	{
-		xPosition = newXCoordinate;
-		yPosition = newYCoordinate; // Updates 
-		health += 2; // PC health recovers overtime 
+		xPosition = newXCoordinate; // Updates the PC's x-coordinate 
+		yPosition = newYCoordinate; // Updates the PC's y-coordinate
+
+		if (health <= 98)
+		{
+			health += 2; // PC health recovers overtime 
+		}
 	}
 }
 
@@ -197,6 +205,10 @@ Enemy::Enemy(int pID, float pDamage)
 	id = pID; 
 }
 
+/// <summary>
+/// Retrieves the enemy's ID, allowing PvE combat
+/// </summary>
+/// <returns></returns>
 float Enemy::getID() const
 {
 	return id;
