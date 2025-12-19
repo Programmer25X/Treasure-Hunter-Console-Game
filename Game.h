@@ -47,5 +47,6 @@ public:
 	void updateGame();
 	void loadMap();
 
+	void fightEnemy(int enemyIndex);
 };
 

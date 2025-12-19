@@ -1,6 +1,8 @@
 #include "Characters.h"
 #include "Items.h"
 
+#include <iostream>
+
 extern int NUMBER_OF_COLUMNS;
 extern int NUMBER_OF_ROWS;
 extern Item* walls[200];
@@ -114,6 +116,11 @@ int PlayerCharacter::getAmountOfPoints() const
 	return numberOfPoints;
 }
 
+float PlayerCharacter::getDamage() const
+{
+	return damage;
+}
+
 /// <summary>
 /// Updates the player's score
 /// </summary>
@@ -196,4 +203,6 @@ float Enemy::getDamage() const
 {
 	return damage;
 }
+
+
 

@@ -36,6 +36,7 @@ private:
 
 	unsigned int numberOfCoins = 0;
 	unsigned int numberOfPoints = 0;
+	float damage = 25; 
 
 public:
 
@@ -44,6 +45,8 @@ public:
 
 	int getAmountOfPoints() const;
 	void setNumberOfPoints(int amountToAdd);
+
+	float getDamage() const; 
 
 	void move(int keycode);
 };
@@ -64,5 +67,4 @@ private:
 public:
 
 	float getDamage() const;
-
 };

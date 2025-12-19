@@ -454,6 +454,47 @@ void Game::updateGame()
 	}
 }
 
+void Game::fightEnemy(int enemyIndex)
+{
+	while (enemies[enemyIndex]->getHealth() > 0 && playerCharacter->getHealth() > 0)
+	{
+		int playerInput = -1;
+
+		while (playerInput != 1 && playerInput != 2 && playerInput != 3)
+		{
+			system("cls");
+			std::cout << "PC Health: " << playerCharacter->getHealth() << endl;
+			std::cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth();
+			std::cout << "\n\n\n\ Attack (1) || DEFEND (2) || GIVE UP (3) ";
+			playerInput = _getch();
+		}
+
+		switch (playerInput)
+		{
+		case 1:
+			std::cout << "PC and the opponent attacked one another!";
+			enemies[enemyIndex]->setHealth(-playerCharacter->getDamage());
+			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage());
+			break;
+		case 2:
+			std::cout << "PC blocked the opponent's attack!";
+			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage() * 0.5);
+			break;
+		case 3:
+			std::cout << "PC gave up...";
+			break;
+		default:
+			return;
+		}
+
+	}
+
+	if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0)
+	{
+		setNumberOfEnemies(-1); 
+	}
+}
+
 
 
 
