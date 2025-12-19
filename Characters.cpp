@@ -1,5 +1,4 @@
 #include "Characters.h"
-#include "Game.h"
 #include "Items.h"
 
 extern int NUMBER_OF_COLUMNS;
@@ -129,7 +128,6 @@ void PlayerCharacter::move(int keycode)
 	int newXCoordinate = -1;
 	int newYCoordinate = -1;
 
-
 	switch (keycode)
 	{
 	case 87: // W
@@ -150,17 +148,8 @@ void PlayerCharacter::move(int keycode)
 		break;
 	}
 
-
-	if (newXCoordinate <= 0 || newXCoordinate >= NUMBER_OF_COLUMNS - 1 || newYCoordinate <= 0 || newYCoordinate >= NUMBER_OF_ROWS - 1)
+	if (newXCoordinate <= 0 || newXCoordinate >= NUMBER_OF_COLUMNS || newYCoordinate <= 0 || newYCoordinate >= NUMBER_OF_ROWS)
 	{
-		for (Item* wall : walls)
-		{
-			if (wall->getIsInteractable() && wall->getXCoordinate() == newXCoordinate && wall->getYCoordinate() == newYCoordinate)
-			{
-				return;
-			}
-		}
-
 		return;
 	}
 	else
