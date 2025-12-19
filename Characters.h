@@ -58,13 +58,15 @@ class Enemy : public Character
 
 public:
 
-	Enemy(float PDamage = 10);
+	Enemy(int pID, float pDamage = 10);
 
 private:
 
+	int id = 0;
 	float damage = 10.0f;
 
 public:
 
+	float getID() const; 
 	float getDamage() const;
 };

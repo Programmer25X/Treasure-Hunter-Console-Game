@@ -155,14 +155,15 @@ void PlayerCharacter::move(int keycode)
 		break;
 	}
 
-	if (newXCoordinate <= 0 || newXCoordinate >= NUMBER_OF_COLUMNS - 1 || newYCoordinate <= 0 || newYCoordinate >= NUMBER_OF_ROWS - 1)
+	if (newXCoordinate <= 0 || newXCoordinate >= NUMBER_OF_COLUMNS - 1 || newYCoordinate <= 0 || newYCoordinate >= NUMBER_OF_ROWS - 1) 
 	{
 		return;
 	}
 	else
 	{
-		setXCoordinate(newXCoordinate - xPosition);
-		setYCoordinate(newYCoordinate - yPosition);
+		xPosition = newXCoordinate;
+		yPosition = newYCoordinate; // Updates 
+		health += 2; // PC health recovers overtime 
 	}
 }
 
@@ -186,13 +187,19 @@ void PlayerCharacter::setNumberOfCoins(int amountToAdd)
 /// Constructor
 /// </summary>
 /// <param name="PDamage"></param>
-Enemy::Enemy(float PDamage)
+Enemy::Enemy(int pID, float pDamage)
 {
 	symbol = 'W';
 	xPosition = 0;
 	yPosition = 0;
-	damage = PDamage;
+	damage = pDamage;
 	health = 50.0f;
+	id = pID; 
+}
+
+float Enemy::getID() const
+{
+	return id;
 }
 
 /// <summary>

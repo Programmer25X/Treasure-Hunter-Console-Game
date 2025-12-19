@@ -5,6 +5,7 @@
 #include <iostream>
 #include <conio.h>
 #include <ctime>
+#include <Windows.h>
 
 using std::cout;
 using std::endl;
@@ -174,7 +175,7 @@ void Game::generateObjects()
 
 	for (int i = 0; i < (sizeof(enemies) / sizeof(enemies[0])); i++)
 	{
-		enemies[i] = new Enemy(30.0f);
+		enemies[i] = new Enemy(i, 30.0f);
 	}
 
 	for (int i = 0; i < (sizeof(coins) / sizeof(coins[0])); i++)
@@ -202,8 +203,9 @@ void Game::displayBoard()
 
 	cout << "\033[33m";
 
-	cout << endl << "Enemies: " << getNumberOfEnemies() << endl; // Displays the current number of enemies
-	cout << endl << "Chests Remaining: " << getNumberOfChests() << endl << endl; // Displays the current number of chests
+	cout << endl << "Enemies: " << getNumberOfEnemies() << " | "; // Displays the current number of enemies
+	cout << "Chests Remaining: " << getNumberOfChests() << " | "; // Displays the current number of chests
+	cout << "Coins Collected: " << playerCharacter->getNumberOfCoins() << endl << endl; // Displays the number of coins collected
 
 	char symbol = ' ';
 
@@ -430,6 +432,94 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 	return false;
 }
 
+
+void Game::checkForCollisions()
+{
+	for (Enemy* enemy : enemies)
+	{
+		if (enemy->getXCoordinate() == playerCharacter->getXCoordinate() && enemy->getYCoordinate() == playerCharacter->getYCoordinate() && enemy->getHealth() > 0) // Is PC colliding with an enemy?
+		{
+			fightEnemy(enemy->getID());
+		}
+	}
+
+	for (Item* coin : coins)
+	{
+		if (coin->getIsInteractable() && coin->getXCoordinate() == playerCharacter->getXCoordinate() && coin->getYCoordinate() == playerCharacter->getYCoordinate()) // Is PC colliding with a coin?
+		{
+			playerCharacter->setNumberOfCoins(1);
+			coin->deactivateItem();
+		}
+	}
+}
+
+
+void Game::fightEnemy(int enemyIndex)
+{
+	const int delay = 3000;
+
+	setNumberOfEnemies(-1);
+
+	while (enemies[enemyIndex]->getHealth() > 0 && playerCharacter->getHealth() > 0)
+	{
+		int playerInput = -1;
+
+		while (playerInput != 1 && playerInput != 2 && playerInput != 3)
+		{
+			system("cls");
+			cout << "PC Health: " << playerCharacter->getHealth() << endl;
+			cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth() << endl;
+			cout << "\n\n\n\ Attack (1) || DEFEND (2) || GIVE UP (3) ";
+			std::cin >> playerInput; 
+		}
+
+		switch (playerInput)
+		{
+		case 1:
+			std::cout << "PC and the opponent attacked one another!";
+			enemies[enemyIndex]->setHealth(-playerCharacter->getDamage());
+			
+			if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth())
+			{
+				break;
+			}
+
+			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage());
+			break;
+		case 2:
+			std::cout << "PC blocked the opponent's attack!";
+			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage() * 0.5);
+			break;
+		case 3:
+			std::cout << "PC gave up...";
+			system("cls");
+			//playerLose()
+			exit; 
+			break;
+		default:
+			return;
+		}
+
+		Sleep(delay);
+	}
+
+	if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0)
+	{
+		std::cout << "The PC was victorious!";
+	}
+	else
+	{
+		std::cout << "YOU LOST...";
+	}
+
+	Sleep(delay);
+}
+
+void Game::CollectTreasure()
+{
+}
+
+
 /// <summary>
 /// Main Gameplay Loop
 /// </summary>
@@ -449,52 +539,10 @@ void Game::updateGame()
 			}
 
 			playerCharacter->move(getPlayerInput()); // Allows the pc to move using the WASD keys
-
+			checkForCollisions(); 
 		}
 	}
 }
-
-void Game::fightEnemy(int enemyIndex)
-{
-	while (enemies[enemyIndex]->getHealth() > 0 && playerCharacter->getHealth() > 0)
-	{
-		int playerInput = -1;
-
-		while (playerInput != 1 && playerInput != 2 && playerInput != 3)
-		{
-			system("cls");
-			std::cout << "PC Health: " << playerCharacter->getHealth() << endl;
-			std::cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth();
-			std::cout << "\n\n\n\ Attack (1) || DEFEND (2) || GIVE UP (3) ";
-			playerInput = _getch();
-		}
-
-		switch (playerInput)
-		{
-		case 1:
-			std::cout << "PC and the opponent attacked one another!";
-			enemies[enemyIndex]->setHealth(-playerCharacter->getDamage());
-			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage());
-			break;
-		case 2:
-			std::cout << "PC blocked the opponent's attack!";
-			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage() * 0.5);
-			break;
-		case 3:
-			std::cout << "PC gave up...";
-			break;
-		default:
-			return;
-		}
-
-	}
-
-	if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0)
-	{
-		setNumberOfEnemies(-1); 
-	}
-}
-
 
 
 

@@ -48,5 +48,7 @@ public:
 	void loadMap();
 
 	void fightEnemy(int enemyIndex);
+	void CollectTreasure(); 
+	void checkForCollisions(); 
 };
 
