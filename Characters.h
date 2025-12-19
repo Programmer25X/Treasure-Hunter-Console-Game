@@ -33,27 +33,29 @@ public:
 	PlayerCharacter();
 
 private:
-	
+
 	unsigned int numberOfCoins = 0;
 	unsigned int numberOfPoints = 0;
 
 public:
-	
+
 	int getNumberOfCoins() const;
 	void setNumberOfCoins(int amountToAdd);
-	
+
 	int getAmountOfPoints() const;
-	void setNumberOfPoints(int amountToAdd); 
+	void setNumberOfPoints(int amountToAdd);
+
+	void move(int keycode);
 };
 
 
 
 class Enemy : public Character
 {
-	
+
 public:
 
-	Enemy(float PDamage = 10); 
+	Enemy(float PDamage = 10);
 
 private:
 
@@ -61,6 +63,6 @@ private:
 
 public:
 
-	float getDamage() const; 
+	float getDamage() const;
 
 };

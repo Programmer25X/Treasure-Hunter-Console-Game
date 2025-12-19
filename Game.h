@@ -12,8 +12,8 @@ private:
 	static int numberOfEnemies;
 	static int numberOfChests;
 
-	bool isGameRunning = false;
-	bool replay = false;
+	bool isGameRunning = true;
+	bool replay = true;
 	unsigned int currentLevel = 1;
 
 public:
@@ -22,7 +22,7 @@ public:
 
 	void setIsGameRunning(bool gameRunning);
 	bool getIsGameRunning() const;
-	
+
 	void setReplay(bool isReplaying);
 	bool getReplay() const;
 
@@ -33,17 +33,18 @@ public:
 	static void setNumberOfEnemies(int amountToAdd);
 
 	static int getNumberOfChests();
-	static void setNumberOfChests(int amountToAdd); 
+	static void setNumberOfChests(int amountToAdd);
 
 
 	// Other Methods 
 
-	int getPlayerInput(); 
-	void displayIntroMenu() const; 
-	void generateObjects(); 
+	int getPlayerInput();
+	void displayIntroMenu() const;
+	void generateObjects();
 	void displayBoard();
 	void resetGame() const;
-	bool getIsOverlapping(int xCoordinate, int yCoordinate) const; 
+	bool getIsOverlapping(int xCoordinate, int yCoordinate) const;
+	void updateGame();
 
 };
 

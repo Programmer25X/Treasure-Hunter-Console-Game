@@ -1,6 +1,9 @@
 #include "Characters.h"
 #include "Items.h"
 
+extern int NUMBER_OF_COLUMNS;
+extern int NUMBER_OF_ROWS;
+extern Item* walls[200];
 
 // =========================================================================== //
 
@@ -25,7 +28,7 @@ void Character::setHealth(float amountToAdd)
 
 	if (health > 100.0f)
 	{
-		health = 100.0f; 
+		health = 100.0f;
 	}
 }
 
@@ -117,7 +120,43 @@ int PlayerCharacter::getAmountOfPoints() const
 /// <param name="amountToAdd"></param>
 void PlayerCharacter::setNumberOfPoints(int amountToAdd)
 {
-	numberOfPoints += amountToAdd; 
+	numberOfPoints += amountToAdd;
+}
+
+void PlayerCharacter::move(int keycode)
+{
+	int newXCoordinate = -1;
+	int newYCoordinate = -1;
+
+	switch (keycode)
+	{
+	case 87: // W
+		newXCoordinate = xPosition + 0;
+		newYCoordinate = yPosition - 1;
+		break;
+	case 83: // S
+		newXCoordinate = xPosition + 0;
+		newYCoordinate = yPosition + 1;
+		break;
+	case 65: // A
+		newXCoordinate = xPosition - 1;
+		newYCoordinate = yPosition + 0;
+		break;
+	case 68: // D
+		newXCoordinate = xPosition + 1;
+		newYCoordinate = yPosition + 0;
+		break;
+	}
+
+	if (newXCoordinate <= 0 || newXCoordinate >= NUMBER_OF_COLUMNS || newYCoordinate <= 0 || newYCoordinate >= NUMBER_OF_ROWS)
+	{
+		return;
+	}
+	else
+	{
+		setXCoordinate(newXCoordinate - xPosition);
+		setYCoordinate(newYCoordinate - yPosition);
+	}
 }
 
 /// <summary>	
@@ -126,7 +165,7 @@ void PlayerCharacter::setNumberOfPoints(int amountToAdd)
 /// <param name="amountToAdd"></param>
 void PlayerCharacter::setNumberOfCoins(int amountToAdd)
 {
-	numberOfCoins += amountToAdd; 
+	numberOfCoins += amountToAdd;
 }
 
 

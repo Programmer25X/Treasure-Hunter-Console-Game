@@ -10,9 +10,8 @@ using std::cout;
 using std::endl;
 
 
-
-constexpr auto NUMBER_OF_ROWS = 25;
-constexpr auto NUMBER_OF_COLUMNS = 30;
+int NUMBER_OF_ROWS = 25;
+int NUMBER_OF_COLUMNS = 30;
 
 int Game::numberOfEnemies = 0;
 int Game::numberOfChests = 0;
@@ -28,9 +27,11 @@ Item* walls[200] = {};
 /// </summary>
 Game::Game()
 {
-	cout << endl << endl << "- - - - - Game Started - - - - -" << endl; 
+	cout << endl << endl << "- - - - - Game Started - - - - -" << endl;
 
 	displayIntroMenu(); // Displays the Intro Menu
+	generateObjects(); // Generates in-game entities
+	resetGame();
 }
 
 /// <summary>
@@ -134,7 +135,7 @@ int Game::getPlayerInput()
 
 	if (keycode == 27) // Determines whether the player chooses to exit the game
 	{
-		isGameRunning = false; 
+		isGameRunning = false;
 	}
 
 	return keycode;
@@ -150,15 +151,15 @@ void Game::displayIntroMenu() const
 
 	system("cls"); // Clears the console#
 
-	cout << "\033[33m"; 
+	cout << "\033[33m";
 
 	cout << endl << "\tTreasure Hunter";
-	cout << endl << "\t- - - - - - - -  " << endl; 
-	cout << endl << "\tCollect All the Treasure" << endl; 
-	cout << endl << "\tAvoid All the Enemies" << endl; 
+	cout << endl << "\t- - - - - - - -  " << endl;
+	cout << endl << "\tCollect All the Treasure" << endl;
+	cout << endl << "\tAvoid All the Enemies" << endl;
 
 	cout << endl << endl << "\tPress ENTER to play" << endl;
-	
+
 	do
 	{
 		keycode = toupper(_getch());
@@ -169,7 +170,7 @@ void Game::displayIntroMenu() const
 
 void Game::generateObjects()
 {
-	playerCharacter = new PlayerCharacter; 
+	playerCharacter = new PlayerCharacter;
 
 	for (int i = 0; i < (sizeof(enemies) / sizeof(enemies[0])); i++)
 	{
@@ -193,7 +194,7 @@ void Game::generateObjects()
 }
 
 
-void Game::displayBoard() 
+void Game::displayBoard()
 {
 	system("cls");
 
@@ -269,9 +270,9 @@ void Game::resetGame() const
 	int startYCoordinate = -1;
 
 	srand(static_cast<unsigned int>(time(0)));
-	
+
 	setNumberOfEnemies(-numberOfEnemies);
-	setNumberOfChests(-numberOfChests); 
+	setNumberOfChests(-numberOfChests);
 
 	for (Item* wall : walls)
 	{
@@ -279,13 +280,13 @@ void Game::resetGame() const
 		{
 			wall->setXCoordinate(i);
 		}
-		
+
 		if (i >= 30 && i < 60)
 		{
 			wall->setXCoordinate(i - 30);
 			wall->setYCoordinate(24);
 		}
-		
+
 		if (i > 60 && i < 94)
 		{
 			wall->setYCoordinate(i - 60);
@@ -309,7 +310,7 @@ void Game::resetGame() const
 
 	for (Enemy* enemy : enemies)
 	{
-		generateEnemyCoordinates: 
+	generateEnemyCoordinates:
 
 		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
 		startYCoordinate = rand() % NUMBER_OF_ROWS;
@@ -321,13 +322,13 @@ void Game::resetGame() const
 
 		enemy->setXCoordinate(startXCoordinate);
 		enemy->setYCoordinate(startYCoordinate);
-		setNumberOfEnemies(1); 
+		setNumberOfEnemies(1);
 	}
 
 
 	for (Item* treasure : treasureChests)
 	{
-		generateTreasureCoordinates:
+	generateTreasureCoordinates:
 
 		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
 		startYCoordinate = rand() % NUMBER_OF_ROWS;
@@ -339,13 +340,13 @@ void Game::resetGame() const
 
 		treasure->setXCoordinate(startXCoordinate);
 		treasure->setYCoordinate(startYCoordinate);
-		setNumberOfChests(1); 
+		setNumberOfChests(1);
 	}
 
 
 	for (Item* coin : coins)
 	{
-		generateCoinCoordinates:
+	generateCoinCoordinates:
 
 		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
 		startYCoordinate = rand() % NUMBER_OF_ROWS;
@@ -358,7 +359,7 @@ void Game::resetGame() const
 		coin->setXCoordinate(startXCoordinate);
 		coin->setYCoordinate(startYCoordinate);
 	}
-	
+
 
 	while (!isPCSpawned)
 	{
@@ -417,6 +418,27 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 	}
 
 	return false;
+}
+
+void Game::updateGame()
+{
+	while (replay)
+	{
+		while (isGameRunning)
+		{
+			displayBoard();
+
+			isGameRunning = playerCharacter->getHealth() > 0 ? true : false; // Checks whether the pc is still alive. 
+
+			if (!isGameRunning)
+			{
+				return;
+			}
+
+			playerCharacter->move(getPlayerInput());
+
+		}
+	}
 }
 
 
