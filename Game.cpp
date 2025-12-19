@@ -260,6 +260,7 @@ void Game::displayBoard()
 	}
 }
 
+
 void Game::resetGame() const
 {
 	bool isPCSpawned = false;
@@ -376,6 +377,8 @@ void Game::resetGame() const
 	}
 
 }
+
+
 
 
 bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const

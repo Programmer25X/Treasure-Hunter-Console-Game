@@ -45,6 +45,7 @@ public:
 	void resetGame() const;
 	bool getIsOverlapping(int xCoordinate, int yCoordinate) const;
 	void updateGame();
+	void loadMap();
 
 };
 
