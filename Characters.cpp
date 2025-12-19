@@ -196,3 +196,4 @@ float Enemy::getDamage() const
 {
 	return damage;
 }
+

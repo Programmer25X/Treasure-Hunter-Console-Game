@@ -193,15 +193,17 @@ void Game::generateObjects()
 	}
 }
 
-
+/// <summary>
+/// Displays the current state of the gameboard
+/// </summary>
 void Game::displayBoard()
 {
-	system("cls");
+	system("cls"); // Clears the console
 
 	cout << "\033[33m";
 
-	cout << endl << "Enemies: " << getNumberOfEnemies() << endl;
-	cout << endl << "Chests Remaining: " << getNumberOfChests() << endl << endl;
+	cout << endl << "Enemies: " << getNumberOfEnemies() << endl; // Displays the current number of enemies
+	cout << endl << "Chests Remaining: " << getNumberOfChests() << endl << endl; // Displays the current number of chests
 
 	char symbol = ' ';
 
@@ -214,43 +216,43 @@ void Game::displayBoard()
 
 			for (Item* tile : walls)
 			{
-				if (tile->getIsInteractable() && tile->getXCoordinate() == column && tile->getYCoordinate() == row)
+				if (tile->getIsInteractable() && tile->getXCoordinate() == column && tile->getYCoordinate() == row) // Is the entity a wall?
 				{
 					cout << "\033[97m";
-					symbol = tile->getSymbol();
+					symbol = tile->getSymbol(); // Output wall symbol to the console.
 				}
 			}
 
 			for (Enemy* enemy : enemies)
 			{
-				if (enemy->getHealth() > 0 && enemy->getXCoordinate() == column && enemy->getYCoordinate() == row)
+				if (enemy->getHealth() > 0 && enemy->getXCoordinate() == column && enemy->getYCoordinate() == row) // Is the entity an enemy?
 				{
 					cout << "\033[91m";
-					symbol = enemy->getSymbol();
+					symbol = enemy->getSymbol(); // Output enemy symbol to the console.
 				}
 			}
 
 			for (Item* treasure : treasureChests)
 			{
-				if (treasure->getIsInteractable() && treasure->getXCoordinate() == column && treasure->getYCoordinate() == row)
+				if (treasure->getIsInteractable() && treasure->getXCoordinate() == column && treasure->getYCoordinate() == row) // Is the entity a treasure chest?
 				{
 					cout << "\033[93m";
-					symbol = treasure->getSymbol();
+					symbol = treasure->getSymbol(); // Output treasure chest symbol to the console.
 				}
 			}
 
 			for (Item* coin : coins)
 			{
-				if (coin->getIsInteractable() && coin->getXCoordinate() == column && coin->getYCoordinate() == row)
+				if (coin->getIsInteractable() && coin->getXCoordinate() == column && coin->getYCoordinate() == row) // Is the entity a coin?
 				{
 					cout << "\033[93m";
-					symbol = coin->getSymbol();
+					symbol = coin->getSymbol(); // Output coin symbol to the console.
 				}
 			}
 
-			if (playerCharacter->getHealth() > 0 && playerCharacter->getXCoordinate() == column && playerCharacter->getYCoordinate() == row)
+			if (playerCharacter->getHealth() > 0 && playerCharacter->getXCoordinate() == column && playerCharacter->getYCoordinate() == row) // Is the entity the player character?
 			{
-				symbol = playerCharacter->getSymbol();
+				symbol = playerCharacter->getSymbol(); // Output player character symbol to the console.
 			}
 
 			cout << ' ' << symbol << ' ';
@@ -380,12 +382,17 @@ void Game::resetGame() const
 
 
 
-
+/// <summary>
+/// Checks whether the player character is colliding with another in-game entity
+/// </summary>
+/// <param name="xCoordinate"></param>
+/// <param name="yCoordinate"></param>
+/// <returns></returns>
 bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 {
 	for (Item* wall : walls)
 	{
-		if (wall->getXCoordinate() == xCoordinate && wall->getYCoordinate() == yCoordinate)
+		if (wall->getXCoordinate() == xCoordinate && wall->getYCoordinate() == yCoordinate) // Is pc colliding with a wall?
 		{
 			return true;
 		}
@@ -393,7 +400,7 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 
 	for (Enemy* enemy : enemies)
 	{
-		if (enemy->getXCoordinate() == xCoordinate && enemy->getYCoordinate() == yCoordinate && enemy->getHealth() > 0)
+		if (enemy->getXCoordinate() == xCoordinate && enemy->getYCoordinate() == yCoordinate && enemy->getHealth() > 0) // Is pc colliding with an enemy?
 		{
 			return true;
 		}
@@ -401,7 +408,7 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 
 	for (Item* coin : coins)
 	{
-		if (coin->getXCoordinate() == xCoordinate && coin->getYCoordinate() == yCoordinate && coin->getIsInteractable())
+		if (coin->getXCoordinate() == xCoordinate && coin->getYCoordinate() == yCoordinate && coin->getIsInteractable()) // Is pc colliding with a coin?
 		{
 			return true;
 		}
@@ -409,13 +416,13 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 
 	for (Item* chest : treasureChests)
 	{
-		if (chest->getXCoordinate() == xCoordinate && chest->getYCoordinate() == yCoordinate && chest->getIsInteractable())
+		if (chest->getXCoordinate() == xCoordinate && chest->getYCoordinate() == yCoordinate && chest->getIsInteractable()) // Is pc colliding with a treasure chest?
 		{
 			return true;
 		}
 	}
 
-	if (playerCharacter->getXCoordinate() == xCoordinate && playerCharacter->getYCoordinate() == yCoordinate)
+	if (playerCharacter->getXCoordinate() == xCoordinate && playerCharacter->getYCoordinate() == yCoordinate) 
 	{
 		return true;
 	}
@@ -423,6 +430,9 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 	return false;
 }
 
+/// <summary>
+/// Main Gameplay Loop
+/// </summary>
 void Game::updateGame()
 {
 	while (replay)
@@ -438,7 +448,7 @@ void Game::updateGame()
 				return;
 			}
 
-			playerCharacter->move(getPlayerInput());
+			playerCharacter->move(getPlayerInput()); // Allows the pc to move using the WASD keys
 
 		}
 	}
