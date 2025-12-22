@@ -502,7 +502,7 @@ void Game::fightEnemy(int enemyIndex)
 		switch (playerInput)
 		{
 		case 1: // PC attacks the enemy
-			std::cout << "PC and the opponent attacked one another!";
+			cout << "PC and the opponent attacked one another!" << endl;
 			enemies[enemyIndex]->setHealth(-playerCharacter->getDamage()); // Redeuces the enemy's health
 			
 			if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth()) // Is the enemy defeated before dealing any damage
@@ -514,12 +514,12 @@ void Game::fightEnemy(int enemyIndex)
 			break;
 
 		case 2: // PC blocks the incoming attack
-			std::cout << "PC blocked the opponent's attack!";
+			cout << "PC blocked the opponent's attack!" << endl;
 			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage() * 0.5); // Redeuces the PC's health
 			break;
 
 		case 3: // Player gives up
-			std::cout << "PC gave up...";
+			cout << "PC gave up..." << endl;
 			displayPlayerLostScreen(); // Display the Player Lost Screen
 			break;
 
@@ -532,11 +532,11 @@ void Game::fightEnemy(int enemyIndex)
 
 	if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0) // Is the enemy defeated and is the PC alive?
 	{
-		std::cout << "The PC was victorious!";
+		std::cout << "The PC was victorious!" << endl;
 	}
 	else
 	{
-		std::cout << "YOU LOST...";
+		std::cout << "YOU LOST..." << endl;
 		displayPlayerLostScreen(); // Display the Player Lost Screen
 	}
 
