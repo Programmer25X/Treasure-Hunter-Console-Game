@@ -49,11 +49,12 @@ public:
 	void fightEnemy(int enemyIndex);
 	void moveEnemies();
 
-	void collectTreasure(); 
-
 	void displayPlayerLostScreen(); 
+	void displayPlayerWonScreen(); 
 	
 	void checkForPcCollision(int previousXPosition, int previousYPosition);
+
+	void checkWin(); 
 
 
 	int map[1][30][25] =

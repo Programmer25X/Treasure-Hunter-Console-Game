@@ -43,7 +43,27 @@ Game::Game()
 /// </summary>
 Game::~Game()
 {
+	delete playerCharacter;
+	
+	for (Item* wall : walls)
+	{
+		delete wall;
+	}
 
+	for (Item* chest : treasureChests)
+	{
+		delete chest;
+	}
+
+	for (Item* coin : coins)
+	{
+		delete coin;
+	}
+
+	for (Enemy* enemy : enemies)
+	{
+		delete enemy;
+	}
 }
 
 /// <summary>
@@ -174,9 +194,9 @@ void Game::displayIntroMenu() const
 	int keycode = 0;
 
 
-	system("cls"); // Clears the console#
+	system("cls"); // Clears the console
 
-	cout << "\033[33m";
+	cout << "\033[33m"; 
 
 	cout << endl << "\tTreasure Hunter";
 	cout << endl << "\t- - - - - - - -  " << endl;
@@ -220,31 +240,47 @@ void Game::generateObjects()
 	}
 }
 
+/// <summary>
+/// Resets the state of the game 
+/// </summary>
 void Game::resetGame()
 {
-	playerCharacter->setHealth(100); // Resets the PC's health
+	// Reset the PC 
+	playerCharacter->setHealth(100); 
+	playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins());
+	playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate());
+	playerCharacter->setYCoordinate(-playerCharacter->getYCoordinate());
 
 	setNumberOfChests(-numberOfChests); // Resets the number of treasure chests
 	setNumberOfEnemies(-numberOfEnemies); // Resets the number of enemies
 
-	for (Item* wall : walls) // Deactivates the walls
+
+	for (Item* wall : walls) // Deactivates and resets the walls
 	{
-		wall->deactivateItem();
+			wall->deactivateItem();
+			wall->setXCoordinate(-wall->getXCoordinate());
+			wall->setYCoordinate(-wall->getYCoordinate());
 	}
 
-	for (Item* coin : coins) // Deactivates the coins
+	for (Item* coin : coins) // Deactivates resets the coins
 	{
-		coin->deactivateItem(); 
+			coin->deactivateItem();
+			coin->setXCoordinate(-coin->getXCoordinate());
+			coin->setYCoordinate(-coin->getYCoordinate());
 	}
 
-	for (Item* chest : treasureChests) // Deactivates the treasure chests
+	for (Item* chest : treasureChests) // Deactivates and resets the treasure chests
 	{
-		chest->deactivateItem();
+			chest->deactivateItem();
+			chest->setXCoordinate(-chest->getXCoordinate());
+			chest->setYCoordinate(-chest->getYCoordinate());
 	}
 
-	for (Enemy* enemy : enemies) // Deactivates the enemies
+	for (Enemy* enemy : enemies) // Deactivates and resets the enemies
 	{
-		enemy->setHealth(-enemy->getHealth());
+			enemy->setHealth(-enemy->getHealth());
+			enemy->setXCoordinate(-enemy->getXCoordinate());
+			enemy->setYCoordinate(-enemy->getYCoordinate()); 
 	}
 }
 
@@ -482,15 +518,16 @@ void Game::fightEnemy(int enemyIndex)
 
 	while (enemies[enemyIndex]->getHealth() > 0 && playerCharacter->getHealth() > 0)
 	{
+		system("cls"); // Clears the console
+
+		cout << "PC Health: " << playerCharacter->getHealth() << endl;
+		cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth() << endl;
+
 		int playerInput = -1;
 
 		while (playerInput != 1 && playerInput != 2 && playerInput != 3)
 		{
-			system("cls"); // Clears the console
-
-			cout << "PC Health: " << playerCharacter->getHealth() << endl;
-			cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth() << endl;
-			cout << endl << endl << endl << "Attack(1) || DEFEND(2) || GIVE UP(3)" << endl;
+			cout << endl << endl << endl << "Attack (1) || DEFEND (2) || GIVE UP (3)" << endl;
 			std::cin >> playerInput; 
 		}
 
@@ -500,12 +537,15 @@ void Game::fightEnemy(int enemyIndex)
 			cout << "PC and the opponent attacked one another!" << endl;
 			enemies[enemyIndex]->setHealth(-playerCharacter->getDamage()); // Redeuces the enemy's health
 			
-			if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth()) // Is the enemy defeated before dealing any damage
+			if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0) // Is the enemy defeated before dealing any damage
 			{
 				break;
 			}
+			else if (enemies[enemyIndex]->getHealth() > 0 && playerCharacter->getHealth() > 0)
+			{
+				playerCharacter->setHealth(-enemies[enemyIndex]->getDamage()); // Redeuces the PC's health
+			}
 
-			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage()); // Redeuces the PC's health
 			break;
 
 		case 2: // PC blocks the incoming attack
@@ -522,25 +562,20 @@ void Game::fightEnemy(int enemyIndex)
 			break;
 		}
 
-		Sleep(delay); // Delays the execution of code
-	}
+		if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0) // Is the enemy defeated and is the PC alive?
+		{
+			cout << "The PC was victorious!" << endl;
+		}
+		else if(playerCharacter->getHealth() <= 0)
+		{
+			cout << "YOU LOST..." << endl;
+			displayPlayerLostScreen(); // Display the Player Lost Screen
+		}
 
-	if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0) // Is the enemy defeated and is the PC alive?
-	{
-		cout << "The PC was victorious!" << endl;
+		Sleep(delay); // Causes a three second delay
 	}
-	else
-	{
-		cout << "YOU LOST..." << endl;
-		displayPlayerLostScreen(); // Display the Player Lost Screen
-	}
-
-	Sleep(delay); // Causes a three second delay
 }
 
-void Game::collectTreasure()
-{
-}
 
 /// <summary>
 /// Displays the Player Lost Screen
@@ -551,7 +586,7 @@ void Game::displayPlayerLostScreen()
 
 	system("cls"); // Clears the console
 
-	cout << "You lost..." << endl << "Play again (y/n)";
+	cout << "You Lost..." << endl << "Play again (y/n)" << endl;
 
 	while (playerInput != 'y' && playerInput != 'n')
 	{
@@ -561,13 +596,54 @@ void Game::displayPlayerLostScreen()
 	if (playerInput == 'y') 
 	{
 		replay = true;
+		isGameRunning = true;
+
+		resetGame();
+		loadMap();
 	}
 	else if(playerInput == 'n')
 	{
 		replay = false;
+		isGameRunning = false;
 	}
 }
 
+void Game::displayPlayerWonScreen()
+{
+	char playerInput = ' ';
+
+	system("cls"); // Clears the console
+
+	cout << "You Won!" << endl << "Play again (y/n)" << endl;
+
+	while (playerInput != 'y' && playerInput != 'n')
+	{
+		playerInput = tolower(_getch());
+	}
+
+	if (playerInput == 'y')
+	{
+		replay = true;
+		isGameRunning = true;
+
+		resetGame();
+		loadMap();
+	}
+	else if (playerInput == 'n')
+	{
+		replay = false;
+		isGameRunning = false; 
+	}
+}
+
+
+void Game::checkWin()
+{
+	if (numberOfChests <= 0)
+	{
+		displayPlayerWonScreen();
+	}
+}
 
 /// <summary>
 /// Main Gameplay Loop
@@ -593,6 +669,7 @@ void Game::updateGame()
 			playerCharacter->movePC(getPlayerInput()); // Allows the pc to move using the WASD keys
 			moveEnemies();
 			checkForPcCollision(previousXPosition, previousYPosition); 
+			checkWin();
 		}
 
 		return; 

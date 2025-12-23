@@ -2,12 +2,12 @@
 //
 
 #include "Game.h"
-#include <iostream>
 
 int main()
 {
     Game* game = new Game;
     game->updateGame();
+    delete game; 
     return 0;
 }
 
