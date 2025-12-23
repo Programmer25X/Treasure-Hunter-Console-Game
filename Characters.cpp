@@ -2,6 +2,7 @@
 #include "Items.h"
 
 #include <iostream>
+#include <cmath>
 
 extern int NUMBER_OF_COLUMNS;
 extern int NUMBER_OF_ROWS;
@@ -134,7 +135,7 @@ void PlayerCharacter::setNumberOfPoints(int amountToAdd)
 	numberOfPoints += amountToAdd;
 }
 
-void PlayerCharacter::move(int keycode)
+void PlayerCharacter::movePC(int keycode)
 {
 	int newXCoordinate = -1;
 	int newYCoordinate = -1;
@@ -157,9 +158,11 @@ void PlayerCharacter::move(int keycode)
 		newXCoordinate = xPosition + 1; // PC moves right
 		newYCoordinate = yPosition + 0;
 		break;
+	default:
+		break;
 	}
 
-	if (newXCoordinate <= 0 || newXCoordinate >= NUMBER_OF_COLUMNS - 1 || newYCoordinate <= 0 || newYCoordinate >= NUMBER_OF_ROWS - 1) 
+	if (newXCoordinate <= 0 || newXCoordinate >= NUMBER_OF_COLUMNS - 1 || newYCoordinate <= 0 || newYCoordinate >= NUMBER_OF_ROWS - 1)
 	{
 		return;
 	}
@@ -202,7 +205,7 @@ Enemy::Enemy(int pID, float pDamage)
 	yPosition = 0;
 	damage = pDamage;
 	health = 50.0f;
-	id = pID; 
+	id = pID;
 }
 
 /// <summary>
@@ -222,6 +225,57 @@ float Enemy::getDamage() const
 {
 	return damage;
 }
+
+/// <summary>
+/// Moves an enemy randomly when in close proximity to the player
+/// </summary>
+/// <param name="pcXPosition"></param>
+/// <param name="pcYPosition"></param>
+void Enemy::moveEnemy(int pcXPosition, int pcYPosition)
+{
+	if ((std::abs(pcXPosition - xPosition) <= 5) && (std::abs(pcYPosition - yPosition) <= 5))
+	{
+		srand(static_cast<unsigned int>(time(0)));
+		int randomNumber = (rand() % 4) + 1; // Generates random number between 1 and 4
+
+		int newXCoordinate = -1;
+		int newYCoordinate = -1;
+
+		switch (randomNumber)
+		{
+		case 1: // Upwards
+			newXCoordinate = xPosition + 0;
+			newYCoordinate = yPosition - 1; // Enemy moves up
+			break;
+		case 2: // Downwards
+			newXCoordinate = xPosition + 0;
+			newYCoordinate = yPosition + 1; // Enemy moves down
+			break;
+		case 3: // Left
+			newXCoordinate = xPosition - 1; // Enemy moves left
+			newYCoordinate = yPosition + 0;
+			break;
+		case 4: // Right
+			newXCoordinate = xPosition + 1; // Enemy moves right
+			newYCoordinate = yPosition + 0;
+			break;
+		default:
+			break;
+		}
+
+		if (newXCoordinate <= 0 || newXCoordinate >= NUMBER_OF_COLUMNS - 1 || newYCoordinate <= 0 || newYCoordinate >= NUMBER_OF_ROWS - 1)
+		{
+			return;
+		}
+		else
+		{
+			xPosition = newXCoordinate; // Updates the enemy's x-coordinate 
+			yPosition = newYCoordinate; // Updates the enemy's y-coordinate
+		}
+	}
+}
+
+
 
 
 

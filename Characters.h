@@ -12,6 +12,7 @@ protected:
 
 public:
 
+	// Getter and Setter methods 
 	float getHealth() const;
 	void setHealth(float amountToAdd);
 
@@ -30,7 +31,7 @@ class PlayerCharacter : public Character
 
 public:
 
-	PlayerCharacter();
+	PlayerCharacter(); // Constructor
 
 private:
 
@@ -40,15 +41,20 @@ private:
 
 public:
 
+	// Getter and Setter methods
+
 	int getNumberOfCoins() const;
 	void setNumberOfCoins(int amountToAdd);
 
 	int getAmountOfPoints() const;
 	void setNumberOfPoints(int amountToAdd);
 
-	float getDamage() const; 
+	float getDamage() const;
 
-	void move(int keycode);
+
+	// Other methods
+
+	void movePC(int keycode);
 };
 
 
@@ -58,7 +64,7 @@ class Enemy : public Character
 
 public:
 
-	Enemy(int pID, float pDamage = 10);
+	Enemy(int pID, float pDamage = 10); // Constructor
 
 private:
 
@@ -67,6 +73,13 @@ private:
 
 public:
 
+	// Getter methods 
+
 	int getID() const; 
 	float getDamage() const;
+
+
+	// Other methods
+
+	void moveEnemy(int pcXPosition, int pcYPosition); 
 };

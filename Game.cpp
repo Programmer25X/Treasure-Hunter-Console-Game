@@ -401,58 +401,7 @@ void Game::displayBoard()
 }
 
 
-
-
-/// <summary>
-/// Checks whether the player character is colliding with another in-game entity
-/// </summary>
-/// <param name="xCoordinate"></param>
-/// <param name="yCoordinate"></param>
-/// <returns></returns>
-bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
-{
-	for (Item* wall : walls)
-	{
-		if (wall->getXCoordinate() == xCoordinate && wall->getYCoordinate() == yCoordinate && wall->getIsInteractable()) // Is the tile a wall?
-		{
-			return true;
-		}
-	}
-
-	for (Enemy* enemy : enemies)
-	{
-		if (enemy->getXCoordinate() == xCoordinate && enemy->getYCoordinate() == yCoordinate && enemy->getHealth() > 0) // Is the tile an enemy?
-		{
-			return true;
-		}
-	}
-
-	for (Item* coin : coins)
-	{
-		if (coin->getXCoordinate() == xCoordinate && coin->getYCoordinate() == yCoordinate && coin->getIsInteractable()) // Is the tile a coin?
-		{
-			return true;
-		}
-	}
-
-	for (Item* chest : treasureChests)
-	{
-		if (chest->getXCoordinate() == xCoordinate && chest->getYCoordinate() == yCoordinate && chest->getIsInteractable()) // Is the tile a treasure chest?
-		{
-			return true;
-		}
-	}
-
-	if (playerCharacter->getXCoordinate() == xCoordinate && playerCharacter->getYCoordinate() == yCoordinate) // Is the tile the PC?
-	{
-		return true;
-	}
-
-	return false;
-}
-
-
-void Game::checkForCollisions(int previousXPosition, int previousYPosition)
+void Game::checkForPcCollision(int previousXPosition, int previousYPosition)
 {
 	for (Enemy* enemy : enemies)
 	{
@@ -471,12 +420,42 @@ void Game::checkForCollisions(int previousXPosition, int previousYPosition)
 		}
 	}
 
+	for (Item* chest : treasureChests)
+	{
+		if (chest->getIsInteractable() && chest->getXCoordinate() == playerCharacter->getXCoordinate() && chest->getYCoordinate() == playerCharacter->getYCoordinate())
+		{
+			setNumberOfChests(-1); // Decreases the number of treasure chests remaining
+			chest->deactivateItem(); // Deactivate the chest
+		}
+	}
+
 	for (Item* wall : walls)
 	{
-		if (wall->getIsInteractable() && wall->getXCoordinate() == playerCharacter->getXCoordinate() && wall->getYCoordinate() == playerCharacter->getYCoordinate())
+		if (wall->getIsInteractable() && wall->getXCoordinate() == playerCharacter->getXCoordinate() && wall->getYCoordinate() == playerCharacter->getYCoordinate()) // Is PC hitting a wall?
 		{
-			playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate() + previousXPosition);
-			playerCharacter->setYCoordinate(-playerCharacter->getYCoordinate() + previousYPosition); 
+			playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate() + previousXPosition); // Return PC to previous x-coordinate (x position)
+			playerCharacter->setYCoordinate(-playerCharacter->getYCoordinate() + previousYPosition); // Return PC to previous y-coordinate (y position)
+		}
+	}
+}
+
+void Game::moveEnemies()
+{
+	for (Enemy* enemy : enemies)
+	{
+		int previousXPosition = enemy->getXCoordinate();
+		int previousYPosition = enemy->getYCoordinate();
+
+		enemy->moveEnemy(playerCharacter->getXCoordinate(), playerCharacter->getYCoordinate());
+
+
+		for (Item* wall : walls)
+		{
+			if (wall->getIsInteractable() && wall->getXCoordinate() == enemy->getXCoordinate() && wall->getYCoordinate() == enemy->getYCoordinate()) // Is enemy hitting a wall?
+			{
+				enemy->setXCoordinate(-enemy->getXCoordinate() + previousXPosition);
+				enemy->setYCoordinate(-enemy->getYCoordinate() + previousYPosition);
+			}
 		}
 	}
 }
@@ -549,7 +528,7 @@ void Game::fightEnemy(int enemyIndex)
 	Sleep(delay); // Causes a three second delay
 }
 
-void Game::CollectTreasure()
+void Game::collectTreasure()
 {
 }
 
@@ -585,7 +564,6 @@ void Game::displayPlayerLostScreen()
 /// </summary>
 void Game::updateGame()
 {
-
 	while (replay)
 	{
 		while (isGameRunning)
@@ -602,8 +580,9 @@ void Game::updateGame()
 			int previousXPosition = playerCharacter->getXCoordinate();
 			int previousYPosition = playerCharacter->getYCoordinate(); 
 
-			playerCharacter->move(getPlayerInput()); // Allows the pc to move using the WASD keys
-			checkForCollisions(previousXPosition, previousYPosition); 
+			playerCharacter->movePC(getPlayerInput()); // Allows the pc to move using the WASD keys
+			moveEnemies();
+			checkForPcCollision(previousXPosition, previousYPosition); 
 		}
 
 		return; 

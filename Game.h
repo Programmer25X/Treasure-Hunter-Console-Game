@@ -43,15 +43,17 @@ public:
 	void generateObjects();
 	void displayBoard();
 	void resetGame();
-	bool getIsOverlapping(int xCoordinate, int yCoordinate) const;
 	void updateGame();
 	void loadMap() const;
 
 	void fightEnemy(int enemyIndex);
-	void CollectTreasure(); 
+	void moveEnemies();
+
+	void collectTreasure(); 
 
 	void displayPlayerLostScreen(); 
-	void checkForCollisions(int previousXPosition, int previousYPosition);
+	
+	void checkForPcCollision(int previousXPosition, int previousYPosition);
 
 
 	int map[1][30][25] =
