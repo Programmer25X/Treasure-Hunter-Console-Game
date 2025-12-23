@@ -249,7 +249,7 @@ void Game::resetGame()
 }
 
 
-void Game::loadMap()
+void Game::loadMap() const
 {
 	for (int row = 0; row < NUMBER_OF_ROWS; row++)
 	{
@@ -447,7 +447,7 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 }
 
 
-void Game::checkForCollisions()
+void Game::checkForCollisions(int previousXPosition, int previousYPosition)
 {
 	for (Enemy* enemy : enemies)
 	{
@@ -463,6 +463,15 @@ void Game::checkForCollisions()
 		{
 			playerCharacter->setNumberOfCoins(1); // Increases the coins collected counter at the top of the screen
 			coin->deactivateItem(); // Deactivate the coin
+		}
+	}
+
+	for (Item* wall : walls)
+	{
+		if (wall->getIsInteractable() && wall->getXCoordinate() == playerCharacter->getXCoordinate() && wall->getYCoordinate() == playerCharacter->getYCoordinate())
+		{
+			playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate() + previousXPosition);
+			playerCharacter->setYCoordinate(-playerCharacter->getYCoordinate() + previousYPosition); 
 		}
 	}
 }
@@ -570,6 +579,7 @@ void Game::displayPlayerLostScreen()
 /// </summary>
 void Game::updateGame()
 {
+
 	while (replay)
 	{
 		while (isGameRunning)
@@ -583,8 +593,11 @@ void Game::updateGame()
 				return;
 			}
 
+			int previousXPosition = playerCharacter->getXCoordinate();
+			int previousYPosition = playerCharacter->getYCoordinate(); 
+
 			playerCharacter->move(getPlayerInput()); // Allows the pc to move using the WASD keys
-			checkForCollisions(); 
+			checkForCollisions(previousXPosition, previousYPosition); 
 		}
 
 		return; 

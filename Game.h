@@ -45,13 +45,13 @@ public:
 	void resetGame();
 	bool getIsOverlapping(int xCoordinate, int yCoordinate) const;
 	void updateGame();
-	void loadMap();
+	void loadMap() const;
 
 	void fightEnemy(int enemyIndex);
 	void CollectTreasure(); 
 
 	void displayPlayerLostScreen(); 
-	void checkForCollisions(); 
+	void checkForCollisions(int previousXPosition, int previousYPosition);
 
 
 	int map[1][30][25] =
