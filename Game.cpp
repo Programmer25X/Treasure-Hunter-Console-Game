@@ -222,38 +222,40 @@ void Game::generateObjects()
 
 void Game::resetGame()
 {
-	playerCharacter->setHealth(100);
+	playerCharacter->setHealth(100); // Resets the PC's health
 
-	setNumberOfChests(-numberOfChests);
-	setNumberOfEnemies(-numberOfEnemies);
+	setNumberOfChests(-numberOfChests); // Resets the number of treasure chests
+	setNumberOfEnemies(-numberOfEnemies); // Resets the number of enemies
 
-	for (Item* wall : walls)
+	for (Item* wall : walls) // Deactivates the walls
 	{
 		wall->deactivateItem();
 	}
 
-	for (Item* coin : coins)
+	for (Item* coin : coins) // Deactivates the coins
 	{
-		coin->deactivateItem();
+		coin->deactivateItem(); 
 	}
 
-	for (Item* chest : treasureChests)
+	for (Item* chest : treasureChests) // Deactivates the treasure chests
 	{
 		chest->deactivateItem();
 	}
 
-	for (Enemy* enemy : enemies)
+	for (Enemy* enemy : enemies) // Deactivates the enemies
 	{
 		enemy->setHealth(-enemy->getHealth());
 	}
 }
 
-
+/// <summary>
+/// Loads the map for the current level
+/// </summary>
 void Game::loadMap() const
 {
-	for (int row = 0; row < NUMBER_OF_ROWS; row++)
+	for (int row = 0; row < NUMBER_OF_ROWS; row++) // Loops through each row on the gameboard
 	{
-		for (int column = 0; column < NUMBER_OF_COLUMNS; column++)
+		for (int column = 0; column < NUMBER_OF_COLUMNS; column++) // Loops through each column on the gameboard
 		{
 			int tile = map[currentLevel][row][column];
 
@@ -271,9 +273,9 @@ void Game::loadMap() const
 				{
 					if (!wall->getIsInteractable())
 					{
+						wall->activateItem(); // Activates the wall
 						wall->setXCoordinate(column);
 						wall->setYCoordinate(row);
-						wall->activateItem();
 						break;
 					}
 				}
@@ -285,10 +287,10 @@ void Game::loadMap() const
 				{
 					if (enemy->getHealth() <= 0.0f)
 					{
-						enemy->setHealth(50.0f);
+						enemy->setHealth(50.0f); // Activates the enemy
 						enemy->setXCoordinate(column);
 						enemy->setYCoordinate(row);
-						setNumberOfEnemies(1);
+						setNumberOfEnemies(1); // Increases the number of enemies
 						break;
 					}
 				}
@@ -313,10 +315,10 @@ void Game::loadMap() const
 				{
 					if (!chest->getIsInteractable())
 					{
+						chest->activateItem(); // Activates the treasure chest
 						chest->setXCoordinate(column);
 						chest->setYCoordinate(row);
-						chest->activateItem();
-						setNumberOfChests(1);
+						setNumberOfChests(1); // Increases the number of treasure chests
 						break;
 					}
 				}
@@ -388,7 +390,7 @@ void Game::displayBoard()
 				}
 			}
 
-			if (playerCharacter->getHealth() > 0 && playerCharacter->getXCoordinate() == column && playerCharacter->getYCoordinate() == row) // Is the entity the player character?
+			if (playerCharacter->getHealth() > 0 && playerCharacter->getXCoordinate() == column && playerCharacter->getYCoordinate() == row) // Is the entity the player character (PC)?
 			{
 				symbol = playerCharacter->getSymbol(); // Output player character symbol to the console.
 			}
@@ -439,22 +441,25 @@ void Game::checkForPcCollision(int previousXPosition, int previousYPosition)
 	}
 }
 
+/// <summary>
+/// Moves the enemies within the level
+/// </summary>
 void Game::moveEnemies()
 {
 	for (Enemy* enemy : enemies)
 	{
-		int previousXPosition = enemy->getXCoordinate();
+		int previousXPosition = enemy->getXCoordinate(); 
 		int previousYPosition = enemy->getYCoordinate();
 
-		enemy->moveEnemy(playerCharacter->getXCoordinate(), playerCharacter->getYCoordinate());
+		enemy->moveEnemy(playerCharacter->getXCoordinate(), playerCharacter->getYCoordinate()); // Moves the enemy
 
 
 		for (Item* wall : walls)
 		{
 			if (wall->getIsInteractable() && wall->getXCoordinate() == enemy->getXCoordinate() && wall->getYCoordinate() == enemy->getYCoordinate()) // Is enemy hitting a wall?
 			{
-				enemy->setXCoordinate(-enemy->getXCoordinate() + previousXPosition);
-				enemy->setYCoordinate(-enemy->getYCoordinate() + previousYPosition);
+				enemy->setXCoordinate(-enemy->getXCoordinate() + previousXPosition); // Return enemy to previous x-coordinate (x position)
+				enemy->setYCoordinate(-enemy->getYCoordinate() + previousYPosition); // Return enemy to previous y-coordinate (y position)
 			}
 		}
 	}
@@ -466,7 +471,7 @@ void Game::moveEnemies()
 /// <param name="enemyIndex"></param>
 void Game::fightEnemy(int enemyIndex)
 {
-	const int delay = 3000;
+	const unsigned int delay = 3000;
 
 	setNumberOfEnemies(-1); // Reduces the enemy counter at the top of the screen
 
@@ -480,7 +485,7 @@ void Game::fightEnemy(int enemyIndex)
 
 			cout << "PC Health: " << playerCharacter->getHealth() << endl;
 			cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth() << endl;
-			cout << endl << endl << endl << "Attack(1) || DEFEND(2) || GIVE UP(3)";
+			cout << endl << endl << endl << "Attack(1) || DEFEND(2) || GIVE UP(3)" << endl;
 			std::cin >> playerInput; 
 		}
 
@@ -512,7 +517,7 @@ void Game::fightEnemy(int enemyIndex)
 			break;
 		}
 
-		Sleep(delay);
+		Sleep(delay); // Delays the execution of code
 	}
 
 	if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0) // Is the enemy defeated and is the PC alive?
@@ -539,7 +544,7 @@ void Game::displayPlayerLostScreen()
 {
 	char playerInput = ' ';
 
-	system("cls");
+	system("cls"); // Clears the console
 
 	cout << "You lost..." << endl << "Play again (y/n)";
 
