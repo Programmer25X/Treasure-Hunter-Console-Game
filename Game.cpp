@@ -317,8 +317,13 @@ void Game::loadMap() const
 						chest->setYCoordinate(row);
 						chest->activateItem();
 						setNumberOfChests(1);
+						break;
 					}
 				}
+				break;
+
+			default:
+				break;
 			}
 		}
 	}
@@ -493,9 +498,10 @@ void Game::fightEnemy(int enemyIndex)
 		while (playerInput != 1 && playerInput != 2 && playerInput != 3)
 		{
 			system("cls"); // Clears the console
+
 			cout << "PC Health: " << playerCharacter->getHealth() << endl;
 			cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth() << endl;
-			cout << "\n\n\n\ Attack (1) || DEFEND (2) || GIVE UP (3) ";
+			cout << endl << endl << endl << "Attack(1) || DEFEND(2) || GIVE UP(3)";
 			std::cin >> playerInput; 
 		}
 
@@ -515,7 +521,7 @@ void Game::fightEnemy(int enemyIndex)
 
 		case 2: // PC blocks the incoming attack
 			cout << "PC blocked the opponent's attack!" << endl;
-			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage() * 0.5); // Redeuces the PC's health
+			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage() * 0.5f); // Redeuces the PC's health
 			break;
 
 		case 3: // Player gives up
@@ -524,7 +530,7 @@ void Game::fightEnemy(int enemyIndex)
 			break;
 
 		default:
-			return;
+			break;
 		}
 
 		Sleep(delay);

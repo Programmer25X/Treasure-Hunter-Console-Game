@@ -209,7 +209,7 @@ Enemy::Enemy(int pID, float pDamage)
 /// Retrieves the enemy's ID, allowing PvE combat
 /// </summary>
 /// <returns></returns>
-float Enemy::getID() const
+int Enemy::getID() const
 {
 	return id;
 }

@@ -67,6 +67,6 @@ private:
 
 public:
 
-	float getID() const; 
+	int getID() const; 
 	float getDamage() const;
 };
