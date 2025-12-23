@@ -462,6 +462,11 @@ void Game::moveEnemies()
 				enemy->setYCoordinate(-enemy->getYCoordinate() + previousYPosition); // Return enemy to previous y-coordinate (y position)
 			}
 		}
+
+		if (enemy->getXCoordinate() == playerCharacter->getXCoordinate() && enemy->getYCoordinate() == playerCharacter->getYCoordinate())
+		{
+			fightEnemy(enemy->getID()); // Start the combat sequence
+		}
 	}
 }
 
@@ -575,7 +580,7 @@ void Game::updateGame()
 		{
 			displayBoard();
 
-			isGameRunning = playerCharacter->getHealth() > 0 ? true : false; // Checks whether the pc is still alive. 
+			isGameRunning = playerCharacter->getHealth() > 0 ? true : false; // Checks whether the PC is still alive. 
 
 			if (!isGameRunning)
 			{
@@ -593,10 +598,3 @@ void Game::updateGame()
 		return; 
 	}
 }
-
-
-
-
-
-
-
