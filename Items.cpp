@@ -71,6 +71,11 @@ int Item::getXCoordinate() const
 	return xCoordinate;
 }
 
+void Item::activateItem()
+{
+	isInteractable = true;
+}
+
 /// <summary>
 /// Deactivates item
 /// </summary>

@@ -11,11 +11,12 @@ using std::cout;
 using std::endl;
 
 
-int NUMBER_OF_ROWS = 25;
-int NUMBER_OF_COLUMNS = 30;
+int NUMBER_OF_ROWS = 30;
+int NUMBER_OF_COLUMNS = 25;
 
 int Game::numberOfEnemies = 0;
 int Game::numberOfChests = 0;
+
 
 PlayerCharacter* playerCharacter = nullptr;
 Enemy* enemies[5] = {};
@@ -33,6 +34,8 @@ Game::Game()
 	displayIntroMenu(); // Displays the Intro Menu
 	generateObjects(); // Generates in-game entities
 	resetGame();
+	loadMap();
+	displayBoard();
 }
 
 /// <summary>
@@ -137,6 +140,8 @@ void Game::setNumberOfChests(int amountToAdd)
 }
 
 
+
+
 /// <summary>
 /// Gets the Player's input to move the PC or exit the game 
 /// </summary>
@@ -196,7 +201,7 @@ void Game::generateObjects()
 
 	for (int i = 0; i < (sizeof(enemies) / sizeof(enemies[0])); i++)
 	{
-		enemies[i] = new Enemy(i, 30.0f); // Creates a new enemy
+		enemies[i] = new Enemy(i, 0.0f); // Creates a new enemy
 	}
 
 	for (int i = 0; i < (sizeof(coins) / sizeof(coins[0])); i++)
@@ -212,6 +217,110 @@ void Game::generateObjects()
 	for (int i = 0; i < (sizeof(walls)) / sizeof(walls[0]); i++)
 	{
 		walls[i] = new Item("Wall", '*', 0, 0, 0); // Creates a new wall
+	}
+}
+
+void Game::resetGame()
+{
+	playerCharacter->setHealth(100);
+
+	setNumberOfChests(-numberOfChests);
+	setNumberOfEnemies(-numberOfEnemies);
+
+	for (Item* wall : walls)
+	{
+		wall->deactivateItem();
+	}
+
+	for (Item* coin : coins)
+	{
+		coin->deactivateItem();
+	}
+
+	for (Item* chest : treasureChests)
+	{
+		chest->deactivateItem();
+	}
+
+	for (Enemy* enemy : enemies)
+	{
+		enemy->setHealth(-enemy->getHealth());
+	}
+}
+
+
+void Game::loadMap()
+{
+	for (int row = 0; row < NUMBER_OF_ROWS; row++)
+	{
+		for (int column = 0; column < NUMBER_OF_COLUMNS; column++)
+		{
+			int tile = map[currentLevel][row][column];
+
+			switch (tile)
+			{
+			case 1:
+
+				playerCharacter->setXCoordinate(column);
+				playerCharacter->setYCoordinate(row);
+				break;
+
+			case 2:
+
+				for (Item* wall : walls)
+				{
+					if (!wall->getIsInteractable())
+					{
+						wall->setXCoordinate(column);
+						wall->setYCoordinate(row);
+						wall->activateItem();
+						break;
+					}
+				}
+				break;
+
+			case 3:
+
+				for (Enemy* enemy : enemies)
+				{
+					if (enemy->getHealth() <= 0.0f)
+					{
+						enemy->setHealth(50.0f);
+						enemy->setXCoordinate(column);
+						enemy->setYCoordinate(row);
+						setNumberOfEnemies(1);
+						break;
+					}
+				}
+				break;
+
+			case 4:
+				for (Item* coin : coins)
+				{
+					if (!coin->getIsInteractable())
+					{
+						coin->setXCoordinate(column);
+						coin->setYCoordinate(row);
+						coin->activateItem();
+						break;
+					}
+				}
+				break;
+
+			case 5:
+
+				for (Item* chest : treasureChests)
+				{
+					if (!chest->getIsInteractable())
+					{
+						chest->setXCoordinate(column);
+						chest->setYCoordinate(row);
+						chest->activateItem();
+						setNumberOfChests(1);
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -238,12 +347,12 @@ void Game::displayBoard()
 			symbol = ' ';
 			cout << "\033[0m";
 
-			for (Item* tile : walls)
+			for (Item* wall : walls)
 			{
-				if (tile->getIsInteractable() && tile->getXCoordinate() == column && tile->getYCoordinate() == row) // Is the entity a wall?
+				if (wall->getIsInteractable() && wall->getXCoordinate() == column && wall->getYCoordinate() == row) // Is the entity a wall?
 				{
 					cout << "\033[97m";
-					symbol = tile->getSymbol(); // Output wall symbol to the console.
+					symbol = wall->getSymbol(); // Output wall symbol to the console.
 				}
 			}
 
@@ -287,124 +396,6 @@ void Game::displayBoard()
 }
 
 
-void Game::resetGame() const
-{
-
-	bool isPCSpawned = false;
-
-	int i = 0;
-
-	int startXCoordinate = -1;
-	int startYCoordinate = -1;
-
-	srand(static_cast<unsigned int>(time(0)));
-
-	setNumberOfEnemies(-numberOfEnemies);
-	setNumberOfChests(-numberOfChests);
-
-	for (Item* wall : walls)
-	{
-		if (i < 30)
-		{
-			wall->setXCoordinate(i);
-		}
-
-		if (i >= 30 && i < 60)
-		{
-			wall->setXCoordinate(i - 30);
-			wall->setYCoordinate(24);
-		}
-
-		if (i > 60 && i < 94)
-		{
-			wall->setYCoordinate(i - 60);
-		}
-
-		if (i >= 94 && i < 118)
-		{
-			wall->setXCoordinate(29);
-			wall->setYCoordinate(i - 94);
-		}
-
-		if (i >= 118 && i < 128)
-		{
-			wall->setXCoordinate(i - 110);
-			wall->setYCoordinate(12);
-		}
-
-		i++;
-	}
-
-
-	for (Enemy* enemy : enemies)
-	{
-	generateEnemyCoordinates:
-
-		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
-		startYCoordinate = rand() % NUMBER_OF_ROWS;
-
-		if (getIsOverlapping(startXCoordinate, startYCoordinate))
-		{
-			goto generateEnemyCoordinates;
-		}
-
-		enemy->setXCoordinate(startXCoordinate);
-		enemy->setYCoordinate(startYCoordinate);
-		setNumberOfEnemies(1);
-	}
-
-
-	for (Item* treasure : treasureChests)
-	{
-	generateTreasureCoordinates:
-
-		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
-		startYCoordinate = rand() % NUMBER_OF_ROWS;
-
-		if (getIsOverlapping(startXCoordinate, startYCoordinate))
-		{
-			goto generateTreasureCoordinates;
-		}
-
-		treasure->setXCoordinate(startXCoordinate);
-		treasure->setYCoordinate(startYCoordinate);
-		setNumberOfChests(1);
-	}
-
-
-	for (Item* coin : coins)
-	{
-	generateCoinCoordinates:
-
-		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
-		startYCoordinate = rand() % NUMBER_OF_ROWS;
-
-		if (getIsOverlapping(startXCoordinate, startYCoordinate))
-		{
-			goto generateCoinCoordinates;
-		}
-
-		coin->setXCoordinate(startXCoordinate);
-		coin->setYCoordinate(startYCoordinate);
-	}
-
-
-	while (!isPCSpawned)
-	{
-		startXCoordinate = rand() % NUMBER_OF_COLUMNS;
-		startYCoordinate = rand() % NUMBER_OF_ROWS;
-
-		if (!getIsOverlapping(startXCoordinate, startYCoordinate))
-		{
-			isPCSpawned = true;
-
-			playerCharacter->setXCoordinate(startXCoordinate);
-			playerCharacter->setYCoordinate(startYCoordinate);
-		}
-	}
-
-}
-
 
 
 /// <summary>
@@ -417,7 +408,7 @@ bool Game::getIsOverlapping(int xCoordinate, int yCoordinate) const
 {
 	for (Item* wall : walls)
 	{
-		if (wall->getXCoordinate() == xCoordinate && wall->getYCoordinate() == yCoordinate) // Is the tile a wall?
+		if (wall->getXCoordinate() == xCoordinate && wall->getYCoordinate() == yCoordinate && wall->getIsInteractable()) // Is the tile a wall?
 		{
 			return true;
 		}
@@ -532,11 +523,11 @@ void Game::fightEnemy(int enemyIndex)
 
 	if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0) // Is the enemy defeated and is the PC alive?
 	{
-		std::cout << "The PC was victorious!" << endl;
+		cout << "The PC was victorious!" << endl;
 	}
 	else
 	{
-		std::cout << "YOU LOST..." << endl;
+		cout << "YOU LOST..." << endl;
 		displayPlayerLostScreen(); // Display the Player Lost Screen
 	}
 
@@ -574,7 +565,6 @@ void Game::displayPlayerLostScreen()
 }
 
 
-
 /// <summary>
 /// Main Gameplay Loop
 /// </summary>
@@ -600,6 +590,8 @@ void Game::updateGame()
 		return; 
 	}
 }
+
+
 
 
 

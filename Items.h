@@ -14,7 +14,7 @@ private:
 	int value = 0;
 	int xCoordinate = 0;
 	int yCoordinate = 0;
-	bool isInteractable = true;
+	bool isInteractable = false;
 
 public:
 
@@ -25,6 +25,7 @@ public:
 	int getYCoordinate() const;
 	int getXCoordinate() const;
 
+	void activateItem();
 	void deactivateItem();
 	void setXCoordinate(int amountToAdd);
 	void setYCoordinate(int amountToAdd);
