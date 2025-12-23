@@ -245,7 +245,7 @@ void Game::generateObjects()
 /// </summary>
 void Game::resetGame()
 {
-	// Reset the PC 
+	// Reset the player character 
 	playerCharacter->setHealth(100); 
 	playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins());
 	playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate());
