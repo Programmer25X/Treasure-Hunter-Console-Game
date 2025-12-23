@@ -7,7 +7,7 @@ class Item
 public:
 	Item(std::string pName, char pSymbol, int pValue, int pXCoordinate, int pYcoordinate); 
 
-private:
+protected:
 
 	std::string name = "";
 	char symbol = ' ';
@@ -29,4 +29,9 @@ public:
 	void deactivateItem();
 	void setXCoordinate(int amountToAdd);
 	void setYCoordinate(int amountToAdd);
+};
+
+class PressurePlate : public Item
+{
+
 };
