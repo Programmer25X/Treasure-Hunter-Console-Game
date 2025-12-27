@@ -2,25 +2,26 @@
 
 #include <string>	
 
+// ============================================================ //
+
+// Item class
+
 class Item
 {
 public:
-	Item(std::string pName, char pSymbol, int pValue, int pXCoordinate, int pYcoordinate); 
+	Item(); 
+	Item(char pSymbol, int pXCoordinate, int pYcoordinate); 
 
 protected:
 
-	std::string name = "";
 	char symbol = ' ';
-	int value = 0;
 	int xCoordinate = 0;
 	int yCoordinate = 0;
 	bool isInteractable = false;
 
 public:
 
-	std::string getName() const;
 	char getSymbol() const;
-	int getValue() const;
 	bool getIsInteractable() const;
 	int getYCoordinate() const;
 	int getXCoordinate() const;
@@ -31,7 +32,37 @@ public:
 	void setYCoordinate(int amountToAdd);
 };
 
+
+// ======================================================== //
+
+// PressurePlate class
+
 class PressurePlate : public Item
 {
+public:
+	PressurePlate(char pSymbol, int pId, int pXCoordinate, int pYcoordinate);
 
+private:
+	int id;
+
+public:
+	int getId() const; 
+};
+
+
+// ============================================================= // 
+
+// Treasure class 
+
+class Treasure : public Item
+{
+public:
+	Treasure(char pSymbol, int pValue, int pXCoordinate, int pYcoordinate);
+
+
+private:
+	int value = 0;
+
+public:
+	int getValue() const;
 };

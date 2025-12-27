@@ -92,7 +92,7 @@ char Character::getSymbol() const
 PlayerCharacter::PlayerCharacter()
 {
 	health = 100.0f;
-	symbol = 'P';
+	symbol = '^';
 	xPosition = 0;
 	yPosition = 0;
 	numberOfCoins = 0;

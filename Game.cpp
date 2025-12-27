@@ -20,8 +20,9 @@ int Game::numberOfChests = 0;
 
 PlayerCharacter* playerCharacter = nullptr;
 Enemy* enemies[5] = {};
-Item* coins[10] = {};
-Item* treasureChests[10] = {};
+Treasure* coins[10] = {};
+Treasure* treasureChests[10] = {};
+PressurePlate* pressurePlates[10] = {};
 Item* walls[200] = {};
 
 /// <summary>
@@ -50,12 +51,12 @@ Game::~Game()
 		delete wall;
 	}
 
-	for (Item* chest : treasureChests)
+	for (Treasure* chest : treasureChests)
 	{
 		delete chest;
 	}
 
-	for (Item* coin : coins)
+	for (Treasure* coin : coins)
 	{
 		delete coin;
 	}
@@ -63,6 +64,11 @@ Game::~Game()
 	for (Enemy* enemy : enemies)
 	{
 		delete enemy;
+	}
+
+	for (Item* pressurePlate : pressurePlates)
+	{
+		delete pressurePlate; 
 	}
 }
 
@@ -226,17 +232,22 @@ void Game::generateObjects()
 
 	for (int i = 0; i < (sizeof(coins) / sizeof(coins[0])); i++)
 	{
-		coins[i] = new Item("Coin", 'c', 1, 0, 0); // Creates a new coin
+		coins[i] = new Treasure('c', 1, 0, 0); // Creates a new coin
 	}
 
 	for (int i = 0; i < (sizeof(treasureChests) / sizeof(treasureChests[0])); i++)
 	{
-		treasureChests[i] = new Item("Chest", 'T', 50, 0, 0); // Creates a new treasure chest
+		treasureChests[i] = new Treasure('T', 50, 0, 0); // Creates a new treasure chest
+	}
+
+	for (int i = 0; i < (sizeof(pressurePlates) / sizeof(pressurePlates[0])); i++)
+	{
+		pressurePlates[i] = new PressurePlate('P', i, 0, 0); 
 	}
 
 	for (int i = 0; i < (sizeof(walls)) / sizeof(walls[0]); i++)
 	{
-		walls[i] = new Item("Wall", '*', 0, 0, 0); // Creates a new wall
+		walls[i] = new Item('*', 0, 0); // Creates a new wall
 	}
 }
 
@@ -262,14 +273,14 @@ void Game::resetGame()
 			wall->setYCoordinate(-wall->getYCoordinate());
 	}
 
-	for (Item* coin : coins) // Deactivates resets the coins
+	for (Treasure* coin : coins) // Deactivates resets the coins
 	{
 			coin->deactivateItem();
 			coin->setXCoordinate(-coin->getXCoordinate());
 			coin->setYCoordinate(-coin->getYCoordinate());
 	}
 
-	for (Item* chest : treasureChests) // Deactivates and resets the treasure chests
+	for (Treasure* chest : treasureChests) // Deactivates and resets the treasure chests
 	{
 			chest->deactivateItem();
 			chest->setXCoordinate(-chest->getXCoordinate());
@@ -281,6 +292,13 @@ void Game::resetGame()
 			enemy->setHealth(-enemy->getHealth());
 			enemy->setXCoordinate(-enemy->getXCoordinate());
 			enemy->setYCoordinate(-enemy->getYCoordinate()); 
+	}
+
+	for (PressurePlate* pressurePlate : pressurePlates)
+	{
+		pressurePlate->deactivateItem();
+		pressurePlate->setXCoordinate(-pressurePlate->getXCoordinate());
+		pressurePlate->setYCoordinate(-pressurePlate->getYCoordinate());
 	}
 }
 
@@ -333,13 +351,13 @@ void Game::loadMap() const
 				break;
 
 			case 4:
-				for (Item* coin : coins)
+				for (Item* pressurePlate : pressurePlates)
 				{
-					if (!coin->getIsInteractable())
+					if (!pressurePlate->getIsInteractable())
 					{
-						coin->setXCoordinate(column);
-						coin->setYCoordinate(row);
-						coin->activateItem();
+						pressurePlate->setXCoordinate(column);
+						pressurePlate->setYCoordinate(row);
+						pressurePlate->activateItem();
 						break;
 					}
 				}
@@ -426,6 +444,15 @@ void Game::displayBoard()
 				}
 			}
 
+			for (PressurePlate* pressurePlate : pressurePlates)
+			{
+				if (pressurePlate->getIsInteractable() && pressurePlate->getXCoordinate() == column && pressurePlate->getYCoordinate() == row)
+				{
+					cout << "\033[93m";
+					symbol = pressurePlate->getSymbol(); // Output pressure plate symbol to the console.
+				}
+			}
+
 			if (playerCharacter->getHealth() > 0 && playerCharacter->getXCoordinate() == column && playerCharacter->getYCoordinate() == row) // Is the entity the player character (PC)?
 			{
 				symbol = playerCharacter->getSymbol(); // Output player character symbol to the console.
@@ -449,7 +476,7 @@ void Game::checkForPcCollision(int previousXPosition, int previousYPosition)
 		}
 	}
 
-	for (Item* coin : coins)
+	for (Treasure* coin : coins)
 	{
 		if (coin->getIsInteractable() && coin->getXCoordinate() == playerCharacter->getXCoordinate() && coin->getYCoordinate() == playerCharacter->getYCoordinate()) // Is PC colliding with a coin?
 		{
@@ -458,12 +485,20 @@ void Game::checkForPcCollision(int previousXPosition, int previousYPosition)
 		}
 	}
 
-	for (Item* chest : treasureChests)
+	for (Treasure* chest : treasureChests)
 	{
 		if (chest->getIsInteractable() && chest->getXCoordinate() == playerCharacter->getXCoordinate() && chest->getYCoordinate() == playerCharacter->getYCoordinate())
 		{
 			setNumberOfChests(-1); // Decreases the number of treasure chests remaining
 			chest->deactivateItem(); // Deactivate the chest
+		}
+	}
+
+	for (PressurePlate* pressurePlate : pressurePlates)
+	{
+		if (pressurePlate->getIsInteractable() && pressurePlate->getXCoordinate() == playerCharacter->getXCoordinate() && pressurePlate->getYCoordinate() == playerCharacter->getYCoordinate())
+		{
+			pressurePlate->deactivateItem();
 		}
 	}
 
