@@ -4,14 +4,12 @@
 class Character
 {
 protected:
-
 	float health = 0;
 	int xPosition = 0;
 	int yPosition = 0;
 	char symbol = ' ';
 
 public:
-
 	// Getter and Setter methods 
 	float getHealth() const;
 	void setHealth(float amountToAdd);
@@ -28,9 +26,7 @@ public:
 
 class PlayerCharacter : public Character
 {
-
 public:
-
 	PlayerCharacter(); // Constructor
 
 private:
@@ -40,7 +36,6 @@ private:
 	float damage = 25; 
 
 public:
-
 	// Getter and Setter methods
 
 	int getNumberOfCoins() const;
@@ -61,10 +56,9 @@ public:
 
 class Enemy : public Character
 {
-
 public:
 
-	Enemy(int pID, float pDamage = 10); // Constructor
+	Enemy(int pId, float pDamage = 10); // Constructor
 
 private:
 

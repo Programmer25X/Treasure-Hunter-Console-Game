@@ -242,7 +242,7 @@ void Game::generateObjects()
 
 	for (int i = 0; i < (sizeof(pressurePlates) / sizeof(pressurePlates[0])); i++)
 	{
-		pressurePlates[i] = new PressurePlate('P', i, 0, 0); 
+		pressurePlates[i] = new PressurePlate('P', i, 0, 0); // Creates a new pressure plate 
 	}
 
 	for (int i = 0; i < (sizeof(walls)) / sizeof(walls[0]); i++)
@@ -294,7 +294,7 @@ void Game::resetGame()
 			enemy->setYCoordinate(-enemy->getYCoordinate()); 
 	}
 
-	for (PressurePlate* pressurePlate : pressurePlates)
+	for (PressurePlate* pressurePlate : pressurePlates) // Deactivates and resets the pressure plates
 	{
 		pressurePlate->deactivateItem();
 		pressurePlate->setXCoordinate(-pressurePlate->getXCoordinate());
@@ -446,7 +446,7 @@ void Game::displayBoard()
 
 			for (PressurePlate* pressurePlate : pressurePlates)
 			{
-				if (pressurePlate->getIsInteractable() && pressurePlate->getXCoordinate() == column && pressurePlate->getYCoordinate() == row)
+				if (pressurePlate->getIsInteractable() && pressurePlate->getXCoordinate() == column && pressurePlate->getYCoordinate() == row) // Is the entity a pressure plate?
 				{
 					cout << "\033[93m";
 					symbol = pressurePlate->getSymbol(); // Output pressure plate symbol to the console.
@@ -466,6 +466,11 @@ void Game::displayBoard()
 }
 
 
+/// <summary>
+/// Checks if the PC is overlapping with an in-game entity
+/// </summary>
+/// <param name="previousXPosition"></param>
+/// <param name="previousYPosition"></param>
 void Game::checkForPcCollision(int previousXPosition, int previousYPosition)
 {
 	for (Enemy* enemy : enemies)
@@ -487,7 +492,7 @@ void Game::checkForPcCollision(int previousXPosition, int previousYPosition)
 
 	for (Treasure* chest : treasureChests)
 	{
-		if (chest->getIsInteractable() && chest->getXCoordinate() == playerCharacter->getXCoordinate() && chest->getYCoordinate() == playerCharacter->getYCoordinate())
+		if (chest->getIsInteractable() && chest->getXCoordinate() == playerCharacter->getXCoordinate() && chest->getYCoordinate() == playerCharacter->getYCoordinate()) // Is PC colliding with a chest?
 		{
 			setNumberOfChests(-1); // Decreases the number of treasure chests remaining
 			chest->deactivateItem(); // Deactivate the chest
@@ -496,10 +501,10 @@ void Game::checkForPcCollision(int previousXPosition, int previousYPosition)
 
 	for (PressurePlate* pressurePlate : pressurePlates)
 	{
-		if (pressurePlate->getIsInteractable() && pressurePlate->getXCoordinate() == playerCharacter->getXCoordinate() && pressurePlate->getYCoordinate() == playerCharacter->getYCoordinate())
+		if (pressurePlate->getIsInteractable() && pressurePlate->getXCoordinate() == playerCharacter->getXCoordinate() && pressurePlate->getYCoordinate() == playerCharacter->getYCoordinate()) // Is PC colliding with a pressure plate?
 		{
-			openDoor(pressurePlate->getXCoordinate(), pressurePlate->getYCoordinate());
-			pressurePlate->deactivateItem();
+			openDoor(pressurePlate->getXCoordinate(), pressurePlate->getYCoordinate()); // Opens the locked door
+			pressurePlate->deactivateItem(); // Deactivates the pressure plate
 		}
 	}
 
@@ -535,13 +540,18 @@ void Game::moveEnemies()
 			}
 		}
 
-		if (enemy->getXCoordinate() == playerCharacter->getXCoordinate() && enemy->getYCoordinate() == playerCharacter->getYCoordinate())
+		if (enemy->getXCoordinate() == playerCharacter->getXCoordinate() && enemy->getYCoordinate() == playerCharacter->getYCoordinate()) // Is enemy hitting the PC?
 		{
 			fightEnemy(enemy->getID()); // Start the combat sequence
 		}
 	}
 }
 
+/// <summary>
+/// Activates the pressure plate and opens the corresponding door
+/// </summary>
+/// <param name="xPosition"></param>
+/// <param name="yPosition"></param>
 void Game::openDoor(int xPosition, int yPosition)
 {
 	switch (currentLevel)
@@ -578,7 +588,6 @@ void Game::openDoor(int xPosition, int yPosition)
 			}
 		}
 		break;
-
 	case 1:
 		break;
 	case 2:
@@ -657,7 +666,7 @@ void Game::fightEnemy(int enemyIndex)
 
 
 /// <summary>
-/// Displays the Player Lost Screen
+/// Displays the player defeat/lost menu
 /// </summary>
 void Game::displayPlayerLostScreen()
 {
@@ -687,6 +696,9 @@ void Game::displayPlayerLostScreen()
 	}
 }
 
+/// <summary>
+/// Displays the player victory/win menu
+/// </summary>
 void Game::displayPlayerWonScreen()
 {
 	char playerInput = ' ';
@@ -715,7 +727,9 @@ void Game::displayPlayerWonScreen()
 	}
 }
 
-
+/// <summary>
+/// Checks if the player has won or lost
+/// </summary>
 void Game::checkWin()
 {
 	if (numberOfChests <= 0)
@@ -725,7 +739,7 @@ void Game::checkWin()
 }
 
 /// <summary>
-/// Main Gameplay Loop
+/// Main gameplay loop
 /// </summary>
 void Game::updateGame()
 {

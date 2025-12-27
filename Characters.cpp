@@ -81,6 +81,7 @@ char Character::getSymbol() const
 }
 
 
+
 // =========================================================================== //
 
 // PlayerCharacter Class Member Functions 
@@ -154,7 +155,7 @@ void PlayerCharacter::movePC(int keycode)
 		newXCoordinate = xPosition - 1; // PC moves left
 		newYCoordinate = yPosition + 0;
 		break;
-	case 68: // D
+	case 68: // D 
 		newXCoordinate = xPosition + 1; // PC moves right
 		newYCoordinate = yPosition + 0;
 		break;
@@ -198,14 +199,14 @@ void PlayerCharacter::setNumberOfCoins(int amountToAdd)
 /// Constructor
 /// </summary>
 /// <param name="PDamage"></param>
-Enemy::Enemy(int pID, float pDamage)
+Enemy::Enemy(int pId, float pDamage)
 {
 	symbol = 'W';
 	xPosition = 0;
 	yPosition = 0;
 	damage = pDamage;
 	health = 50.0f;
-	id = pID;
+	id = pId;
 }
 
 /// <summary>
