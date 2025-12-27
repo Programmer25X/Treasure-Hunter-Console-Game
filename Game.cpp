@@ -625,11 +625,7 @@ void Game::fightEnemy(int enemyIndex)
 			cout << "PC and the opponent attacked one another!" << endl;
 			enemies[enemyIndex]->setHealth(-playerCharacter->getDamage()); // Redeuces the enemy's health
 			
-			if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0) // Is the enemy defeated before dealing any damage
-			{
-				break;
-			}
-			else if (enemies[enemyIndex]->getHealth() > 0 && playerCharacter->getHealth() > 0)
+			if (enemies[enemyIndex]->getHealth() > 0)
 			{
 				playerCharacter->setHealth(-enemies[enemyIndex]->getDamage()); // Redeuces the PC's health
 			}
