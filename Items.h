@@ -59,7 +59,6 @@ class Treasure : public Item
 public:
 	Treasure(char pSymbol, int pValue, int pXCoordinate, int pYcoordinate);
 
-
 private:
 	int value = 0;
 

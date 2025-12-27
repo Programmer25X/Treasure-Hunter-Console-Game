@@ -351,7 +351,7 @@ void Game::loadMap() const
 				break;
 
 			case 4:
-				for (Item* pressurePlate : pressurePlates)
+				for (PressurePlate* pressurePlate : pressurePlates)
 				{
 					if (!pressurePlate->getIsInteractable())
 					{
@@ -365,7 +365,7 @@ void Game::loadMap() const
 
 			case 5:
 
-				for (Item* chest : treasureChests)
+				for (Treasure* chest : treasureChests)
 				{
 					if (!chest->getIsInteractable())
 					{
@@ -498,6 +498,7 @@ void Game::checkForPcCollision(int previousXPosition, int previousYPosition)
 	{
 		if (pressurePlate->getIsInteractable() && pressurePlate->getXCoordinate() == playerCharacter->getXCoordinate() && pressurePlate->getYCoordinate() == playerCharacter->getYCoordinate())
 		{
+			openDoor(pressurePlate->getXCoordinate(), pressurePlate->getYCoordinate());
 			pressurePlate->deactivateItem();
 		}
 	}
@@ -541,6 +542,50 @@ void Game::moveEnemies()
 	}
 }
 
+void Game::openDoor(int xPosition, int yPosition)
+{
+	switch (currentLevel)
+	{
+	case 0:
+		if (xPosition == 8 && yPosition == 25)
+		{
+			for (Item* wall : walls)
+			{
+				if (wall->getXCoordinate() == 8 && wall->getYCoordinate() == 6) // First pressure plate
+				{
+					wall->deactivateItem(); // Unlocks the entrance
+				}
+			}
+		}
+		else if (xPosition == 6 && yPosition == 1)
+		{
+			for (Item* wall : walls)
+			{
+				if (wall->getXCoordinate() == 19 && wall->getYCoordinate() == 3) // First pressure plate
+				{
+					wall->deactivateItem(); // Unlocks the entrance
+				}
+			}
+		}
+		else if (xPosition == 22 && yPosition == 1)
+		{
+			for (Item* wall : walls)
+			{
+				if (wall->getXCoordinate() == 11 && wall->getYCoordinate() == 16) // First pressure plate
+				{
+					wall->deactivateItem(); // Unlocks the entrance
+				}
+			}
+		}
+		break;
+
+	case 1:
+		break;
+	case 2:
+		break;
+	}
+}
+
 /// <summary>
 /// The PvE combat system
 /// </summary>
@@ -554,21 +599,20 @@ void Game::fightEnemy(int enemyIndex)
 	while (enemies[enemyIndex]->getHealth() > 0 && playerCharacter->getHealth() > 0)
 	{
 		system("cls"); // Clears the console
-
 		cout << "PC Health: " << playerCharacter->getHealth() << endl;
 		cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth() << endl;
 
-		int playerInput = -1;
+		char playerInput = ' ';
 
-		while (playerInput != 1 && playerInput != 2 && playerInput != 3)
+		while (playerInput != '1' && playerInput != '2' && playerInput != '3')
 		{
 			cout << endl << endl << endl << "Attack (1) || DEFEND (2) || GIVE UP (3)" << endl;
-			std::cin >> playerInput; 
+			playerInput = _getch(); 
 		}
 
 		switch (playerInput)
 		{
-		case 1: // PC attacks the enemy
+		case '1': // PC attacks the enemy
 			cout << "PC and the opponent attacked one another!" << endl;
 			enemies[enemyIndex]->setHealth(-playerCharacter->getDamage()); // Redeuces the enemy's health
 			
@@ -583,12 +627,12 @@ void Game::fightEnemy(int enemyIndex)
 
 			break;
 
-		case 2: // PC blocks the incoming attack
+		case '2': // PC blocks the incoming attack
 			cout << "PC blocked the opponent's attack!" << endl;
 			playerCharacter->setHealth(-enemies[enemyIndex]->getDamage() * 0.5f); // Redeuces the PC's health
 			break;
 
-		case 3: // Player gives up
+		case '3': // Player gives up
 			cout << "PC gave up..." << endl;
 			displayPlayerLostScreen(); // Display the Player Lost Screen
 			break;
