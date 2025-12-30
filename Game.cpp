@@ -19,8 +19,8 @@ int Game::numberOfChests = 0;
 
 
 PlayerCharacter* playerCharacter = nullptr;
-Enemy* enemies[5] = {};
-Treasure* coins[10] = {};
+Enemy* enemies[10] = {};
+Treasure* coins[15] = {};
 Treasure* treasureChests[10] = {};
 PressurePlate* pressurePlates[10] = {};
 Item* walls[250] = {};
@@ -323,7 +323,7 @@ void Game::loadMap() const
 				{
 					if (!wall->getIsInteractable())
 					{
-						wall->activateItem(); // Activates the wall
+						wall->activateItem(); 
 						wall->setXCoordinate(column);
 						wall->setYCoordinate(row);
 						break;
@@ -336,10 +336,10 @@ void Game::loadMap() const
 				{
 					if (enemy->getHealth() <= 0.0f)
 					{
-						enemy->setHealth(50.0f); // Activates the enemy
+						enemy->setHealth(50.0f); 
 						enemy->setXCoordinate(column);
 						enemy->setYCoordinate(row);
-						setNumberOfEnemies(1); // Increases the number of enemies
+						setNumberOfEnemies(1);
 						break;
 					}
 				}
@@ -351,7 +351,7 @@ void Game::loadMap() const
 					if (!pressurePlate->getIsInteractable())
 					{
 						pressurePlate->setXCoordinate(column);
-						pressurePlate->setYCoordinate(row);
+						pressurePlate->setYCoordinate(row); 
 						pressurePlate->activateItem();
 						break;
 					}
@@ -363,10 +363,10 @@ void Game::loadMap() const
 				{
 					if (!chest->getIsInteractable())
 					{
-						chest->activateItem(); // Activates the treasure chest
+						chest->activateItem();
 						chest->setXCoordinate(column);
 						chest->setYCoordinate(row);
-						setNumberOfChests(1); // Increases the number of treasure chests
+						setNumberOfChests(1);
 						break;
 					}
 				}
@@ -535,6 +535,19 @@ void Game::moveEnemies()
 			}
 		}
 
+		for (Enemy* otherEnemy : enemies)
+		{
+			if (enemy->getID() != otherEnemy->getID()) // Are enemy and otherEnemy different entities? 
+			{
+				if (otherEnemy->getHealth() > 0 && otherEnemy->getXCoordinate() == enemy->getXCoordinate() && otherEnemy->getYCoordinate() == enemy->getYCoordinate())
+				{
+					enemy->setXCoordinate(-enemy->getXCoordinate() + previousXPosition); // Return enemy to previous x-coordinate (x position)
+					enemy->setYCoordinate(-enemy->getYCoordinate() + previousYPosition); // Return enemy to previous y-coordinate (y position)
+				}
+
+			}
+		}
+
 		if (enemy->getXCoordinate() == playerCharacter->getXCoordinate() && enemy->getYCoordinate() == playerCharacter->getYCoordinate()) // Is enemy hitting the PC?
 		{
 			fightEnemy(enemy->getID()); // Start the combat sequence
@@ -549,44 +562,62 @@ void Game::moveEnemies()
 /// <param name="yPosition"></param>
 void Game::openDoor(int xPosition, int yPosition)
 {
+	int deactivateDoorXPosition = -1;
+	int deactivateDoorYPosition = -1;
+
 	switch (currentLevel)
 	{
-	case 0:
-		if (xPosition == 8 && yPosition == 25)
+	case 0: // Level 1 
+		if (xPosition == 8 && yPosition == 25) // Is PC standing on pressure plate?
 		{
-			for (Item* wall : walls)
-			{
-				if (wall->getXCoordinate() == 8 && wall->getYCoordinate() == 6) // First pressure plate
-				{
-					wall->deactivateItem(); // Unlocks the entrance
-				}
-			}
+			deactivateDoorXPosition = 8;
+			deactivateDoorYPosition = 6; 
 		}
-		else if (xPosition == 6 && yPosition == 1)
+		else if (xPosition == 6 && yPosition == 1) // Is PC standing on pressure plate?
 		{
-			for (Item* wall : walls)
-			{
-				if (wall->getXCoordinate() == 19 && wall->getYCoordinate() == 3) // First pressure plate
-				{
-					wall->deactivateItem(); // Unlocks the entrance
-				}
-			}
+			deactivateDoorXPosition = 19;
+			deactivateDoorYPosition = 3;
 		}
-		else if (xPosition == 22 && yPosition == 1)
+		else if (xPosition == 22 && yPosition == 1) // Is PC standing on pressure plate?
 		{
-			for (Item* wall : walls)
-			{
-				if (wall->getXCoordinate() == 11 && wall->getYCoordinate() == 16) // First pressure plate
-				{
-					wall->deactivateItem(); // Unlocks the entrance
-				}
-			}
+			deactivateDoorXPosition = 11;
+			deactivateDoorYPosition = 16;
 		}
 		break;
-	case 1:
+	
+	case 1: // Level 2
+		if (xPosition == 2 && yPosition == 3) // Is PC standing on pressure plate?
+		{
+			deactivateDoorXPosition = 5;
+			deactivateDoorYPosition = 15;
+		}
+		else if (xPosition == 7 && yPosition == 26)
+		{
+			deactivateDoorXPosition = 10;
+			deactivateDoorYPosition = 23;
+		}
+		else if (xPosition == 13 && yPosition == 3)
+		{
+			deactivateDoorXPosition = 15;
+			deactivateDoorYPosition = 11;
+		}
+		else if (xPosition == 17 && yPosition == 7)
+		{
+			deactivateDoorXPosition = 20;
+			deactivateDoorYPosition = 22;
+		}
 		break;
+	
 	case 2:
 		break;
+	}
+
+	for (Item* wall : walls)
+	{
+		if (wall->getXCoordinate() == deactivateDoorXPosition && wall->getYCoordinate() == deactivateDoorYPosition) // Unlocks the correct door
+		{
+			wall->deactivateItem(); // Unlocks the entrance
+		}
 	}
 }
 
