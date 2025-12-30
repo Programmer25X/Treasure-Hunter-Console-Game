@@ -23,7 +23,7 @@ Enemy* enemies[5] = {};
 Treasure* coins[10] = {};
 Treasure* treasureChests[10] = {};
 PressurePlate* pressurePlates[10] = {};
-Item* walls[200] = {};
+Item* walls[250] = {};
 
 /// <summary>
 /// Constructor
@@ -167,7 +167,6 @@ void Game::setNumberOfChests(int amountToAdd)
 
 
 
-
 /// <summary>
 /// Gets the Player's input to move the PC or exit the game 
 /// </summary>
@@ -258,7 +257,6 @@ void Game::resetGame()
 {
 	// Reset the player character 
 	playerCharacter->setHealth(100); 
-	playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins());
 	playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate());
 	playerCharacter->setYCoordinate(-playerCharacter->getYCoordinate());
 
@@ -316,13 +314,11 @@ void Game::loadMap() const
 			switch (tile)
 			{
 			case 1:
-
 				playerCharacter->setXCoordinate(column);
 				playerCharacter->setYCoordinate(row);
 				break;
 
 			case 2:
-
 				for (Item* wall : walls)
 				{
 					if (!wall->getIsInteractable())
@@ -336,7 +332,6 @@ void Game::loadMap() const
 				break;
 
 			case 3:
-
 				for (Enemy* enemy : enemies)
 				{
 					if (enemy->getHealth() <= 0.0f)
@@ -364,7 +359,6 @@ void Game::loadMap() const
 				break;
 
 			case 5:
-
 				for (Treasure* chest : treasureChests)
 				{
 					if (!chest->getIsInteractable())
@@ -388,12 +382,13 @@ void Game::loadMap() const
 /// <summary>
 /// Displays the current state of the gameboard
 /// </summary>
-void Game::displayBoard()
+void Game::displayBoard() const
 {
 	system("cls"); // Clears the console
 
 	cout << "\033[33m";
 
+	cout << " Level: " << currentLevel + 1 << endl; 
 	cout << endl << " PC Health: " << playerCharacter->getHealth() << " | "; // Display's the PC's current health
 	cout << "Enemies: " << getNumberOfEnemies() << " | "; // Displays the current number of enemies
 	cout << "Chests Remaining: " << getNumberOfChests() << " | "; // Displays the current number of chests
@@ -485,7 +480,7 @@ void Game::checkForPcCollision(int previousXPosition, int previousYPosition)
 	{
 		if (coin->getIsInteractable() && coin->getXCoordinate() == playerCharacter->getXCoordinate() && coin->getYCoordinate() == playerCharacter->getYCoordinate()) // Is PC colliding with a coin?
 		{
-			playerCharacter->setNumberOfCoins(1); // Increases the coins collected counter at the top of the screen
+			playerCharacter->setNumberOfCoins(coin->getValue()); // Increases the coins collected counter at the top of the screen
 			coin->deactivateItem(); // Deactivate the coin
 		}
 	}
@@ -728,9 +723,17 @@ void Game::displayPlayerWonScreen()
 /// </summary>
 void Game::checkWin()
 {
-	if (numberOfChests <= 0)
+	if ((numberOfChests <= 0 && currentLevel == 0) || (numberOfChests <= 0 && currentLevel == 1))
 	{
-		displayPlayerWonScreen();
+		currentLevel++;
+		resetGame();
+		loadMap();
+	}
+	else if (numberOfChests <= 0 && currentLevel == 2)
+	{
+		displayPlayerWonScreen(); 
+		playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins());
+		currentLevel = 0;
 	}
 }
 
