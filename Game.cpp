@@ -226,7 +226,7 @@ void Game::generateObjects()
 
 	for (int i = 0; i < (sizeof(enemies) / sizeof(enemies[0])); i++)
 	{
-		enemies[i] = new Enemy(i, 0.0f); // Creates a new enemy 
+		enemies[i] = new Enemy(i); // Creates a new enemy 
 	}
 
 	for (int i = 0; i < (sizeof(coins) / sizeof(coins[0])); i++)
@@ -256,7 +256,7 @@ void Game::generateObjects()
 void Game::resetGame()
 {
 	// Reset the player character 
-	playerCharacter->setHealth(100); 
+	playerCharacter->setHealth(-playerCharacter->getHealth() + 100); 
 	playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate());
 	playerCharacter->setYCoordinate(-playerCharacter->getYCoordinate());
 
@@ -648,6 +648,7 @@ void Game::fightEnemy(int enemyIndex)
 		switch (playerInput)
 		{
 		case '1': // PC attacks the enemy
+
 			cout << "PC and the opponent attacked one another!" << endl;
 			enemies[enemyIndex]->setHealth(-playerCharacter->getDamage()); // Redeuces the enemy's health
 			

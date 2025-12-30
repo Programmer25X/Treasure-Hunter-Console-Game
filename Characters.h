@@ -3,7 +3,13 @@
 
 class Character
 {
+
+public:
+	Character();
+
 protected:
+
+	float damage = 0;
 	float health = 0;
 	int xPosition = 0;
 	int yPosition = 0;
@@ -11,8 +17,11 @@ protected:
 
 public:
 	// Getter and Setter methods 
+
 	float getHealth() const;
 	void setHealth(float amountToAdd);
+
+	float getDamage() const;
 
 	int getXCoordinate() const;
 	int getYCoordinate() const;
@@ -30,22 +39,12 @@ public:
 	PlayerCharacter(); // Constructor
 
 private:
-
 	unsigned int numberOfCoins = 0;
-	unsigned int numberOfPoints = 0;
-	float damage = 25; 
-
 public:
 	// Getter and Setter methods
 
 	int getNumberOfCoins() const;
 	void setNumberOfCoins(int amountToAdd);
-
-	int getAmountOfPoints() const;
-	void setNumberOfPoints(int amountToAdd);
-
-	float getDamage() const;
-
 
 	// Other methods
 
@@ -57,21 +56,15 @@ public:
 class Enemy : public Character
 {
 public:
-
-	Enemy(int pId, float pDamage = 10); // Constructor
+	Enemy(int pId); // Constructor
 
 private:
-
 	int id = 0;
-	float damage = 10.0f;
 
 public:
-
 	// Getter methods 
 
 	int getID() const; 
-	float getDamage() const;
-
 
 	// Other methods
 

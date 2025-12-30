@@ -12,6 +12,11 @@ extern Item* walls[200];
 
 // Character Class Member Functions 
 
+Character::Character()
+{
+
+}
+
 /// <summary>
 /// Retrieves the amount of health the character currently has
 /// </summary>
@@ -27,12 +32,17 @@ float Character::getHealth() const
 /// <param name="amountToAdd"></param>
 void Character::setHealth(float amountToAdd)
 {
-	health += amountToAdd;
+	health += amountToAdd; 
 
 	if (health > 100.0f)
 	{
 		health = 100.0f;
 	}
+}
+
+float Character::getDamage() const
+{
+	return damage; 
 }
 
 /// <summary>
@@ -92,12 +102,12 @@ char Character::getSymbol() const
 /// </summary>
 PlayerCharacter::PlayerCharacter()
 {
-	health = 100.0f;
+	health = 0;
 	symbol = '^';
 	xPosition = 0;
 	yPosition = 0;
 	numberOfCoins = 0;
-	numberOfPoints = 0;
+	damage = 40.0f;
 }
 
 /// <summary>
@@ -109,31 +119,13 @@ int PlayerCharacter::getNumberOfCoins() const
 	return numberOfCoins;
 }
 
-/// <summary>
-/// Retrieves the amount of points obtained
-/// </summary>
-/// <returns></returns>
-int PlayerCharacter::getAmountOfPoints() const
-{
-	return numberOfPoints;
-}
-
-/// <summary>
-/// Retrieves the damage inflicted by the PC
-/// </summary>
-/// <returns></returns>
-float PlayerCharacter::getDamage() const
-{
-	return damage;
-}
-
-/// <summary>
-/// Updates the player's score
+/// <summary>	
+/// Updates the number of coins the PC has collected
 /// </summary>
 /// <param name="amountToAdd"></param>
-void PlayerCharacter::setNumberOfPoints(int amountToAdd)
+void PlayerCharacter::setNumberOfCoins(int amountToAdd)
 {
-	numberOfPoints += amountToAdd;
+	numberOfCoins += amountToAdd;
 }
 
 void PlayerCharacter::movePC(int keycode)
@@ -172,21 +164,19 @@ void PlayerCharacter::movePC(int keycode)
 		xPosition = newXCoordinate; // Updates the PC's x-coordinate 
 		yPosition = newYCoordinate; // Updates the PC's y-coordinate
 
-		if (health <= 98)
+		if (health < 100)
 		{
 			health += 2; // PC health recovers overtime 
+
+			if (health >= 100)
+			{
+				health = 100;
+			}
 		}
+
 	}
 }
 
-/// <summary>	
-/// Updates the number of coins the PC has collected
-/// </summary>
-/// <param name="amountToAdd"></param>
-void PlayerCharacter::setNumberOfCoins(int amountToAdd)
-{
-	numberOfCoins += amountToAdd;
-}
 
 
 
@@ -199,13 +189,13 @@ void PlayerCharacter::setNumberOfCoins(int amountToAdd)
 /// Constructor
 /// </summary>
 /// <param name="PDamage"></param>
-Enemy::Enemy(int pId, float pDamage)
+Enemy::Enemy(int pId)
 {
 	symbol = 'W';
 	xPosition = 0;
 	yPosition = 0;
-	damage = pDamage;
-	health = 50.0f;
+	damage = 25.0f;
+	health = 0;
 	id = pId;
 }
 
@@ -216,15 +206,6 @@ Enemy::Enemy(int pId, float pDamage)
 int Enemy::getID() const
 {
 	return id;
-}
-
-/// <summary>
-/// Retrieves the damage the enemy will inflict onto the PC
-/// </summary>
-/// <returns></returns>
-float Enemy::getDamage() const
-{
-	return damage;
 }
 
 /// <summary>
