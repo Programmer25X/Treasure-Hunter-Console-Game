@@ -34,7 +34,7 @@ Game::Game()
 
 	displayIntroMenu(); // Displays the Intro Menu
 	generateObjects(); // Generates in-game entities
-	resetGame();
+	resetObjects();
 	loadMap();
 	displayBoard();
 }
@@ -253,8 +253,9 @@ void Game::generateObjects()
 /// <summary>
 /// Resets the state of the game 
 /// </summary>
-void Game::resetGame()
+void Game::resetObjects()
 {
+
 	// Reset the player character 
 	playerCharacter->setHealth(-playerCharacter->getHealth() + 100); 
 	playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate());
@@ -591,24 +592,44 @@ void Game::openDoor(int xPosition, int yPosition)
 			deactivateDoorXPosition = 5;
 			deactivateDoorYPosition = 15;
 		}
-		else if (xPosition == 7 && yPosition == 26)
+		else if (xPosition == 7 && yPosition == 26) // Is PC standing on pressure plate?
 		{
 			deactivateDoorXPosition = 10;
 			deactivateDoorYPosition = 23;
 		}
-		else if (xPosition == 13 && yPosition == 3)
+		else if (xPosition == 13 && yPosition == 3) // Is PC standing on pressure plate?
 		{
 			deactivateDoorXPosition = 15;
 			deactivateDoorYPosition = 11;
 		}
-		else if (xPosition == 17 && yPosition == 7)
+		else if (xPosition == 17 && yPosition == 7) // Is PC standing on pressure plate?
 		{
 			deactivateDoorXPosition = 20;
 			deactivateDoorYPosition = 22;
 		}
 		break;
 	
-	case 2:
+	case 2: // Level 3
+		if (xPosition == 4 && yPosition == 23)
+		{
+			deactivateDoorXPosition = 16;
+			deactivateDoorYPosition = 15;
+		}
+		else if (xPosition == 22 && yPosition == 28)
+		{
+			deactivateDoorXPosition = 8;
+			deactivateDoorYPosition = 8;
+		}
+		else if (xPosition == 10 && yPosition == 1)
+		{
+			deactivateDoorXPosition = 2;
+			deactivateDoorYPosition = 19;
+		}
+		else if (xPosition == 17 && yPosition == 18)
+		{
+			deactivateDoorXPosition = 10;
+			deactivateDoorYPosition = 14;
+		}
 		break;
 	}
 
@@ -666,7 +687,7 @@ void Game::fightEnemy(int enemyIndex)
 
 		case '3': // Player gives up
 			cout << "PC gave up..." << endl;
-			displayPlayerLostScreen(); // Display the Player Lost Screen
+			playerCharacter->setHealth(-playerCharacter->getHealth()); 
 			break;
 
 		default:
@@ -681,6 +702,7 @@ void Game::fightEnemy(int enemyIndex)
 		{
 			cout << "YOU LOST..." << endl;
 			displayPlayerLostScreen(); // Display the Player Lost Screen
+			break;
 		}
 
 		Sleep(delay); // Causes a three second delay
@@ -709,7 +731,10 @@ void Game::displayPlayerLostScreen()
 		replay = true;
 		isGameRunning = true;
 
-		resetGame();
+		playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins());
+		currentLevel = 0;
+
+		resetObjects();
 		loadMap();
 	}
 	else if(playerInput == 'n')
@@ -740,7 +765,10 @@ void Game::displayPlayerWonScreen()
 		replay = true;
 		isGameRunning = true;
 
-		resetGame();
+		playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins());
+		currentLevel = 0;
+
+		resetObjects();
 		loadMap();
 	}
 	else if (playerInput == 'n')
@@ -758,7 +786,7 @@ void Game::checkWin()
 	if ((numberOfChests <= 0 && currentLevel == 0) || (numberOfChests <= 0 && currentLevel == 1))
 	{
 		currentLevel++;
-		resetGame();
+		resetObjects();
 		loadMap();
 	}
 	else if (numberOfChests <= 0 && currentLevel == 2)

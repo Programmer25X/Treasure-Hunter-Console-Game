@@ -42,7 +42,7 @@ public:
 
 	void generateObjects();
 	void displayBoard() const;
-	void resetGame();
+	void resetObjects();
 	void updateGame();
 	void loadMap() const;
 
