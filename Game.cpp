@@ -257,8 +257,8 @@ void Game::resetObjects()
 {
 	// Reset the player character 
 	playerCharacter->setHealth(-playerCharacter->getHealth() + 100); // Resets the player character's health to 100
-	playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate());
-	playerCharacter->setYCoordinate(-playerCharacter->getYCoordinate());
+	playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate()); // Resets the player character's x-coordinate to 0
+	playerCharacter->setYCoordinate(-playerCharacter->getYCoordinate()); // Resets the player character's y-coordinate to 0
 
 	setNumberOfChests(-numberOfChests); // Resets the number of treasure chests
 	setNumberOfEnemies(-numberOfEnemies); // Resets the number of enemies
@@ -591,11 +591,6 @@ void Game::moveEnemies()
 
 			}
 		}
-
-		if (enemy->getXCoordinate() == playerCharacter->getXCoordinate() && enemy->getYCoordinate() == playerCharacter->getYCoordinate()) // Is enemy hitting the PC?
-		{
-			fightEnemy(enemy->getID()); // Start the combat sequence
-		}
 	}
 }
 
@@ -693,8 +688,6 @@ void Game::fightEnemy(int enemyIndex)
 {
 	const unsigned int delay = 3000;
 
-	setNumberOfEnemies(-1); // Reduces the enemy counter at the top of the screen
-
 	while (enemies[enemyIndex]->getHealth() > 0 && playerCharacter->getHealth() > 0)
 	{
 		system("cls"); // Clears the console
@@ -740,6 +733,7 @@ void Game::fightEnemy(int enemyIndex)
 		if (enemies[enemyIndex]->getHealth() <= 0 && playerCharacter->getHealth() > 0) // Is the enemy defeated and is the PC alive?
 		{
 			cout << "The PC was victorious!" << endl;
+			setNumberOfEnemies(-1); // Reduces the enemy counter at the top of the screen
 		}
 		else if(playerCharacter->getHealth() <= 0)
 		{
