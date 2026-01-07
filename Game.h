@@ -44,7 +44,8 @@ public:
 	void displayBoard() const;
 	void resetObjects();
 	void updateGame();
-	void loadMap() const;
+	void loadMap();
+	void generateCoins();
 
 	void fightEnemy(int enemyIndex);
 	void moveEnemies();

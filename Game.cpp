@@ -255,56 +255,59 @@ void Game::generateObjects()
 /// </summary>
 void Game::resetObjects()
 {
-
 	// Reset the player character 
-	playerCharacter->setHealth(-playerCharacter->getHealth() + 100); 
+	playerCharacter->setHealth(-playerCharacter->getHealth() + 100); // Resets the player character's health to 100
 	playerCharacter->setXCoordinate(-playerCharacter->getXCoordinate());
 	playerCharacter->setYCoordinate(-playerCharacter->getYCoordinate());
 
 	setNumberOfChests(-numberOfChests); // Resets the number of treasure chests
 	setNumberOfEnemies(-numberOfEnemies); // Resets the number of enemies
 
-
-	for (Item* wall : walls) // Deactivates and resets the walls
+	// Deactivates and resets the walls
+	for (Item* wall : walls) 
 	{
 			wall->deactivateItem();
-			wall->setXCoordinate(-wall->getXCoordinate());
-			wall->setYCoordinate(-wall->getYCoordinate());
+			wall->setXCoordinate(-wall->getXCoordinate());  // Resets the wall's x-coordinate to 0
+			wall->setYCoordinate(-wall->getYCoordinate());  // Resets the wall's y-coordinate to 0
 	}
 
-	for (Treasure* coin : coins) // Deactivates resets the coins
+	// Deactivates resets the coins
+	for (Treasure* coin : coins) 
 	{
 			coin->deactivateItem();
-			coin->setXCoordinate(-coin->getXCoordinate());
-			coin->setYCoordinate(-coin->getYCoordinate());
+			coin->setXCoordinate(-coin->getXCoordinate());  // Resets the coin's x-coordinate to 0
+			coin->setYCoordinate(-coin->getYCoordinate());  // Resets the coin's y-coordinate to 0
 	}
 
-	for (Treasure* chest : treasureChests) // Deactivates and resets the treasure chests
+	// Deactivates and resets the treasure chests
+	for (Treasure* chest : treasureChests) 
 	{
 			chest->deactivateItem();
-			chest->setXCoordinate(-chest->getXCoordinate());
-			chest->setYCoordinate(-chest->getYCoordinate());
+			chest->setXCoordinate(-chest->getXCoordinate()); // Resets the chest's x-coordinate to 0
+			chest->setYCoordinate(-chest->getYCoordinate()); // Resets the chest's y-coordinate to 0
 	}
 
-	for (Enemy* enemy : enemies) // Deactivates and resets the enemies
+	// Deactivates and resets the enemies
+	for (Enemy* enemy : enemies)
 	{
 			enemy->setHealth(-enemy->getHealth());
-			enemy->setXCoordinate(-enemy->getXCoordinate());
-			enemy->setYCoordinate(-enemy->getYCoordinate()); 
+			enemy->setXCoordinate(-enemy->getXCoordinate()); // Resets the enemy's x-coordinate to 0
+			enemy->setYCoordinate(-enemy->getYCoordinate()); // Resets the enemy's y-coordinate to 0
 	}
 
-	for (PressurePlate* pressurePlate : pressurePlates) // Deactivates and resets the pressure plates
+	// Deactivates and resets the pressure plates
+	for (PressurePlate* pressurePlate : pressurePlates) 
 	{
 		pressurePlate->deactivateItem();
-		pressurePlate->setXCoordinate(-pressurePlate->getXCoordinate());
-		pressurePlate->setYCoordinate(-pressurePlate->getYCoordinate());
+		pressurePlate->setXCoordinate(-pressurePlate->getXCoordinate()); // Resets the pressure plate's x-coordinate to 0
+		pressurePlate->setYCoordinate(-pressurePlate->getYCoordinate()); // Resets the pressure plate's y-coordinate to 0
 	}
 }
 
 /// <summary>
 /// Loads the map for the current level
 /// </summary>
-void Game::loadMap() const
+void Game::loadMap()
 {
 	for (int row = 0; row < NUMBER_OF_ROWS; row++) // Loops through each row on the gameboard
 	{
@@ -378,6 +381,46 @@ void Game::loadMap() const
 			}
 		}
 	}
+
+	generateCoins(); // Generate the coins in the level
+}
+
+/// <summary>
+/// Generates the coins in each level randomly
+/// </summary>
+void Game::generateCoins()
+{
+	int numberOfCoinsToSpawn = 0;
+
+	srand(static_cast<unsigned int>(time(0)));
+
+	switch (currentLevel)
+	{
+	case 0: // Level 1
+		numberOfCoinsToSpawn = 5;
+		break;
+	case 1: // Level 2 
+		numberOfCoinsToSpawn = 7;
+		break;
+	case 2: // Level 3 
+		numberOfCoinsToSpawn = 10;
+		break;
+	}
+
+	for (int i = 0; i < numberOfCoinsToSpawn;)
+	{
+		int xPosition = rand() % NUMBER_OF_COLUMNS; // Generates random x-coordinate
+		int yPosition = rand() % NUMBER_OF_ROWS; // Generates random y-coordinate 
+
+		if (map[currentLevel][yPosition][xPosition] == 0) // Is the generated position avaliable?
+		{
+			map[currentLevel][yPosition][xPosition] = 7; // Marks the coordinate as occupied
+			coins[i]->activateItem();
+			coins[i]->setXCoordinate(xPosition); // Sets the x-coordinate of the coin
+			coins[i]->setYCoordinate(yPosition); // Sets the y-coordinate of the coin
+			i++; 
+		}
+	}
 }
 
 /// <summary>
@@ -444,7 +487,7 @@ void Game::displayBoard() const
 			{
 				if (pressurePlate->getIsInteractable() && pressurePlate->getXCoordinate() == column && pressurePlate->getYCoordinate() == row) // Is the entity a pressure plate?
 				{
-					cout << "\033[93m";
+					cout << "\033[34m";
 					symbol = pressurePlate->getSymbol(); // Output pressure plate symbol to the console.
 				}
 			}
@@ -610,22 +653,22 @@ void Game::openDoor(int xPosition, int yPosition)
 		break;
 	
 	case 2: // Level 3
-		if (xPosition == 4 && yPosition == 23)
+		if (xPosition == 4 && yPosition == 23) // Is PC standing on pressure plate?
 		{
 			deactivateDoorXPosition = 16;
 			deactivateDoorYPosition = 15;
 		}
-		else if (xPosition == 22 && yPosition == 28)
+		else if (xPosition == 22 && yPosition == 28) // Is PC standing on pressure plate?
 		{
 			deactivateDoorXPosition = 8;
 			deactivateDoorYPosition = 8;
 		}
-		else if (xPosition == 10 && yPosition == 1)
+		else if (xPosition == 10 && yPosition == 1) // Is PC standing on pressure plate?
 		{
 			deactivateDoorXPosition = 2;
 			deactivateDoorYPosition = 19;
 		}
-		else if (xPosition == 17 && yPosition == 18)
+		else if (xPosition == 17 && yPosition == 18) // Is PC standing on pressure plate?
 		{
 			deactivateDoorXPosition = 10;
 			deactivateDoorYPosition = 14;
