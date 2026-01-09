@@ -166,12 +166,28 @@ void Game::displayIntroMenu() const
 
 	cout << "\033[33m"; // Sets the colour of text/characters to yellow
 
-	cout << endl << "\tTreasure Hunter";
-	cout << endl << "\t- - - - - - - -  " << endl;
-	cout << endl << "\tCollect All the Treasure" << endl;
-	cout << endl << "\tAvoid All the Enemies" << endl;
 
-	cout << endl << endl << "\tPress ENTER to play" << endl;
+	cout << R"(
+
+   ---|---   |----\   |-----   /-----\   |-----  |     |   |-----\  |-----
+      |      |     |  |        |     |   |___    |     |   |     |  |
+      |      |_____/  |---     |-----|       |   |     |   |_____/  |---
+      |	     |    \   |        |     |       |   |     |   |    \   |
+      |      |    |   |_____   |     |  _____|   |_____|   |     |  |_____
+
+    |     |  |     |  |\    |  ---|---  |-----   |----\
+    |     |  |     |  | \   |     |     |        |     |
+    |-----|  |     |  |  \  |     |     |---     |_____/
+    |     |  |     |  |   \ |     |     |        |    \
+    |     |  |_____|  |    \|     |     |_____   |     |
+)"; 
+   
+	cout << endl << endl << "\t\tCreated by Dennis Cullip-Cross";
+	cout << endl << "\t- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
+	cout << endl << "\t\tCollect All the Treasure" << endl;
+	cout << endl << "\t\tAvoid All the Enemies" << endl;
+
+	cout << endl << endl << "\t\tPress ENTER to play" << endl;
 
 	do
 	{
@@ -341,8 +357,8 @@ void Game::loadMap()
 			switch (tile)
 			{
 			case 1:
-				playerCharacter->setXCoordinate(column);
-				playerCharacter->setYCoordinate(row);
+				playerCharacter->setXCoordinate(column); // Updates the PC's x-coordinate 
+				playerCharacter->setYCoordinate(row); // Updates the PC's y-coordinate
 				break;
 
 			case 2:
@@ -351,8 +367,8 @@ void Game::loadMap()
 					if (!wall->getIsInteractable())
 					{
 						wall->activateItem(); 
-						wall->setXCoordinate(column);
-						wall->setYCoordinate(row);
+						wall->setXCoordinate(column); // Set the wall's x-coordinate
+						wall->setYCoordinate(row); // Set the wall's y-coordinate
 						break;
 					}
 				}
@@ -364,9 +380,9 @@ void Game::loadMap()
 					if (enemy->getHealth() <= 0.0f)
 					{
 						enemy->setHealth(50.0f); 
-						enemy->setXCoordinate(column);
-						enemy->setYCoordinate(row);
-						setNumberOfEnemies(1);
+						enemy->setXCoordinate(column); // Set the enemy's initial x-coordinate
+						enemy->setYCoordinate(row); // Set the enemy's initial y-coordinate
+						setNumberOfEnemies(1); // Increases the enemy counter
 						break;
 					}
 				}
@@ -377,8 +393,8 @@ void Game::loadMap()
 				{
 					if (!pressurePlate->getIsInteractable())
 					{
-						pressurePlate->setXCoordinate(column);
-						pressurePlate->setYCoordinate(row); 
+						pressurePlate->setXCoordinate(column); // Set the pressure plates's x-coordinate
+						pressurePlate->setYCoordinate(row); // Set the pressure plates's y-coordinate
 						pressurePlate->activateItem();
 						break;
 					}
@@ -391,9 +407,9 @@ void Game::loadMap()
 					if (!chest->getIsInteractable())
 					{
 						chest->activateItem();
-						chest->setXCoordinate(column);
-						chest->setYCoordinate(row);
-						setNumberOfChests(1);
+						chest->setXCoordinate(column); // Set chest's x-coordinate
+						chest->setYCoordinate(row); // Set chest's y-coordinate
+						setNumberOfChests(1); // Increase the chest counter
 						break;
 					}
 				}
