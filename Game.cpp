@@ -169,25 +169,40 @@ void Game::displayIntroMenu() const
 
 	cout << R"(
 
-   ---|---   |----\   |-----   /-----\   |-----  |     |   |-----\  |-----
-      |      |     |  |        |     |   |___    |     |   |     |  |
-      |      |_____/  |---     |-----|       |   |     |   |_____/  |---
-      |	     |    \   |        |     |       |   |     |   |    \   |
-      |      |    |   |_____   |     |  _____|   |_____|   |     |  |_____
+             ---|---  |----\   |-----   /-----\   |-----  |     |   |-----\  |-----
+                |     |     |  |        |     |   |___    |     |   |     |  |
+                |     |_____/  |---     |-----|       |   |     |   |_____/  |---
+                |     |    \   |        |     |       |   |     |   |    \   |
+                |     |    |   |_____   |     |  _____|   |_____|   |     |  |_____
 
-    |     |  |     |  |\    |  ---|---  |-----   |----\
-    |     |  |     |  | \   |     |     |        |     |
-    |-----|  |     |  |  \  |     |     |---     |_____/
-    |     |  |     |  |   \ |     |     |        |    \
-    |     |  |_____|  |    \|     |     |_____   |     |
+                      |     |  |     |  |\    |  ---|---  |-----   |----\
+                      |     |  |     |  | \   |     |     |        |     |
+                      |-----|  |     |  |  \  |     |     |---     |_____/
+                      |     |  |     |  |   \ |     |     |        |    \
+                      |     |  |_____|  |    \|     |     |_____   |     |
 )"; 
    
-	cout << endl << endl << "\t\tCreated by Dennis Cullip-Cross";
-	cout << endl << "\t- - - - - - - - - - - - - - - - - - - - - - - - - - - " << endl;
-	cout << endl << "\t\tCollect All the Treasure" << endl;
-	cout << endl << "\t\tAvoid All the Enemies" << endl;
+	cout << endl << endl << "\t\t\t\t  Created by Dennis Cullip-Cross" << endl;
+	cout << endl << "\t\t- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -" << endl;
+	cout << endl << "\t\t\t\t    Collect All the Treasure" << endl;
+	cout << endl << "\t\t\t\t    Avoid All the Enemies" << endl << endl << endl;
 
-	cout << endl << endl << "\t\tPress ENTER to play" << endl;
+
+	cout << "\033[97m"; // Sets the colour of text/characters to bright white
+	cout << endl << "\t\t\t\t    Player Character (^)" << endl;
+
+	cout << "\033[31m"; // Sets the colour of text/characters to red
+	cout << endl << "\t\t\t\t    Enemies (W)" << endl;
+
+	cout << "\033[34m"; // Sets the colour of text/characters to blue
+	cout << endl << "\t\t\t\t    Pressure Plates (P)" << endl;
+
+	cout << "\033[93m"; // Sets the colour of text/characters to bright yellow
+	cout << endl << "\t\t\t\t    Coins (C)" << endl;
+	cout << endl << "\t\t\t\t    Treasure Chests (T)" << endl << endl << endl; 
+
+	cout << "\033[33m"; // Sets the colour of text/characters to yellow
+	cout << endl << endl << "\t\t\t\t    Press ENTER to play" << endl;
 
 	do
 	{
@@ -491,7 +506,7 @@ void Game::displayBoard() const
 			{
 				if (wall->getIsInteractable() && wall->getXCoordinate() == column && wall->getYCoordinate() == row) // Is the entity a wall?
 				{
-					cout << "\033[97m";
+					cout << "\033[97m"; // Sets the colour of text/characters to bright white
 					symbol = wall->getSymbol(); // Output wall symbol to the console.
 				}
 			}
@@ -500,7 +515,7 @@ void Game::displayBoard() const
 			{
 				if (enemy->getHealth() > 0 && enemy->getXCoordinate() == column && enemy->getYCoordinate() == row) // Is the entity an enemy?
 				{
-					cout << "\033[91m";
+					cout << "\033[91m"; // Sets the colour of text/characters to bright red
 					symbol = enemy->getSymbol(); // Output enemy symbol to the console.
 				}
 			}
@@ -509,7 +524,7 @@ void Game::displayBoard() const
 			{
 				if (treasure->getIsInteractable() && treasure->getXCoordinate() == column && treasure->getYCoordinate() == row) // Is the entity a treasure chest?
 				{
-					cout << "\033[93m";
+					cout << "\033[93m"; // Sets the colour of text/characters to bright yellow
 					symbol = treasure->getSymbol(); // Output treasure chest symbol to the console.
 				}
 			}
@@ -518,7 +533,7 @@ void Game::displayBoard() const
 			{
 				if (coin->getIsInteractable() && coin->getXCoordinate() == column && coin->getYCoordinate() == row) // Is the entity a coin?
 				{
-					cout << "\033[93m";
+					cout << "\033[93m"; // Sets the colour of text/characters to bright yellow
 					symbol = coin->getSymbol(); // Output coin symbol to the console.
 				}
 			}
@@ -527,13 +542,14 @@ void Game::displayBoard() const
 			{
 				if (pressurePlate->getIsInteractable() && pressurePlate->getXCoordinate() == column && pressurePlate->getYCoordinate() == row) // Is the entity a pressure plate?
 				{
-					cout << "\033[34m";
+					cout << "\033[34m"; // Sets the colour of text/characters to blue
 					symbol = pressurePlate->getSymbol(); // Output pressure plate symbol to the console.
 				}
 			}
 
 			if (playerCharacter->getHealth() > 0 && playerCharacter->getXCoordinate() == column && playerCharacter->getYCoordinate() == row) // Is the entity the player character (PC)?
 			{
+				cout << "\033[97m"; // Sets the colour of text/characters to bright white
 				symbol = playerCharacter->getSymbol(); // Output player character symbol to the console.
 			}
 
