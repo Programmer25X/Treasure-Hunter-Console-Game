@@ -164,7 +164,7 @@ void Game::displayIntroMenu() const
 
 	system("cls"); // Clears the console
 
-	cout << "\033[33m"; 
+	cout << "\033[33m"; // Sets the colour of text/characters to yellow
 
 	cout << endl << "\tTreasure Hunter";
 	cout << endl << "\t- - - - - - - -  " << endl;
@@ -175,16 +175,18 @@ void Game::displayIntroMenu() const
 
 	do
 	{
-		keycode = toupper(_getch());
+		keycode = toupper(_getch()); // Gets the player's input
 
 	} while (keycode != 13); // While the ENTER key has not been pressed 
+
+	cout << "\033[0m"; // Resets the colour of text/characters displayed on the console
 }
 
 void Game::displayLevelMessage() const
 {
 	const int delay = 3000;
 	
-	cout << "\033[33m";
+	cout << "\033[33m"; // Sets the colour of text/characters to yellow
 
 	system("cls");
 
@@ -233,9 +235,9 @@ void Game::displayLevelMessage() const
 
 	}
 
-	cout << "\033[0m";
-	Sleep(3000);
-	system("cls"); 
+	cout << "\033[0m"; // Resets the colour of text/characters displayed on the console
+	Sleep(3000); // Starts a three second delay
+	system("cls");  // Clears the console
 }
 
 /// <summary>
@@ -404,7 +406,7 @@ void Game::loadMap()
 	}
 
 	generateCoins(); // Generate the coins in the level
-	displayLevelMessage(); 
+	displayLevelMessage(); // Displays a message indicating the current level
 }
 
 /// <summary>
@@ -713,8 +715,9 @@ void Game::fightEnemy(int enemyIndex)
 	while (enemies[enemyIndex]->getHealth() > 0 && playerCharacter->getHealth() > 0)
 	{
 		system("cls"); // Clears the console
-		cout << "PC Health: " << playerCharacter->getHealth() << endl;
-		cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth() << endl;
+
+		cout << "PC Health: " << playerCharacter->getHealth() << endl; // Displays the PC's current health 
+		cout << "Enemy " << enemyIndex << " Health: " << enemies[enemyIndex]->getHealth() << endl; // Displays the enemy's current health 
 
 		char playerInput = ' ';
 
@@ -745,7 +748,7 @@ void Game::fightEnemy(int enemyIndex)
 
 		case '3': // Player gives up
 			cout << "PC gave up..." << endl;
-			playerCharacter->setHealth(-playerCharacter->getHealth()); 
+			playerCharacter->setHealth(-playerCharacter->getHealth()); // Reduce's the PC's health to 0
 			break;
 
 		default:
@@ -782,7 +785,7 @@ void Game::displayPlayerLostScreen()
 
 	while (playerInput != 'y' && playerInput != 'n')
 	{
-		playerInput = tolower(_getch());
+		playerInput = tolower(_getch()); // Gets the player's input
 	}
 
 	if (playerInput == 'y') 
@@ -790,11 +793,11 @@ void Game::displayPlayerLostScreen()
 		replay = true;
 		isGameRunning = true;
 
-		playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins());
-		currentLevel = 0;
+		playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins()); // Resets the number of coins the PC has gathered to 0
+		currentLevel = 0; // Sets the current level to level one 
 
-		resetObjects();
-		loadMap();
+		resetObjects(); // Resets the state of each in-game entity
+		loadMap(); // Loads the map data for level one
 	}
 	else if(playerInput == 'n')
 	{
@@ -816,7 +819,7 @@ void Game::displayPlayerWonScreen()
 
 	while (playerInput != 'y' && playerInput != 'n')
 	{
-		playerInput = tolower(_getch());
+		playerInput = tolower(_getch()); // Gets the player's input
 	}
 
 	if (playerInput == 'y')
@@ -824,11 +827,11 @@ void Game::displayPlayerWonScreen()
 		replay = true;
 		isGameRunning = true;
 
-		playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins());
-		currentLevel = 0;
+		playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins()); // Resets the number of coins the PC has gathered to 0
+		currentLevel = 0; // Sets the current level to level one 
 
-		resetObjects();
-		loadMap();
+		resetObjects(); // Resets the state of each in-game entity
+		loadMap(); // Loads the map data for level one
 	}
 	else if (playerInput == 'n')
 	{
@@ -845,13 +848,13 @@ void Game::checkWin()
 	if ((numberOfChests <= 0 && currentLevel == 0) || (numberOfChests <= 0 && currentLevel == 1))
 	{
 		currentLevel++;
-		resetObjects();
-		loadMap();
+		resetObjects(); // Resets the state of each in-game entity
+		loadMap(); // Loads the map data for the next level
 	}
 	else if (numberOfChests <= 0 && currentLevel == 2)
 	{
 		displayPlayerWonScreen(); 
-		playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins());
+		playerCharacter->setNumberOfCoins(-playerCharacter->getNumberOfCoins()); // Resets the number of coins the PC has gathered to 0
 		currentLevel = 0;
 	}
 }
@@ -863,14 +866,14 @@ void Game::updateGame()
 {
 	displayIntroMenu(); // Displays the Intro Menu
 	generateObjects(); // Generates in-game entities
-	resetObjects();
-	loadMap();
+	resetObjects(); // Resets the state of each in-game entity
+	loadMap(); // Loads the map data for level one 
 
 	while (replay)
 	{
 		while (isGameRunning)
 		{
-			displayBoard();
+			displayBoard(); // Displays the updated game board. 
 
 			isGameRunning = playerCharacter->getHealth() > 0 ? true : false; // Checks whether the PC is still alive. 
 
@@ -879,13 +882,13 @@ void Game::updateGame()
 				return;
 			}
 
-			int previousXPosition = playerCharacter->getXCoordinate();
-			int previousYPosition = playerCharacter->getYCoordinate(); 
+			int previousXPosition = playerCharacter->getXCoordinate(); // Stores the PC's x-coordinate before moving
+			int previousYPosition = playerCharacter->getYCoordinate(); // Stores the PC's y-coordinate before moving
 
 			playerCharacter->movePC(getPlayerInput()); // Allows the pc to move using the WASD keys
-			moveEnemies();
-			checkForPcCollision(previousXPosition, previousYPosition); 
-			checkWin();
+			moveEnemies(); // Moves the enemies 
+			checkForPcCollision(previousXPosition, previousYPosition);  // Checks if the player character is overlapping with another object
+			checkWin(); // Checks whether the PC has won the game
 		}
 
 		return; 
