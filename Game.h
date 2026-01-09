@@ -40,6 +40,7 @@ public:
 
 	int getPlayerInput();
 
+	void displayLevelMessage() const; 
 	void generateObjects();
 	void displayBoard() const;
 	void resetObjects();

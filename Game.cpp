@@ -30,13 +30,7 @@ Item* walls[250] = {};
 /// </summary>
 Game::Game()
 {
-	cout << endl << endl << "- - - - - Game Started - - - - -" << endl;
 
-	displayIntroMenu(); // Displays the Intro Menu
-	generateObjects(); // Generates in-game entities
-	resetObjects();
-	loadMap();
-	displayBoard();
 }
 
 /// <summary>
@@ -76,94 +70,64 @@ Game::~Game()
 /// Sets whether the game is stil running
 /// </summary>
 /// <param name="gameRunning"></param>
-void Game::setIsGameRunning(bool gameRunning)
-{
-	isGameRunning = gameRunning;
-}
+void Game::setIsGameRunning(bool gameRunning) { isGameRunning = gameRunning; }
 
 /// <summary>
 /// Retrieves whether the game is running
 /// </summary>
 /// <returns></returns>
-bool Game::getIsGameRunning() const
-{
-	return isGameRunning;
-}
+bool Game::getIsGameRunning() const { return isGameRunning; }
 
 /// <summary>
 /// Sets whether the game is to be replayed
 /// </summary>
 /// <param name="isReplaying"></param>
-void Game::setReplay(bool isReplaying)
-{
-	replay = isReplaying;
-}
+void Game::setReplay(bool isReplaying) { replay = isReplaying; }
 
 /// <summary>
 /// Retrieves whether the game is going to be replayed.
 /// </summary>
 /// <returns></returns>
-bool Game::getReplay() const
-{
-	return replay;
-}
+bool Game::getReplay() const { return replay; }
 
 /// <summary>
 /// Retrieves the current level
 /// </summary>
 /// <returns></returns>
 
-int Game::getCurrentLevel() const
-{
-	return currentLevel;
-}
+int Game::getCurrentLevel() const { return currentLevel; }
 
 /// <summary>
 /// Increases the current level
 /// </summary>
-void Game::increaseCurrentLevel()
-{
-	currentLevel++;
-}
+void Game::increaseCurrentLevel() { currentLevel++; }
 
 /// <summary>
 /// Retrieves the number of enemies within the level to display at the top of the screen
 /// </summary>
 /// <returns></returns>
 
-int Game::getNumberOfEnemies()
-{
-	return numberOfEnemies;
-}
+int Game::getNumberOfEnemies() { return numberOfEnemies; }
 
 /// <summary>
 /// Set the number of enemies within the level to display at the top of the screen
 /// </summary>
 /// <param name="amountToAdd"></param>
 
-void Game::setNumberOfEnemies(int amountToAdd)
-{
-	numberOfEnemies += amountToAdd;
-}
+void Game::setNumberOfEnemies(int amountToAdd) { numberOfEnemies += amountToAdd; }
 
 /// <summary>
 /// Retrieves the number of treasure chests within the level to display at the top of the screen
 /// </summary>
 /// <returns></returns>
-int Game::getNumberOfChests()
-{
-	return numberOfChests;
-}
+int Game::getNumberOfChests() { return numberOfChests; }
 
 /// <summary>
 /// Set the number of treasure chests within the level to display at the top of the screen
 /// </summary>
 /// <param name="amountToAdd"></param>
 
-void Game::setNumberOfChests(int amountToAdd)
-{
-	numberOfChests += amountToAdd;
-}
+void Game::setNumberOfChests(int amountToAdd) { numberOfChests += amountToAdd; }
 
 
 
@@ -198,7 +162,6 @@ void Game::displayIntroMenu() const
 {
 	int keycode = 0;
 
-
 	system("cls"); // Clears the console
 
 	cout << "\033[33m"; 
@@ -214,7 +177,65 @@ void Game::displayIntroMenu() const
 	{
 		keycode = toupper(_getch());
 
-	} while (keycode != 13); // While the ENTER key has not been pressed
+	} while (keycode != 13); // While the ENTER key has not been pressed 
+}
+
+void Game::displayLevelMessage() const
+{
+	const int delay = 3000;
+	
+	cout << "\033[33m";
+
+	system("cls");
+
+	switch (currentLevel)
+	{
+	case 0:
+		// Outputing LEVEL ONE to the console (ASCII Art)
+		cout << R"(
+
+		|	|-----  \        /   |-----  |		 /------\    |\    |   |-----
+		|	|        \      /    |       |		|        |   | \   |   |
+		|	|---      \    /     |--     |		|        |   |  \  |   |---
+		|	|          \  /      |       |		|        |   |   \ |   |
+		|____	|_____      \/       |_____  |____	\________/   |    \|   |_____ )" << endl;
+
+		break;
+	
+	case 1:
+		// Outputting LEVEL TWO to the console (ASCII Art)
+
+		cout << R"(
+
+ 		|	|-----  \        /   |-----  |	       -----|-----   |       |     /--------\
+		|	|        \      /    |       |		    |        |       |     |        |
+		|	|---      \    /     |---    |		    |        |       |     |        |
+		|	|          \  /      |       |		    |        |   |   |     |        |
+		|____	|_____      \/       |_____  |____          |	     |___|___|	   \________/		)" << endl;
+
+		break;
+
+	case 2:
+		// Outputting LEVEL THREE to the console (ASCII Art)
+
+		cout << R"(
+
+		|	|-----  \        /   |-----  |	       -----|-----   |     |   |-----\    |-----  |-----
+		|	|        \      /    |       |		    |        |     |   |      |   |       |
+		|	|---      \    /     |---    |		    |        |-----|   |---\--/   |---    |---
+		|	|          \  /      |       |		    |        |     |   |    \     |       |
+		|____	|_____      \/       |_____  |____	    |	     |     |   |     |    |_____  |_____  )" << endl;
+
+		break;
+
+	default:
+		break;
+
+	}
+
+	cout << "\033[0m";
+	Sleep(3000);
+	system("cls"); 
 }
 
 /// <summary>
@@ -383,6 +404,7 @@ void Game::loadMap()
 	}
 
 	generateCoins(); // Generate the coins in the level
+	displayLevelMessage(); 
 }
 
 /// <summary>
@@ -839,6 +861,11 @@ void Game::checkWin()
 /// </summary>
 void Game::updateGame()
 {
+	displayIntroMenu(); // Displays the Intro Menu
+	generateObjects(); // Generates in-game entities
+	resetObjects();
+	loadMap();
+
 	while (replay)
 	{
 		while (isGameRunning)
