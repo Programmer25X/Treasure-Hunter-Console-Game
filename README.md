@@ -21,6 +21,10 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 
 ## Media
 
-<img width="1059" height="793" alt="TreasureHunterStartImage" src="https://github.com/user-attachments/assets/6f14541f-a297-4249-8446-9e2393775634" />
-<img width="626" height="610" alt="TreasureHunterLevelOneImage" src="https://github.com/user-attachments/assets/d6dff181-23ce-4a98-b802-4f277d2c44f4" />
+<picture>
+<center> <img width="650" height="610" alt="TreasureHunterStartImage" src="https://github.com/user-attachments/assets/6f14541f-a297-4249-8446-9e2393775634" /> </center>
+<center> <img width="650" height="610" alt="TreasureHunterLevelOneImage" src="https://github.com/user-attachments/assets/d6dff181-23ce-4a98-b802-4f277d2c44f4" /> </center>
+<center> <img width="650" height="610" alt="TreasureHunterLevelTwoImage" src="https://github.com/user-attachments/assets/33cc4e0f-2091-455a-b6ba-42df220a727c" /> <center>
+</picture>
+
 
