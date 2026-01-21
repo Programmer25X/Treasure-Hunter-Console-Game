@@ -7,8 +7,6 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 - Three unique levels
 - PvE combat system
 - Player character health system
-= Pressure plate mechanic
+- Pressure plate mechanic
 - Coins and treasure system
-
-- 
 
