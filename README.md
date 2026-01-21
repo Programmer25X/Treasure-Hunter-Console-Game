@@ -1,5 +1,9 @@
 # Treasure Hunter Console Game
 
+<picture>
+   <img src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
+</picture>
+
 ## Overview
 Treasure Hunter is a C++ console game, in which the player character must navigate through a series of levels, activate pressure plates to unlock new areas and gather treasure. The game was developed by using the object-oriented programming paradigm, and using conditional statements, arrays, loops and pointers. 
 
