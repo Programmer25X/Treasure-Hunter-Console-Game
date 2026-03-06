@@ -18,7 +18,7 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 ## Tools & Languages
 ### Tools
 - Visual Studio
-- GitHub (Source Control)
+- Git
 
 ### Languages
 - C++
