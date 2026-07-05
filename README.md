@@ -7,12 +7,16 @@
 ## Overview
 Treasure Hunter is a C++ console game, in which the player character must navigate through a series of levels, activate pressure plates to unlock new areas and gather treasure. The game was developed by using the object-oriented programming paradigm, and using conditional statements, arrays, loops and pointers. 
 
+----
+
 ## Technical Details
 - **Data Structures & Control Structures**: Implemented *data structures* (including 3D arrays) and *control structures* to manage the player character's movement, the combat system and level management
 - **Game Logic**: The game logic consists of turn-based player vs enemy (PvE) combat, gaining access to new areas and collecting coins and treasure
 - **Object-Oriented Programming (OOP)**: By using *classes*, *inheritance*, *encapsulation* and *reusable components*, I produced more efficient and robust code, some of which could be reused effectively
 - **Event-Driven Programming (EDP)**: Used *control structures* to implement *event listeners*, allowing the state of the game to change according to the player's inputs
 - **Memory Management**: Utilised **pointers** to dynamically allocate and deallocate memory during runtime
+
+----
 
 ## Current Game Features
 - Three unique levels
@@ -22,6 +26,8 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 - Coins and treasure system
 - In-game entity memory management
 
+----
+
 ## Tools & Languages
 ### Tools
 - Visual Studio
@@ -29,6 +35,8 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 
 ### Languages
 - C++
+
+----
 
 ## Media
 
@@ -47,11 +55,15 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 
 [Play on itch.io](https://programmer025x.itch.io/treasure-hunter)
 
+----
+
 ## Gained Skills
 - **Organisational Skills**: Planned, designed, implemented and tested my project, whilst ensuring to use source control and maintain backups
 - **Computational Thinking**: Utilised computational methods including *decomposition, abstraction and visualisation*
 - **Testing & Debugging**: Throughout the development process, I had to continuously debug and test the source code and handle any warnings or errors
 - **Documentation**: Produced thorough documentation throughout the entire planning, design, implementation, testing and evaluation phases
+
+----
 
 ## Reflection 
 Developing Treasure Hunter has developed my understanding of the C++ programming language and provided the opportunity to learn and apply different concepts, such as **conditional statements**, **loops**, **arrays**, **pointers**, **object-oriented programming (OOP)**, **procedural programming** and **event-driven programming (EDP)**. By developing my understanding of these concepts, I have since started a custom OpenGL C++ graphics engine by applying these concepts. 
