@@ -47,7 +47,13 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 
 [Play on itch.io](https://programmer025x.itch.io/treasure-hunter)
 
+## Gained Skills
+- **Organisational Skills**: Planned, designed, implemented and tested my project, whilst ensuring to use source control and maintain backups
+- **Computational Thinking**: Utilised computational methods including *decomposition, abstraction and visualisation*
+- **Testing & Debugging**: Throughout the development process, I had to continuously debug and test the source code and handle any warnings or errors
+- **Documentation**: Produced thorough documentation throughout the entire planning, design, implementation, testing and evaluation phases
+
 ## Reflection 
-Developing Treasure Hunter has developed my understanding of the C++ programming language and provided the opportunity to learn and apply different concepts, such as conditional statements, loops, arrays, pointers, object-oriented programming (OOP) and procedural programming. By developing my understanding of these concepts, I have since started developing a first-person action-puzzle game in Unreal Engine 5 and a custom OpenGL C++ graphics engine by applying these concepts. 
+Developing Treasure Hunter has developed my understanding of the C++ programming language and provided the opportunity to learn and apply different concepts, such as conditional statements, loops, arrays, pointers, object-oriented programming (OOP), procedural programming and event-driven programming (EDP). By developing my understanding of these concepts, I have since started developing a first-person action-puzzle game in Unreal Engine 5 and a custom OpenGL C++ graphics engine by applying these concepts. 
 
 
