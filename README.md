@@ -44,6 +44,7 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 </picture>
 
 [Portfolio Page](https://djcc11.brighton.domains/portfolio/treasure-hunter/)
+
 [Play on itch.io](https://programmer025x.itch.io/treasure-hunter)
 
 ## Gained Skills
