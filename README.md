@@ -12,7 +12,7 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 - **Game Logic**: The game logic consists of turn-based player vs enemy (PvE) combat, gaining access to new areas and collecting coins and treasure
 - **Object-Oriented Programming (OOP)**: By using *classes*, *inheritance*, *encapsulation* and *reusable components*, I produced more efficient and robust code, some of which could be reused effectively
 - **Event-Driven Programming (EDP)**: Used *control structures* to implement *event listeners*, allowing the state of the game to change according to the player's inputs
-- **Memory Management**: Utilised pointers to dynamically allocate and deallocate memory. 
+- **Memory Management**: Utilised **pointers** to dynamically allocate and deallocate memory during runtime
 
 ## Current Game Features
 - Three unique levels
@@ -44,7 +44,6 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 </picture>
 
 [Portfolio Page](https://djcc11.brighton.domains/portfolio/treasure-hunter/)
-
 [Play on itch.io](https://programmer025x.itch.io/treasure-hunter)
 
 ## Gained Skills
@@ -54,6 +53,6 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 - **Documentation**: Produced thorough documentation throughout the entire planning, design, implementation, testing and evaluation phases
 
 ## Reflection 
-Developing Treasure Hunter has developed my understanding of the C++ programming language and provided the opportunity to learn and apply different concepts, such as conditional statements, loops, arrays, pointers, object-oriented programming (OOP), procedural programming and event-driven programming (EDP). By developing my understanding of these concepts, I have since started developing a first-person action-puzzle game in Unreal Engine 5 and a custom OpenGL C++ graphics engine by applying these concepts. 
+Developing Treasure Hunter has developed my understanding of the C++ programming language and provided the opportunity to learn and apply different concepts, such as **conditional statements**, **loops**, **arrays**, **pointers**, **object-oriented programming (OOP)**, **procedural programming** and **event-driven programming (EDP)**. By developing my understanding of these concepts, I have since started a custom OpenGL C++ graphics engine by applying these concepts. 
 
 
