@@ -10,11 +10,11 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 ----
 
 ## Technical Details
-- **Data Structures & Control Structures**: Implemented *data structures* (including 3D arrays) and *control structures* to manage the player character's movement, the combat system and level management
+- **Data Structures & Control Structures**: Implemented data structures (including 3D arrays) and control structures to manage the player character's movement, the combat system and level management
 - **Game Logic**: The game logic consists of turn-based player vs enemy (PvE) combat, gaining access to new areas and collecting coins and treasure
-- **Object-Oriented Programming (OOP)**: By using *classes*, *inheritance*, *encapsulation* and *reusable components*, I produced more efficient and robust code, some of which could be reused effectively
-- **Event-Driven Programming (EDP)**: Used *control structures* to implement *event listeners*, allowing the state of the game to change according to the player's inputs
-- **Memory Management**: Utilised **pointers** to dynamically allocate and deallocate memory during runtime
+- **Object-Oriented Programming (OOP)**: By using classes, inheritance, encapsulation and reusable components, I produced more efficient and robust code, some of which could be reused effectively
+- **Event-Driven Programming (EDP)**: Used control structures to implement event listeners, allowing the state of the game to change according to the player's inputs
+- **Memory Management**: Utilised pointers to dynamically allocate and deallocate memory during runtime
 
 ----
 
