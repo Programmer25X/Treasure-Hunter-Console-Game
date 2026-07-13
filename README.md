@@ -42,18 +42,20 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 
 <picture>
    <img width="650" height="610" alt="TreasureHunterStartImage" src="https://github.com/user-attachments/assets/6f14541f-a297-4249-8446-9e2393775634" />
-   <p><i>Captured image of Start Menu</i></p> 
+   <p>Captured image of Start Menu</p> 
    <img width="650" height="610" alt="TreasureHunterLevelOneImage" src="https://github.com/user-attachments/assets/d6dff181-23ce-4a98-b802-4f277d2c44f4" /> </center>
-   <p><i>Captured image of Level One</i></p> 
+   <p>Captured image of Level One</p> 
    <img width="650" height="610" alt="TreasureHunterLevelTwoImage" src="https://github.com/user-attachments/assets/33cc4e0f-2091-455a-b6ba-42df220a727c" /> <center>
-   <p><i>Captured image of Level Two</i></p> 
+   <p>Captured image of Level Two</p> 
    <img width="610" height="589" alt="TreasureHunterLevelThreemage" src="https://github.com/user-attachments/assets/020f0292-d6ff-497a-bc13-6f031e72ed2c" />
-   <p><i>Captured image of Level Three</i></p> 
+   <p>Captured image of Level Three</p> 
 </picture>
 
-[Portfolio Page](https://djcc11.brighton.domains/portfolio/treasure-hunter/)
+[**Portfolio Page**](https://djcc11.brighton.domains/portfolio/treasure-hunter/)
 
-[Play on itch.io](https://programmer025x.itch.io/treasure-hunter)
+[**Play on itch.io**](https://programmer025x.itch.io/treasure-hunter)
+
+[**Gameplay Video**](https://vimeo.com/1208493172?share=copy&fl=sv&fe=ci#t=0)
 
 ----
 
