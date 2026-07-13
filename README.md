@@ -70,6 +70,6 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 ----
 
 ## Reflection 
-Developing Treasure Hunter has developed my understanding of the C++ programming language and provided the opportunity to learn and apply different concepts, such as **conditional statements**, **loops**, **arrays**, **pointers**, **object-oriented programming (OOP)**, **procedural programming** and **event-driven programming (EDP)**. By developing my understanding of these concepts, I have since started a custom OpenGL C++ graphics engine by applying these concepts. 
+Developing Treasure Hunter has developed my understanding of the C++ programming language and provided the opportunity to learn and apply different concepts, such as conditional statements, loops, arrays, pointers, object-oriented programming (OOP), procedural programming and event-driven programming (EDP). By developing my understanding of these concepts, I have since started a custom OpenGL C++ graphics engine by applying these concepts. 
 
 
