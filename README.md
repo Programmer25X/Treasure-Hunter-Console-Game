@@ -57,7 +57,7 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 
 [**Play on itch.io**](https://programmer025x.itch.io/treasure-hunter)
 
-[**Gameplay Video**](https://vimeo.com/1208493172?share=copy&fl=sv&fe=ci#t=0) (***Please note: The video below contains flickering images***)
+[**Gameplay Video**](https://vimeo.com/1208493172?share=copy&fl=sv&fe=ci#t=0) (***Please note: The video contains flickering images***)
 
 ----
 
