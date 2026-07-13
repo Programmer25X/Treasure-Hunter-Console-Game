@@ -48,14 +48,16 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
    <img width="650" height="610" alt="TreasureHunterLevelTwoImage" src="https://github.com/user-attachments/assets/33cc4e0f-2091-455a-b6ba-42df220a727c" /> <center>
    <p>Captured image of Level Two</p> 
    <img width="610" height="589" alt="TreasureHunterLevelThreemage" src="https://github.com/user-attachments/assets/020f0292-d6ff-497a-bc13-6f031e72ed2c" />
-   <p>Captured image of Level Three</p> 
+   <p>Captured image of Level Three</p>
 </picture>
+
+
 
 [**Portfolio Page**](https://djcc11.brighton.domains/portfolio/treasure-hunter/)
 
 [**Play on itch.io**](https://programmer025x.itch.io/treasure-hunter)
 
-[**Gameplay Video**](https://vimeo.com/1208493172?share=copy&fl=sv&fe=ci#t=0)
+[**Gameplay Video**](https://vimeo.com/1208493172?share=copy&fl=sv&fe=ci#t=0) (***Please note: The video below contains flickering images***)
 
 ----
 
