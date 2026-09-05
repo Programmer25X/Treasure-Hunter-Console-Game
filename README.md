@@ -63,7 +63,7 @@ Treasure Hunter is a C++ console game, in which the player character must naviga
 
 ## Gained Skills
 - **Organisational Skills**: Planned, designed, implemented and tested my project, whilst ensuring to use source control and maintain backups
-- **Computational Thinking**: Utilised computational methods including *decomposition, abstraction and visualisation*
+- **Computational Thinking**: Utilised computational methods including decomposition, abstraction and visualisation
 - **Testing & Debugging**: Throughout the development process, I had to continuously debug and test the source code and handle any warnings or errors
 - **Documentation**: Produced thorough documentation throughout the entire planning, design, implementation, testing and evaluation phases
 - **C++ Programming, Object-Oriented Programming (OOP) & Event Driven Programming (EDP)**: Developed my proficiency and understanding of the C++ programming language and object-oriented programming paradigm, enabling me to successfully implement: event listeners, by using conditional statements, in-game entities; game mechanics and systems
